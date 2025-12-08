@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BOOKZY</title>
+    <link rel="stylesheet" href="homeCss.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+            <div class="sidebar" id="sidebar">
+                <a href="#">Home</a>
+                <a href="#">Trains</a>
+                <a href="#">Flights</a>
+                <a href="#">Hotels</a>
+                <a href="#">Movies</a>
+                <a href="#">Contact</a>
+            </div>
+
+            <div class="menu-icon" onclick="toggleMenu()">
+                &#9776;
+            </div>
+
+
+            <div class="dropdown-menu" id="dropdownMenu">
+                <a href="#">Home</a>
+                <a href="#">Trains</a>
+                <a href="#">Flights</a>
+                <a href="#">Hotels</a>
+                <a href="#">Movies</a>
+                <a href="#">Contact</a>
+            </div>
+            <a class="navbar-brand" href="#">
+                <img src="logo.png" width="180px" style="border-radius: 10px;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#"
+                            style="color: #F5F1DC;font-size: 22px;margin-right: 25px;">
+                            <strong>HOME</strong>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" style="color: #F5F1DC;font-size: 22px;margin-right: 25px;">
+                            <strong>SHOWS</strong>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" style="color: #F5F1DC;font-size: 22px;margin-right: 25px;">
+                            <strong>
+                                HOTELS
+                            </strong>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false"
+                            style="color: #F5F1DC;font-size: 22px;margin-right: 25px;">
+                            <strong>TRAVEL</strong>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"
+                            style="border: 1px solid black;">
+                            <li style="border-bottom:1px solid black"><a class="dropdown-item" href="#">FLIGHT</a></li>
+                            <li style="border-bottom:1px solid black"><a class="dropdown-item" href="#">TRAIN</a></li>
+                            <li><a class="dropdown-item" href="#">BUSES</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" style="color: #F5F1DC;font-size: 22px;margin-right: 25px;">
+                            <strong>OFFERS</strong>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" style="color: #F5F1DC;font-size: 22px;margin-right: 350px;">
+                            <strong>ABOUT US</strong>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" style="color: #F5F1DC;font-size: 22px;">
+                            <button style="border-radius: 20px; width: 270px; background-color: #F5F1DC;">
+                                <strong>
+                                    SIGN UP | LOGIN <img src="https://cdn-icons-png.flaticon.com/512/10542/10542498.png"
+                                        width="40px">
+                                </strong>
+                            </button>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container-fluid">
+
+        <div class="carousel-container">
+            <div id="carouselExampleRide" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000"
+                data-bs-pause="false">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="image1.jpg" class="d-block" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="image2.jpg" class="d-block" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="image3.jpg" class="d-block" alt="...">
+                    </div>
+                </div>
+
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleRide"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleRide"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container-xxl mycontainer">
+        <div class="row">
+            <div class="col-6">
+                <p class="info">
+                    <strong style="font-size: 25px;">Welcome to Bookzy</strong> — your all-in-one platform designed to
+                    simplify the way you travel, explore, and
+                    enjoy entertainment.
+                    At Bookzy, we bring together train, flight, and bus bookings along with hotel reservations, movie
+                    tickets, and show passes under one seamless system. Instead of jumping between multiple apps or
+                    websites, Bookzy lets you find everything in a single, user-friendly space. Our goal is to make
+                    booking effortless by offering real-time availability, secure payments, transparent pricing, and
+                    quick confirmations. Whether you’re planning a long vacation, a weekend trip, a business journey, or
+                    a night out with friends, Bookzy supports every step of your plan. With a clean interface, smart
+                    search filters, and trusted partnerships, we ensure that your travel and entertainment choices are
+                    always smooth, convenient, and reliable.
+                </p>
+            </div>
+            <div class="col-6">
+                <img src="imagebookzy.png" width="600px">
+            </div>
+        </div>
+    </div>
+
+
+    <br><br><br><br><br><br>
+    <footer id="contact" class="footer">
+        <div class="container">
+            <h5>Contact Us</h5>
+            <p>Email: taskforce404@gmail.com | Phone: 7020240416</p>
+            <p style="margin-bottom: 0;">Address: IIIT Lucknow, Lucknow, Uttar Pradesh, India</p>
+
+        </div>
+    </footer>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="homeJs.js"></script>
+
+</body>
+
+</html>
