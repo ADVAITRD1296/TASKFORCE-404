@@ -5,12 +5,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BOOKZY</title>
-    <link rel="stylesheet" href="homeCss.css" />
+    <link rel="stylesheet" href="showsCss.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
 
     <header class="site-header">
@@ -115,68 +116,77 @@
     </div>
 
 
+    <button class="booked" id="bookinfo" onclick="scrollToSection()">BOOKED TICKETS</button>
 
 
+    <button class="booknow">BOOK NOW</button>
 
+    <div id="ticketOverlay">
+        <div id="ticketPopup">
+            <span id="closeTicketPopup">&times;</span>
 
+            <h1 style="text-align: center; font-family: 'Times New Roman'; color: blue; font-size: 70px;"><strong>Book Tickets</strong></h1>
 
+            <label for="movie">Movie</label>
+            <select id="moviepop">
+                <option value="250" name="Inception - Rs.250">Inception - Rs.250</option>
+                <option value="200" name="Interstellar - Rs.200">Interstellar - Rs.200</option>
+                <option value="180" name="Dune - Rs.180">Dune - Rs.180</option>
+                <option value="150" name="Avatar - Rs.150">Avatar - Rs.150</option>
+            </select>
 
-    <div class="container-fluid">
+            <label for="tickets">Number of Tickets</label>
+            <input type="number" id="tickets" min="1" max="10">
 
-        <div class="carousel-container">
-            <div id="carouselExampleRide" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000"
-                data-bs-pause="false">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="image1.jpg" class="d-block" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="image2.jpg" class="d-block" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="image3.jpg" class="d-block" alt="...">
-                    </div>
-                </div>
+            <label for="showtime">Show Time</label>
+            <select id="showtime">
+                <option>10:00 AM</option>
+                <option>1:30 PM</option>
+                <option>4:00 PM</option>
+                <option>7:00 PM</option>
+                <option>10:00 PM</option>
+            </select>
 
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleRide"
-                    data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon"></span>
-                </button>
+            <button id="calcBtn">Calculate Total</button>
 
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleRide"
-                    data-bs-slide="next">
-                    <span class="carousel-control-next-icon"></span>
-                </button>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="container-xxl mycontainer">
-        <div class="row">
-            <div class="col-6">
-                <p class="info">
-                    <strong style="font-size: 25px;">Welcome to Bookzy</strong> — your all-in-one platform designed to
-                    simplify the way you travel, explore, and
-                    enjoy entertainment.
-                    At Bookzy, we bring together train, flight, and bus bookings along with hotel reservations, movie
-                    tickets, and show passes under one seamless system. Instead of jumping between multiple apps or
-                    websites, Bookzy lets you find everything in a single, user-friendly space. Our goal is to make
-                    booking effortless by offering real-time availability, secure payments, transparent pricing, and
-                    quick confirmations. Whether you’re planning a long vacation, a weekend trip, a business journey, or
-                    a night out with friends, Bookzy supports every step of your plan. With a clean interface, smart
-                    search filters, and trusted partnerships, we ensure that your travel and entertainment choices are
-                    always smooth, convenient, and reliable.
-                </p>
-            </div>
-            <div class="col-6">
-                <img src="imagebookzy.png" width="600px">
-            </div>
+            <div id="result" style="color: white;"></div>
         </div>
     </div>
 
 
-    <br><br><br><br><br><br>
+
+    <h1 class="showsheading"><strong>TRENDING MOVIES</strong></h1>
+
+    <div class="movie-container" id="movies"></div>
+
+
+    <div id="popup2" class="popup-overlay">
+        <div class="popup-box">
+            <span id="closePopup" class="close-btn">&times;</span>
+            <h2 id="popupTitle"></h2>
+            <p id="popupSummary"></p>
+        </div>
+    </div>
+
+    <div class="container-xxl " id="bookingSection">
+        <table border="5" id="bookingTable">
+            <thead>
+                <tr>
+                    <th>MOVIE</th>
+                    <th>NUMBER OF TICKETS</th>
+                    <th>SHOW TIME</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+
+
+
+    <br><br><br>
     <footer id="contact">
         <div class="container">
             <div class="row">
@@ -206,8 +216,9 @@
 
 
 
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="homeJs.js"></script>
+    <script src="showsJs.js"></script>
 
 </body>
 
