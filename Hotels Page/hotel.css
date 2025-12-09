@@ -1,0 +1,371 @@
+html,
+body {
+    height: 100%;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+}
+
+body {
+    background-image: url('imagebg2.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* Navbar  */
+.navbar {
+    background: linear-gradient(to right, orange, #0046FF);
+    border-bottom: solid 1px black;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* Footer  */
+footer {
+    background-color: black;
+    opacity: 0.5;
+    color: white;
+    margin-top: 40px;
+    padding: 18px 0;
+    border: none;
+    text-align: center;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 170px;
+    height: 100vh;
+    background: #F5F1DC;
+    padding-top: 20px;
+    display: flex;
+    top: 77px;
+    flex-direction: column;
+    gap: 18px;
+    position: fixed;
+    left: 0;
+    border: 2px solid black;
+}
+
+.sidebar {
+    display: none;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: #333;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 25px;
+}
+
+.sidebar a:hover {
+    background: #eee;
+}
+
+.menu-icon,
+.dropdown-menu {
+    display: none;
+}
+
+.menu-icon {
+    display: block;
+    font-size: 32px;
+    padding: 10px;
+    cursor: pointer;
+    user-select: none;
+    background: #F5F1DC;
+    width: 50px;
+    margin-right: 20px;
+}
+
+.dropdown-menu {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    animation: fade 0.3s ease-in-out;
+}
+
+.dropdown-menu.active {
+    display: flex;
+    margin-top: 450px;
+    border: 1px solid black;
+}
+
+.dropdown-menu a {
+    padding: 12px;
+    text-decoration: none;
+    background: #eee;
+    color: #333;
+    border-radius: 6px;
+    text-align: center;
+}
+
+/* Why book from bookzy  */
+.why-box {
+    background: rgba(255, 255, 255, 0.92);
+    padding: 30px;
+    border-radius: 18px;
+    border: 2px solid #222;
+    box-shadow: 0 0 14px rgba(0, 0, 0, 0.2);
+    margin-top: 120px;
+}
+
+.why-title {
+    font-size: 32px;
+    font-weight: 900;
+    color: #0a1a4a;
+}
+
+.why-card-new {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 18px;
+    height: 100%;
+    border: 1px solid #ddd;
+    transition: 0.25s ease-in-out;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.why-card-new:hover {
+    transform: translateY(-4px);
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.why-card-new h5 {
+    font-weight: 800;
+    color: #111;
+    margin-top: 10px;
+}
+
+.why-card-new p {
+    font-size: 14px;
+    color: #555;
+    margin-top: 6px;
+}
+
+.why-icon {
+    width: 45px;
+    margin-bottom: 6px;
+}
+
+.why-book-btn {
+    background: linear-gradient(to right, #0046FF, orange);
+    color: #fff;
+    font-weight: 700;
+    font-size: 18px;
+    padding: 8px 28px;
+    border-radius: 999px;
+    border: 2px solid #000;
+}
+
+.why-book-btn:hover {
+    transform: scale(1.05);
+    transition: 0.2s;
+}
+
+
+/* Featured Hotels  */
+.featured-section {
+    margin-top: 10px;
+}
+
+.featured-title {
+    font-size: 30px;
+    font-weight: 800;
+    color: #0a1a4a;
+}
+
+.hotel-card {
+    background: #ffffff;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 2px solid #222;
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.18);
+    transition: 0.25s ease-in-out;
+    height: 100%;
+}
+
+.hotel-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 10px 24px rgba(0, 0, 0, 0.25);
+}
+
+.hotel-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.hotel-card-body {
+    padding: 14px 16px 16px;
+}
+
+.hotel-card-body h5 {
+    font-weight: 800;
+    margin-bottom: 4px;
+}
+
+.hotel-location {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 4px;
+}
+
+.hotel-rating {
+    font-size: 14px;
+    color: #166534;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.hotel-price {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.small-book-btn {
+    background: linear-gradient(to right, #0046FF, orange);
+    color: #fff;
+    font-weight: 600;
+    border-radius: 20px;
+    padding: 6px 16px;
+    border: 1px solid #000;
+    font-size: 14px;
+}
+
+.small-book-btn:hover {
+    transform: scale(1.05);
+}
+
+/* Booking Form  */
+.hotel-section {
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+.booking-container {
+    background: rgba(255, 255, 255, 0.75);
+    padding: 25px;
+    border-radius: 15px;
+    border: 2px solid #222;
+}
+
+.page-title {
+    font-size: 35px;
+    font-weight: 900;
+    color: #0a1a4a;
+}
+
+.booking-box label {
+    color: #000;
+}
+
+.book-btn {
+    background: linear-gradient(to right, #0046FF, orange);
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    border-radius: 8px;
+    border: 2px solid black;
+}
+
+.book-btn:hover {
+    background: linear-gradient(to right, orange, #0046FF);
+    transform: scale(1.05);
+    transition: 0.3s;
+}
+
+.result-msg {
+    font-weight: 700;
+    font-size: 18px;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    display: none;
+}
+
+
+/* For responsive */
+@media (max-width: 768px) {
+    .why-box {
+        margin-top: 110px;
+        padding: 20px;
+    }
+
+    .page-title,
+    .why-title,
+    .featured-title {
+        font-size: 26px;
+        text-align: center;
+    }
+
+    .book-btn {
+        width: 100%;
+    }
+
+    .why-book-btn {
+        width: 100%;
+    }
+}
+
+/* Trending destinations */
+.trending-section {
+    margin-top: 110px;
+}
+
+.trend-title {
+    text-align: left;
+    font-size: 32px;
+    font-weight: 900;
+    color: #000000;
+}
+
+.trend-sub {
+    text-align: left;
+    color: #000000;
+    font-size: 17px;
+}
+
+.dest-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 18px;
+    border: 2px solid black;
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.25);
+    transition: 0.3s ease-in-out;
+    height: 270px;
+}
+
+.dest-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .3s;
+}
+
+.dest-card:hover .dest-img {
+    transform: scale(1.08);
+}
+
+.dest-overlay {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.55);
+    color: #F5F1DC;
+    padding: 8px 0;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    border-top: 2px solid #000;
+    text-align: center;
+}

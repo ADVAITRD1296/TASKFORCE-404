@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BOOKZY - Hotels</title>
+    <link rel="stylesheet" href="hotel.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+            <div class="sidebar" id="sidebar">
+                <a href="#">Home</a>
+                <a href="#">Trains</a>
+                <a href="#">Flights</a>
+                <a href="#">Hotels</a>
+                <a href="#">Movies</a>
+                <a href="#">Contact</a>
+            </div>
+
+            <div class="menu-icon" onclick="toggleMenu()">
+                &#9776;
+            </div>
+
+            <div class="dropdown-menu" id="dropdownMenu">
+                <a href="#">Home</a>
+                <a href="#">Trains</a>
+                <a href="#">Flights</a>
+                <a href="#">Hotels</a>
+                <a href="#">Movies</a>
+                <a href="#">Contact</a>
+            </div>
+
+            <a class="navbar-brand" href="#">
+                <img src="logo.png" width="180px" style="border-radius: 10px;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#"
+                            style="color: #F5F1DC;font-size: 22px;margin-right: 25px;">
+                            <strong>HOME</strong>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" style="color: #F5F1DC;font-size: 22px;margin-right: 25px;">
+                            <strong>SHOWS</strong>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" style="color: #F5F1DC;font-size: 22px;margin-right: 25px;">
+                            <strong>
+                                HOTELS
+                            </strong>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false"
+                            style="color: #F5F1DC;font-size: 22px;margin-right: 25px;">
+                            <strong>TRAVEL</strong>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"
+                            style="border: 1px solid black;">
+                            <li style="border-bottom:1px solid black"><a class="dropdown-item" href="#">FLIGHT</a></li>
+                            <li style="border-bottom:1px solid black"><a class="dropdown-item" href="#">TRAIN</a></li>
+                            <li><a class="dropdown-item" href="#">BUSES</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" style="color: #F5F1DC;font-size: 22px;margin-right: 25px;">
+                            <strong>OFFERS</strong>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" style="color: #F5F1DC;font-size: 22px;margin-right: 350px;">
+                            <strong>ABOUT US</strong>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" style="color: #F5F1DC;font-size: 22px;">
+                            <button style="border-radius: 20px; width: 270px; background-color: #F5F1DC;">
+                                <strong>
+                                    SIGN UP | LOGIN <img src="https://cdn-icons-png.flaticon.com/512/10542/10542498.png"
+                                        width="40px">
+                                </strong>
+                            </button>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Top Destinations -->
+    <section id="top-destinations" class="mt-4 pt-4 trending-section">
+        <div class="container text-center">
+            <h2 class="trend-title mb-2">Trending Destinations</h2>
+            <p class="trend-sub">Most popular choices for travellers from India</p>
+
+            <div class="row g-4 mt-2">
+
+                <div class="col-md-4">
+                    <div class="dest-card">
+                        <img src="https://pohcdn.com/sites/default/files/styles/paragraph__live_banner__lb_image__1880bp/public/live_banner/New-Delhi-2.jpg"
+                            class="dest-img" alt="New Delhi">
+                        <div class="dest-overlay">New Delhi</div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="dest-card">
+                        <img src="https://karnatakatourism.org/_next/image/?url=https%3A%2F%2Fweb-cms.karnatakatourism.org%2Fwp-content%2Fuploads%2F2025%2F06%2FUB_City_at_night_.jpg&w=3840&q=75"
+                            class="dest-img" alt="Bengaluru">
+                        <div class="dest-overlay">Bengaluru</div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="dest-card">
+                        <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/33/fc/f0/goa.jpg?w=600&h=500&s=1"
+                            class="dest-img" alt="Goa">
+                        <div class="dest-overlay">Goa</div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="dest-card">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/F7xZ48abwAAgNst.jpg/960px-F7xZ48abwAAgNst.jpg"
+                            class="dest-img" alt="Mumbai">
+                        <div class="dest-overlay">Mumbai</div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="dest-card">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Chennai_-_bird%27s-eye_view.jpg/1200px-Chennai_-_bird%27s-eye_view.jpg"
+                            class="dest-img" alt="Chennai">
+                        <div class="dest-overlay">Chennai</div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="dest-card">
+                        <img src="https://static.toiimg.com/thumb/msid-92654212,width-748,height-499,resizemode=4,imgsize-128652/.jpg"
+                            class="dest-img" alt="Hyderabad">
+                        <div class="dest-overlay">Hyderabad</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Why to book from BOOKZY -->
+    <section class="why-section mt-4 mb-4">
+        <div class="container why-box">
+            <h2 class="why-title mb-4">Why book hotels from BOOKZY?</h2>
+
+            <div class="row g-4 justify-content-center">
+
+                <div class="col-md-3">
+                    <div class="why-card-new text-start">
+                        <img src="calendar.png" class="why-icon" alt="">
+                        <h5>Book now, pay at hotel</h5>
+                        <p>FREE cancellation on most rooms</p>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="why-card-new text-start">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3159/3159066.png" class="why-icon" alt="">
+                        <h5>300K+ trusted reviews</h5>
+                        <p>Verified travellers & real experiences</p>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="why-card-new text-start">
+                        <img src="https://cdn-icons-png.flaticon.com/512/854/854878.png" class="why-icon" alt="">
+                        <h5>2M+ properties worldwide</h5>
+                        <p>Hotels, Villas, Resorts & more</p>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="why-card-new text-start">
+                        <img src="https://cdn-icons-png.flaticon.com/512/4841/4841477.png" class="why-icon" alt="">
+                        <h5>24/7 Customer Support</h5>
+                        <p>We’re always here to help!</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="text-center mt-4">
+                <button id="whyBookBtn" class="btn why-book-btn">
+                    Book now
+                </button>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Featured Hotels -->
+    <section class="featured-section mb-5">
+        <div class="container">
+            <h2 class="featured-title mb-4">Featured hotels</h2>
+
+            <div class="row g-4">
+
+                <div class="col-md-4">
+                    <div class="hotel-card">
+                        <img src="https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg?auto=compress&cs=tinysrgb&w=800"
+                            class="hotel-img" alt="Sea View Resort Goa">
+                        <div class="hotel-card-body">
+                            <h5>Sea View Resort</h5>
+                            <p class="hotel-location">Goa, India</p>
+                            <p class="hotel-rating">⭐ 4.7 · Excellent</p>
+                            <p class="hotel-price">From ₹3,999 / night</p>
+                            <button class="btn small-book-btn" onclick="scrollToBooking()">Book now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="hotel-card">
+                        <img src="https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=800"
+                            class="hotel-img" alt="Skyline Grand Mumbai">
+                        <div class="hotel-card-body">
+                            <h5>Skyline Grand</h5>
+                            <p class="hotel-location">Mumbai, India</p>
+                            <p class="hotel-rating">⭐ 4.6 · Superb</p>
+                            <p class="hotel-price">From ₹4,499 / night</p>
+                            <button class="btn small-book-btn" onclick="scrollToBooking()">Book now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="hotel-card">
+                        <img src="https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg?auto=compress&cs=tinysrgb&w=800"
+                            class="hotel-img" alt="Royal Heritage Inn Delhi">
+                        <div class="hotel-card-body">
+                            <h5>Royal Heritage Inn</h5>
+                            <p class="hotel-location">New Delhi, India</p>
+                            <p class="hotel-rating">⭐ 4.5 · Very good</p>
+                            <p class="hotel-price">From ₹3,499 / night</p>
+                            <button class="btn small-book-btn" onclick="scrollToBooking()">Book now</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Booking Form -->
+    <section id="booking-section" class="hotel-section">
+        <div class="container booking-container">
+
+            <h2 class="page-title text-center mb-4">Find your perfect stay</h2>
+
+            <div class="booking-box">
+                <form id="bookingForm">
+                    <div class="row g-3">
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Destination</label>
+                            <input type="text" id="destination" class="form-control" placeholder="Mumbai, Goa, Delhi..."
+                                required>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Check-In Date</label>
+                            <input type="date" id="checkin" class="form-control" required>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Check-Out Date</label>
+                            <input type="date" id="checkout" class="form-control" required>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Guests</label>
+                            <select id="guests" class="form-select" required>
+                                <option value="" disabled selected>Select</option>
+                                <option>1 Guest</option>
+                                <option>2 Guests</option>
+                                <option>3 Guests</option>
+                                <option>4+ Guests</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Room Type</label>
+                            <select id="roomType" class="form-select" required>
+                                <option value="" disabled selected>Select</option>
+                                <option>Standard Room</option>
+                                <option>Deluxe Room</option>
+                                <option>Luxury Suite</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button class="btn book-btn w-50" type="submit">
+                            🔍 Find hotels
+                        </button>
+                    </div>
+
+                    <p id="resultMsg" class="result-msg mt-3"></p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer  -->
+    <footer id="contact" class="footer">
+        <div class="container">
+            <h5>Contact Us</h5>
+            <p>Email: taskforce404@gmail.com | Phone: 7020240416</p>
+            <p style="margin-bottom: 0;">Address: IIIT Lucknow, Lucknow, Uttar Pradesh, India</p>
+
+        </div>
+    </footer>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="hotel.js"></script>
+
+</body>
+
+</html>
