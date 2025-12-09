@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taskforce-404</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="backcss.css">
+
+
+</head>
+
+<body>
+    <header class="site-header">
+        <nav class="navbar" aria-label="Main navigation">
+            <div class="nav-left">
+                <a href="#" class="brand" id="brand">
+
+                    <img src="weblogo.jpeg" height="56px" width="180px" style="border-radius: 10px;" alt="Logo" />
+
+                </a>
+                <ul class="nav-links" role="menubar">
+                    <li role="none"><a role="menuitem" href="#" class="nav-item">Home</a></li>
+                    <li role="none"><a role="menuitem" href="#" class="nav-item">Shows</a></li>
+                    <li role="none"><a role="menuitem" href="#" class="nav-item">Hotels</a></li>
+
+                    <li class="nav-dropdown" role="none">
+                        <button aria-haspopup="true" aria-expanded="false" class="nav-item dropdown-toggle">
+                            Travel 
+                        </button>
+                        <ul class="dropdown-menu" role="menu" aria-label="Travel submenu">
+                            <li role="none"><a role="menuitem" href="#" class="dropdown-item">Flights</a></li>
+                            <li role="none"><a role="menuitem" href="#" class="dropdown-item">Trains</a></li>
+                            <li role="none"><a role="menuitem" href="#" class="dropdown-item">Buses</a></li>
+                        </ul>
+                    </li>
+
+                    <li role="none"><a role="menuitem" href="#" class="nav-item">Offers</a></li>
+                    <li role="none"><a role="menuitem" href="#" class="nav-item">AboutUs</a></li>
+                </ul>
+            </div>
+
+            <div class="nav-right">
+                <div class="user-info" id="userInfo">
+                    <span id="userCount">Users: 0</span>
+                    <span id="loginStatus" class="status">Not logged in</span>
+                </div>
+
+                <div class="auth-buttons">
+                    <button id="loginBtn" class="btn btn-outline">Login</button>
+                    <button id="registerBtn" class="btn btn-primary" style="margin-right: 10px;">Register</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+    <div class="modal" id="loginModal" aria-hidden="true">
+        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+            <button class="modal-close" data-close>✕</button>
+            <h2 id="loginTitle">Login</h2>
+            <form id="loginForm" class="form">
+                <label>Email
+                    <input type="email" name="email" required placeholder="you@example.com" />
+                </label>
+                <label>Password
+                    <input type="password" name="password" required minlength="6" />
+                </label>
+                <div class="form-row">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    <button type="button" class="btn btn-link" id="openRegisterFromLogin">Create account</button>
+                </div>
+                <div id="loginMsg" class="form-msg"></div>
+            </form>
+        </div>
+    </div>
+
+
+    <div class="modal" id="registerModal" aria-hidden="true">
+        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="registerTitle">
+            <button class="modal-close" data-close>✕</button>
+            <h2 id="registerTitle">Register</h2>
+            <form id="registerForm" class="form">
+                <label>Full name
+                    <input type="text" name="fullname" required placeholder="Full name" />
+                </label>
+                <label>Email
+                    <input type="email" name="email" required placeholder="you@example.com" />
+                </label>
+                <label>Password
+                    <input type="password" name="password" required minlength="6" />
+                </label>
+                <label>Confirm password
+                    <input type="password" name="confirmPassword" required minlength="6" />
+                </label>
+                <label>Phone
+                    <input type="tel" name="phone" placeholder="+91-9876543210" />
+                </label>
+                <label>Date of birth
+                    <input type="date" name="dob" />
+                </label>
+                <label>Address
+                    <input type="text" name="address" placeholder="City, State" />
+                </label>
+                <div class="form-row">
+                    <button type="submit" class="btn btn-primary">Register</button>
+                    <button type="button" class="btn btn-outline" id="openLoginFromRegister">Already have
+                        account</button>
+                </div>
+                <div id="registerMsg" class="form-msg"></div>
+            </form>
+        </div>
+    </div>
+
+
+    <div id="box1">
+        <div id="main-div">
+            <div id="train-heading">
+                <h2 id="subject">Train Ticket Booking</h2>
+                <img id="irctc-logo" src="https://logos-world.net/wp-content/uploads/2020/11/IRCTC-Emblem.png"
+                    height="25px">
+                <h2 id="subject-2">IRCTC Authorized Partner</h2>
+
+            </div>
+            <div class="contain">
+                <div class="input-source">
+                    <label>From</label>
+                    <input type="text" id="source" placeholder="Enter Sorce Name">
+                </div>
+                <div>
+                    <button id="btn" onclick="swap()">⇆</button>
+
+                </div>
+                <div class="input-source">
+                    <label>To</label>
+                    <input type="text" id="dest" placeholder="Enter Your Destination">
+                </div>
+                <div class="input-source">
+                    <label>Departure</label>
+                    <input type="date" id="departure">
+                </div>
+            </div>
+
+        </div>
+        <div class="search-btn-container">
+    <button class="search-btn">SEARCH TRAINS</button>
+</div>
+
+
+
+        <section class="benefits-section">
+            <div style="text-align: center">
+                <h3>Customers Choice</h3>
+                <p>book train tickets with us because</p>
+            </div>
+            <div class="benefits-section">
+
+                <div class="container py-5">
+                    <div class="row g-4 justify-content-center">
+
+
+                        <div class="col-12 col-md-4">
+
+                            <div class="benefit-box d-flex align-items-center">
+                                <img src="no cancelation.svg" class="benefit-icon">
+                                <div class="ms-3">
+                                    <h5 class="benefit-title">No Cancellation Fee</h5>
+                                    <p class="benefit-text">
+                                        You can opt for free cancellation & get full refund.
+                                    </p>
+                                    <a href="#" class="benefit-link">Learn more about cancellation</a>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-12 col-md-4">
+
+                            <div class="benefit-box d-flex align-items-center">
+                                <img src="alternate_trips.svg" class="benefit-icon">
+                                <div class="ms-3">
+                                    <h5 class="benefit-title">Alternate Trip</h5>
+                                    <p class="benefit-text">
+                                        Get 2x refund if ticket doesn't get confirmed.
+                                    </p>
+                                    <a href="#" class="benefit-link">Learn more about Alternate Trip</a>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-12 col-md-4">
+
+                            <div class="benefit-box d-flex align-items-center">
+                                <img src="nopg.png" class="benefit-icon">
+                                <div class="ms-3">
+                                    <h5 class="benefit-title">No PG Fee via UPI</h5>
+                                    <p class="benefit-text">
+                                        Zero Payment Gateway Charges via UPI mode.
+                                    </p>
+                                    <a href="#" class="benefit-link">Learn more about UPI</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        <section class="py-5 bg-transparent">
+            <div class="container text-dark">
+                <h2 class="fw-bold mb-4">What users say about Bookzy</h2>
+
+                <div class="row g-4 justify-content-center">
+
+                    
+
+                    <div class="col-md-4">
+                        <div class="testimonial-card p-4 rounded shadow-sm bg-white h-100">
+                            <p class="mb-4">Seamless Booking Experience</p>
+                            <h6 class="fw-semibold mb-0">Harish</h6>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="testimonial-card p-4 rounded shadow-sm bg-white h-100">
+                            <p class="mb-4">Satisfying Train Ticket Booking Experience</p>
+                            <h6 class="fw-semibold mb-0">Budupula Nagaraj</h6>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="testimonial-card p-4 rounded shadow-sm bg-white h-100">
+                            <p class="mb-4">Top-Rated Alternate TripGuarantee</p>
+                            <h6 class="fw-semibold mb-0">Ramu Dhanvijay</h6>
+                        </div>
+                    </div>
+
+                    
+
+                    <div class="col-md-4">
+                        <div class="testimonial-card p-4 rounded shadow-sm bg-white h-100">
+                            <p class="mb-4">Reliable Alternate TripGuarantee Service</p>
+                            <h6 class="fw-semibold mb-0">C Deepak Kumar</h6>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="testimonial-card p-4 rounded shadow-sm bg-white h-100">
+                            <p class="mb-4">Effortless Booking and Refund</p>
+                            <h6 class="fw-semibold mb-0">Akhil</h6>
+                        </div>
+                    </div>
+
+                   
+                    <div class="col-md-4">
+                        <div class="testimonial-card p-4 rounded shadow-sm bg-white h-100">
+                            <p class="mb-4">Fast, user-friendly and super reliable. Bookzy has become my go-to platform
+                                for all train bookings.</p>
+                            <h6 class="fw-semibold mb-0">Sneha Patil</h6>
+                        </div>
+                    </div>
+
+                    <section class="py-5">
+                        <div class="table-container">
+    <h2 class="table-heading">IRCTC Cancellation Charges on Train Ticket Booking</h2>
+    <p style="font-weight:600;">You may opt for Free Cancellation for selected trains to save on IRCTC cancellation charges imposed on IRCTC train booking</p>
+
+    <div class="table-responsive">
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th>Time Until Scheduled Departure</th>
+                    <th>Train Ticket Cancellation Charges (Per Passenger)</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>More than 48 hours</td>
+                    <td>
+                        AC First Class/Executive – Rs. 240 + GST<br>
+                        AC 2-Tier/First Class – Rs. 200 + GST<br>
+                        AC 3-Tier/Chair Car – Rs. 180 + GST<br>
+                        Sleeper Class – Rs. 120 + GST<br>
+                        Second Class – Rs. 60 + GST
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Between 12 to 48 hours</td>
+                    <td>25% of ticket fare (minimum amount above) + GST</td>
+                </tr>
+
+                <tr>
+                    <td>Between 4 to 12 hours</td>
+                    <td>50% of ticket fare (minimum amount above) + GST</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+                    </section>
+
+
+                </div>
+            </div>
+        </section>
+
+
+
+
+
+
+
+    </div>
+<footer id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 style="font-weight:800">Get in touch</h5>
+                    <p style="color:rgba(255,255,255,0.9)">Have questions or want to collaborate? Reach out to us.</p>
+                    <p style="margin:0"><i class="fa-solid fa-phone"></i> +91 12345 67890</p>
+                    <p><i class="fa-solid fa-envelope"></i> <a
+                            href="mailto:info@taskforce404.com">taskforce404@gmailcom</a></p>
+                </div>
+                <div class="col-md-6 d-flex align-items-center justify-content-end">
+                    <div>
+                        <p style="margin:0;color:rgba(255,255,255,0.9)">Follow us</p>
+                        <a href="https://www.instagram.com/taskforce_404/" target="_blank" class="me-3 text-white"><i
+                                class="fa-brands fa-instagram fa-lg"></i></a>
+                        <a href="https://github.com/ADVAITRD1296/TASKFORCE-404.git" target="_blank"
+                            class="me-3 text-white"><i class="fa-brands fa-github fa-lg"></i></a>
+                        <a href="#" class="text-white"><i class="fa-brands fa-linkedin fa-lg"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-4" style="opacity:0.95">&copy; 2025 Taskforce 404 — Designed by Team • All rights
+                reserved.</div>
+        </div>
+    </footer>
+
+
+
+
+
+</body>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"></script>
+<script src="backjs.js"></script>
+
+</html>
