@@ -1,0 +1,438 @@
+/* ============================
+   GLOBAL RESET & BASE SETTINGS
+   ============================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Inter, system-ui, sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #f3f4f6;
+    color: #111827;
+}
+
+/* ============================
+            NAVBAR
+   ============================ */
+
+.site-header {
+    width: 100%;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(90deg, #ff6600, #0046FF);
+    color: #fff;
+    padding: 10px 18px;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.nav-item,
+.dropdown-toggle {
+    background: transparent;
+    color: #e6eef6;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.nav-item:hover,
+.dropdown-toggle:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.nav-dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    min-width: 160px;
+    background: #ffffff;
+    color: #111827;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(2, 6, 23, 0.3);
+    z-index: 30;
+}
+
+.dropdown-menu li a {
+    display: block;
+    padding: 10px 14px;
+    text-decoration: none;
+    color: inherit;
+}
+
+.dropdown-menu li a:hover {
+    background: #f3f4f6;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.user-info {
+    color: #e5e7eb;
+    font-size: 13px;
+    display: flex;
+    gap: 12px;
+}
+
+.status {
+    font-weight: 700;
+    color: #fffbcc;
+}
+
+.btn {
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+   
+}
+
+.auth-buttons {
+    width: 200px;
+    display: flex;
+   
+}
+
+.btn-primary {
+    background: #06b6d4;
+    color: #012;
+     
+     width: 150px;
+}
+
+.btn-outline {
+    border: 1px solid #ffffff50;
+    background: transparent;
+    color: #fff;
+    width: 80px;
+     
+}
+
+/* ============================
+            MODAL
+   ============================ */
+
+
+
+/* ============================
+        BACKGROUND
+   ============================ */
+.bg-image {
+    position: fixed;
+    inset: 0;
+    background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5Kye8Zc6eevHr3sAmpHHZoYNpoe1-7khW_Q&s");
+    background-size: cover;
+    background-position: center;
+    z-index: -2;
+}
+
+.bg-tint {
+    position: fixed;
+    inset: 0;
+    /* background: rgba(15,23,42,0.60); */
+    z-index: -1;
+}
+
+/* ============================
+            PAGE
+   ============================ */
+
+.page {
+    max-width: 1250px;
+    margin: auto;
+    padding: 1.4rem;
+    color: white;
+}
+
+/* ============================
+            HERO SECTION
+   ============================ */
+
+.hero {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 2rem;
+    padding-top: 1rem;
+}
+
+.hero-left h1 {
+    font-size: 2.3rem;
+    font-weight: 800;
+}
+
+.hero-left p {
+    margin: 10px 0 18px;
+    opacity: 0.9;
+}
+
+/* ============================
+        BOOKING FORM
+   ============================ */
+
+.booking-form {
+    background: rgba(15,23,42,0.85);
+    padding: 1.6rem;
+    border-radius: 1.3rem;
+    border: 1px solid rgba(255,255,255,0.25);
+    backdrop-filter: blur(10px);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 1rem;
+}
+
+.form-group label {
+    font-size: 0.75rem;
+    color: #cbd5e1;
+}
+
+.form-group input {
+    padding: 0.6rem;
+    border-radius: 0.7rem;
+    background: rgba(255,255,255,0.15);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.25);
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 0.9rem;
+    margin-top: 12px;
+    background: linear-gradient(135deg, #f97316, #facc15);
+    color: black;
+    border-radius: 999px;
+}
+
+/* ============================
+          CAROUSEL
+   ============================ */
+
+.carousel-wrapper {
+    width: 100%;
+    height: 380px;
+    overflow: hidden;
+    border-radius: 1.2rem;
+    background: rgba(0,0,0,0.3);
+    position: relative;
+}
+
+.carousel-track {
+    display: flex;
+    height: 100%;
+    transition: transform 0.6s ease-in-out;
+}
+
+.carousel-slide {
+    min-width: 100%;
+    height: 100%;
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 10px 15px;
+    border: none;
+    background: rgba(0,0,0,0.5);
+    cursor: pointer;
+    border-radius: 50%;
+    color: #fff;
+}
+
+.prev { left: 10px; }
+.next { right: 10px; }
+
+/* ============================
+     GOVERNMENT BUS SECTION
+   ============================ */
+
+.govt-bus-section {
+    width: 92%;
+    margin: 40px auto;
+    text-align: center;
+}
+
+.govt-bus-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.bus-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+}
+
+.bus-card {
+    background: rgba(255, 255, 255, 0.85);
+    width: 160px;
+    padding: 15px;
+    height: 170px;
+    border-radius: 10px;
+    text-align: center;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.bus-card:hover {
+    transform: scale(1.07);
+    box-shadow: 0 4px 15px rgba(255,255,255,0.35);
+}
+
+.bus-card img {
+    width: 60px;
+    margin-bottom: 10px;
+}
+
+.bus-name {
+    color: black;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+/* ============================
+        BOOKINGS TABLE
+   ============================ */
+
+.bookings-section {
+    margin-top: 2rem;
+}
+
+.bookings-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.search {
+    padding: 0.6rem 1rem;
+    border-radius: 100px;
+    border: 1px solid white;
+    background: rgba(255, 255, 255, 0.906);
+    color: white;
+}
+
+.table-container {
+    background: rgb(2, 95, 181);
+    padding: 1rem;
+    border-radius: 1rem;
+    backdrop-filter: blur(10px);
+}
+
+.booking-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.booking-table th, 
+.booking-table td {
+    padding: 0.8rem;
+    border: 1px solid rgba(255,255,255,0.6);
+}
+
+.delete-btn {
+    padding: 6px 14px;
+    background: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* ============================
+          SUPPORT
+   ============================ */
+
+.support {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.4);
+}
+
+.support h2 {
+    margin-bottom: 0.5rem;
+}
+
+/* ============================
+            FOOTER
+   ============================ */
+
+footer {
+    background: linear-gradient(90deg, #ff6600, #0046FF);
+    padding: 40px 0;
+    color: white;
+    margin-top: 2rem;
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+    text-align: center;
+}
+
+footer a {
+    color: white;
+}
+
+/* ============================
+       RESPONSIVE DESIGN
+   ============================ */
+
+@media (max-width: 900px) {
+    .hero {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px){
+    .bus-card {
+        width: 130px;
+        height: 150px;
+    }
+    .bus-name {
+        font-size: 13px;
+    }
+}
