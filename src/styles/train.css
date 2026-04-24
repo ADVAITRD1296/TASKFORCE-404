@@ -1,0 +1,428 @@
+•⁠ ⁠ {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Inter, system-ui, Arial, sans-serif;
+}
+
+body {
+    background: #f3f4f6;
+    color: #111827;
+    padding: 0px;
+}
+
+
+.site-header {
+    width: 100%;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(90deg, #ff6600, #0046FF);
+    color: #fff;
+    padding: 10px 18px;
+    gap: 16px;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.brand {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+}
+
+.brand-text {
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 0.2px;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-left: 8px;
+}
+
+.nav-item,
+.dropdown-toggle {
+    background: transparent;
+    color: #e6eef6;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+.nav-item:hover,
+.dropdown-toggle:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.nav-dropdown {
+    position: relative;
+}
+
+.caret {
+    margin-left: 6px;
+    font-size: 12px;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    min-width: 160px;
+    background: #ffffff;
+    color: #111827;
+    border-radius: 8px;
+    box-shadow: 0 6px 18px rgba(2, 6, 23, 0.35);
+    display: none;
+    padding: 8px 0;
+    z-index: 30;
+}
+
+.dropdown-menu .dropdown-item {
+    display: block;
+    padding: 10px 14px;
+    text-decoration: none;
+    color: inherit;
+    white-space: nowrap;
+}
+
+.dropdown-menu .dropdown-item:hover {
+    background: #f3f4f6;
+}
+
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.user-info {
+    color: #cbd5e1;
+    font-size: 13px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-right: 6px;
+}
+
+.status {
+    font-weight: 600;
+    color: #fde68a;
+}
+
+.auth-buttons .btn {
+    margin-left: 6px;
+}
+
+.btn {
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 0;
+    font-weight: 600;
+}
+
+.btn-primary {
+    background: #06b6d4;
+    color: #012;
+    box-shadow: 0 4px 14px rgba(6, 182, 212, 0.18);
+}
+
+.btn-outline {
+    background: transparent;
+    color: #e6eef6;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+
+
+
+@media (max-width:720px) {
+    .nav-links {
+        display: none;
+    }
+
+    .nav-left {
+        gap: 8px;
+    }
+
+    .brand-text {
+        display: none;
+    }
+}
+
+
+
+
+#box1{
+    background-image: url("https://img.freepik.com/premium-vector/orange-colour-flow-abstract-background-design_665888-171.jpg?semt=ais_se_enriched&w=740&q=80");
+    background-size: cover;
+    min-height: 100vh;
+    padding: 80px 0;
+    position: relative;
+
+}
+
+
+.contain{
+    display: flex;
+    align-items: center;
+    gap:15px;
+    padding:20px;
+    border-radius: 15px;
+    border: 2px solid black;
+    margin:40px auto;
+    width:fit-content;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.7); 
+    backdrop-filter: blur(6px);  
+
+
+}
+.input-source{
+    display:flex;
+    flex-direction:column;
+    font-size: 15px;
+
+}
+#btn{
+    background: white;
+    border-radius: 45%;
+    padding:5px 5px;
+    font-size: 20px;
+    position: relative;
+    top:8px;
+
+}
+.search-btn-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    
+}
+
+.search-btn {
+    background-color: #ff6f47;   
+    color: white;
+    padding: 20px 60px;
+    font-size: 20px;
+    border: none;
+    border-radius: 70px;         
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0px 8px 20px rgba(255, 111, 71, 0.4);
+    transition: 0.2s;
+}
+
+.search-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 12px 25px rgba(255, 111, 71, 0.55);
+}
+
+.input-source input{
+    padding: 15px 20px;
+    border-radius: 6px;
+    min-width: 200px;
+    font-size: 15px;
+    border: 2px solid black;
+
+}
+#logo{
+    background-size: cover;
+    position: relative;
+    top:4px;
+    left:2px;
+}
+#row{
+    display:flex;
+    justify-content: center;
+    gap:20px;
+}
+.column-features {
+  width: 250px;              
+  padding: 20px;
+  border: 2px solid #000;
+  text-align: center;
+  width: fit-content;
+}
+
+#subject{
+    display: inline;
+    color: #000075;
+    left:20px;
+    position: relative;
+
+}
+#subject-2{
+    display: inline;
+    position: relative;
+    left:700px;
+    color: #000075;
+}
+#irctc-logo{
+    position: relative;
+    left:700px;
+    bottom:5px;
+}
+#train-heading{
+    position: relative;
+    bottom:70px;
+}
+
+
+
+
+
+
+.benefit-icon {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+}
+
+
+
+.benefit-title {
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.benefit-text {
+  margin: 0;
+  font-size: 14px;
+  color: #444;
+}
+
+.benefit-link {
+  color: #2f80ed;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.benefit-link:hover {
+  text-decoration: underline;
+}
+.benefit-box {
+    background: #fff;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    height: 100%;              
+}
+.benefits-section {
+    backdrop-filter: blur(3px);
+    padding-bottom: 40px;
+}
+
+.testimonial-card {
+  border: 1px solid #ddd;
+  border-radius: 16px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+
+
+
+
+.table-container {
+    max-width: 90%;
+    margin: 40px auto;
+    text-align: left;
+}
+
+.table-heading {
+    color: #000;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.custom-table {
+    width: 100%;
+    background: #fff; /* Solid white so image doesn't disturb */
+    border-radius: 12px;
+    border-collapse: collapse;
+    overflow: hidden;
+    box-shadow: 0px 8px 25px rgba(0,0,0,0.15);
+}
+
+.custom-table th {
+    background: #f4f4fb;
+    padding: 18px;
+    font-size: 16px;
+    font-weight: 600;
+    border-bottom: 2px solid #ddd;
+}
+
+.custom-table td {
+    padding: 18px;
+    font-size: 15px;
+    border-bottom: 1px solid #e3e3e3;
+    vertical-align: top;
+}
+
+.custom-table tr:last-child td {
+    border-bottom: none;
+}
+
+.custom-table tbody tr:hover {
+    background: #fafafa;
+}
+
+
+footer {
+    background: linear-gradient(90deg, var(--accent), var(--blue));
+    color: white;
+    padding: 40px 0;
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+    position: relative;
+    bottom: 0;
+    width: 100vw;
+    ;
+}
+
+footer a {
+    color: rgba(255, 255, 255, 0.95)
+}
+
+html,
+body {
+    height: 100%;
+    font-family: Inter, Arial, sans-serif;
+
+    color: #222
+}
+
+:root {
+    --accent: #ff6600;
+    --blue: #0046FF;
+    --muted: #6b6b6b;
+    --card-shadow: 0 6px 20px rgba(20, 20, 20, 0.08);
+    --glass: rgba(255, 255, 255, 0.7);
+}
