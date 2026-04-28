@@ -47,6 +47,11 @@ public class User implements UserDetails {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @ElementCollection
+    @CollectionTable(name = "user_device_tokens", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "token")
+    private List<String> deviceTokens;
+
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();

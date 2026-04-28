@@ -13,18 +13,18 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "flights")
-public class Flight {
+@Table(name = "buses")
+public class Bus {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private String airline;
+    private String operatorName;
 
-    @Column(name = "flight_number", nullable = false)
-    private String flightNumber;
+    @Column(name = "bus_type")
+    private String busType; // e.g., AC Sleeper, Non-AC Seater
 
     @Column(nullable = false)
     private String origin;
@@ -43,9 +43,6 @@ public class Flight {
 
     @Column(name = "available_seats")
     private Integer availableSeats;
-
-    @Column(name = "class_type")
-    private String classType;
 
     @Column(name = "image_url", length = 1000)
     private String imageUrl;

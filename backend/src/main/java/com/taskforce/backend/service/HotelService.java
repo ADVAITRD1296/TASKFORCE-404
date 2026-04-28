@@ -11,6 +11,8 @@ import com.taskforce.backend.repository.HotelRepository;
 import com.taskforce.backend.repository.BookingRepository;
 import com.taskforce.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,20 +25,28 @@ public class HotelService {
     private final HotelRepository hotelRepository;
     private final BookingRepository bookingRepository;
     private final UserRepository userRepository;
+    private final ExternalApiService apiService;
+    private final FirebaseService firebaseService;
 
+    @Cacheable(value = "hotels")
     public List<Hotel> getAllHotels() {
         return hotelRepository.findAll();
     }
 
     public List<Hotel> searchHotels(String location, String roomType) {
-        if (location != null && !location.isEmpty() && roomType != null && !roomType.isEmpty()) {
-            return hotelRepository.findByLocationContainingIgnoreCaseAndRoomTypeContainingIgnoreCase(location, roomType);
-        } else if (location != null && !location.isEmpty()) {
-            return hotelRepository.findByLocationContainingIgnoreCase(location);
-        } else if (roomType != null && !roomType.isEmpty()) {
-            return hotelRepository.findByRoomTypeContainingIgnoreCase(roomType);
+        List<Hotel> dbHotels = hotelRepository.findByLocationContainingIgnoreCaseAndRoomTypeContainingIgnoreCase(
+            location != null ? location : "", 
+            roomType != null ? roomType : ""
+        );
+
+        if (dbHotels.isEmpty() && location != null) {
+            List<Hotel> apiHotels = apiService.fetchHotels(location);
+            if (!apiHotels.isEmpty()) {
+                hotelRepository.saveAll(apiHotels);
+                return apiHotels;
+            }
         }
-        return hotelRepository.findAll();
+        return dbHotels;
     }
 
     public Hotel getHotelById(Long id) {
@@ -44,6 +54,7 @@ public class HotelService {
                 .orElseThrow(() -> new ResourceNotFoundException("Hotel not found with id: " + id));
     }
 
+    @CacheEvict(value = "hotels", allEntries = true)
     public Booking bookHotel(Long userId, Long hotelId, String checkin, String checkout, String guests, String roomType) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
@@ -73,6 +84,17 @@ public class HotelService {
                 .status(BookingStatus.CONFIRMED)
                 .build();
 
-        return bookingRepository.save(booking);
+        Booking savedBooking = bookingRepository.save(booking);
+
+        if (user.getDeviceTokens() != null) {
+            for (String token : user.getDeviceTokens()) {
+                firebaseService.sendPushNotification(token, 
+                    "Hotel Booking Confirmed!", 
+                    "Your hotel booking " + savedBooking.getBookingReference() + " is confirmed."
+                );
+            }
+        }
+
+        return savedBooking;
     }
 }

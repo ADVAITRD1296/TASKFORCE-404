@@ -10,6 +10,7 @@ import java.util.Optional;
 @Repository
 public interface FlightRepository extends JpaRepository<Flight, Long> {
     Optional<Flight> findByFlightNumber(String flightNumber);
+    Optional<Flight> findByExternalId(String externalId);
     List<Flight> findByOriginContainingIgnoreCaseAndDestinationContainingIgnoreCase(String origin, String destination);
     List<Flight> findByOriginContainingIgnoreCaseOrDestinationContainingIgnoreCase(String origin, String destination);
 }

@@ -32,13 +32,16 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         // Public auth endpoints
-                        .requestMatchers("/api/auth/register", "/api/auth/login").permitAll()
+                        .requestMatchers("/api/auth/register", "/api/auth/login", "/ws/**").permitAll()
                         // Public read endpoints - flights, hotels, shows listing/search
                         .requestMatchers(HttpMethod.GET, "/api/flights/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/hotels/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/shows/**").permitAll()
-                        // Public contact form
+                        .requestMatchers(HttpMethod.GET, "/api/trains/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/buses/**").permitAll()
+                        // Public contact and chat
                         .requestMatchers(HttpMethod.POST, "/api/contact").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/chat/**").permitAll()
                         // Everything else requires authentication
                         .anyRequest().authenticated()
                 )

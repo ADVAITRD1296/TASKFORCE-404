@@ -40,4 +40,14 @@ public class AuthController {
     ) {
         return ResponseEntity.ok(userService.getProfileByEmail(user.getEmail()));
     }
+
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(
+            @AuthenticationPrincipal User user,
+            @RequestBody java.util.Map<String, String> payload
+    ) {
+        String deviceToken = payload.get("deviceToken");
+        service.logout(user, deviceToken);
+        return ResponseEntity.ok("Logged out successfully");
+    }
 }

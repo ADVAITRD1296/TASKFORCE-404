@@ -23,20 +23,27 @@ public class FlightService {
     private final FlightRepository flightRepository;
     private final BookingRepository bookingRepository;
     private final UserRepository userRepository;
+    private final ExternalApiService apiService;
+    private final FirebaseService firebaseService;
 
     public List<Flight> getAllFlights() {
         return flightRepository.findAll();
     }
 
     public List<Flight> searchFlights(String origin, String destination) {
-        if (origin != null && destination != null && !origin.isEmpty() && !destination.isEmpty()) {
-            return flightRepository.findByOriginContainingIgnoreCaseAndDestinationContainingIgnoreCase(origin, destination);
-        } else if (origin != null && !origin.isEmpty()) {
-            return flightRepository.findByOriginContainingIgnoreCaseOrDestinationContainingIgnoreCase(origin, origin);
-        } else if (destination != null && !destination.isEmpty()) {
-            return flightRepository.findByOriginContainingIgnoreCaseOrDestinationContainingIgnoreCase(destination, destination);
+        List<Flight> dbFlights = flightRepository.findByOriginContainingIgnoreCaseAndDestinationContainingIgnoreCase(
+            origin != null ? origin : "", 
+            destination != null ? destination : ""
+        );
+
+        if (dbFlights.isEmpty() && (origin != null || destination != null)) {
+            List<Flight> apiFlights = apiService.fetchFlights(origin, destination);
+            if (!apiFlights.isEmpty()) {
+                flightRepository.saveAll(apiFlights);
+                return apiFlights;
+            }
         }
-        return flightRepository.findAll();
+        return dbFlights;
     }
 
     public Flight getFlightById(Long id) {
@@ -71,6 +78,17 @@ public class FlightService {
                 .status(BookingStatus.CONFIRMED)
                 .build();
 
-        return bookingRepository.save(booking);
+        Booking savedBooking = bookingRepository.save(booking);
+
+        if (user.getDeviceTokens() != null) {
+            for (String token : user.getDeviceTokens()) {
+                firebaseService.sendPushNotification(token, 
+                    "Flight Booking Confirmed!", 
+                    "Your flight ticket " + savedBooking.getBookingReference() + " is confirmed."
+                );
+            }
+        }
+
+        return savedBooking;
     }
 }

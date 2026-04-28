@@ -32,7 +32,14 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const data = await apiLogin(email, password);
+      let deviceToken = localStorage.getItem('deviceToken');
+      if (!deviceToken) {
+        // Generate a unique token to identify this browser/device
+        deviceToken = 'DEV-' + Math.random().toString(36).substring(2, 15);
+        localStorage.setItem('deviceToken', deviceToken);
+      }
+      
+      const data = await apiLogin(email, password, deviceToken);
       setUser({ id: data.userId, name: data.name, email: data.email });
       setToken(data.token);
       localStorage.setItem('currentUser', data.email);
@@ -45,7 +52,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (userData) => {
     try {
-      const data = await apiRegister(userData.fullname, userData.email, userData.password);
+      const data = await apiRegister(userData.fullname, userData.email, userData.password, userData.phone);
       setUser({ id: data.userId, name: data.name, email: data.email });
       setToken(data.token);
       localStorage.setItem('currentUser', data.email);
@@ -56,7 +63,22 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logout = () => {
+  const logout = async () => {
+    try {
+      const deviceToken = localStorage.getItem('deviceToken');
+      if (deviceToken) {
+        await fetch('http://localhost:8080/api/auth/logout', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          },
+          body: JSON.stringify({ deviceToken })
+        });
+      }
+    } catch (e) {
+      console.error("Logout error", e);
+    }
     setUser(null);
     setToken(null);
     localStorage.removeItem('currentUser');

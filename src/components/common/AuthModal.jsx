@@ -144,6 +144,7 @@ const AuthModal = ({ show, handleClose, type = 'login' }) => {
                       name="phone" 
                       placeholder="+91..."
                       value={formData.phone} 
+                      required
                       onChange={handleChange} 
                     />
                   </Form.Group>

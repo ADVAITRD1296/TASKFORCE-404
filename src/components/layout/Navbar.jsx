@@ -17,19 +17,20 @@ const Navbar = () => {
   };
 
   return (
-    <header className="site-header">
-      <nav className="navbar navbar-expand-lg" aria-label="Main navigation">
-        <div className="container-fluid">
-          <Link to="/" className="brand">
-            <img src={logo} height="56px" width="180px" style={{ borderRadius: '10px' }} alt="Logo" />
+    <header className="site-header sticky-top">
+      <nav className="navbar navbar-expand-lg py-3" aria-label="Main navigation">
+        <div className="container">
+          <Link to="/" className="navbar-brand d-flex align-items-center gap-2">
+            <img src={logo} height="40px" style={{ borderRadius: '8px' }} alt="Logo" />
+            <span className="d-none d-sm-inline">BOOKZY</span>
           </Link>
           
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <button className="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span className="navbar-toggler-icon"></span>
           </button>
 
           <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0 nav-links">
+            <ul className="navbar-nav mx-auto mb-2 mb-lg-0 gap-2">
               <li className="nav-item"><Link to="/" className="nav-link">Home</Link></li>
               <li className="nav-item"><Link to="/shows" className="nav-link">Shows</Link></li>
               <li className="nav-item"><Link to="/hotels" className="nav-link">Hotels</Link></li>
@@ -38,10 +39,10 @@ const Navbar = () => {
                 <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                   Travel
                 </a>
-                <ul className="dropdown-menu">
-                  <li><Link to="/travel/flights" className="dropdown-item">Flights</Link></li>
-                  <li><Link to="/travel/trains" className="dropdown-item">Trains</Link></li>
-                  <li><Link to="/travel/buses" className="dropdown-item">Buses</Link></li>
+                <ul className="dropdown-menu border-0 shadow-lg rounded-4 overflow-hidden mt-2">
+                  <li><Link to="/travel/flights" className="dropdown-item py-2 px-4">Flights</Link></li>
+                  <li><Link to="/travel/trains" className="dropdown-item py-2 px-4">Trains</Link></li>
+                  <li><Link to="/travel/buses" className="dropdown-item py-2 px-4">Buses</Link></li>
                 </ul>
               </li>
 
@@ -49,21 +50,24 @@ const Navbar = () => {
               <li className="nav-item"><Link to="/about" className="nav-link">About Us</Link></li>
             </ul>
 
-            <div className="nav-right d-flex align-items-center">
-              <div className="user-info me-3">
-                <span className={`status ${user ? 'online' : ''}`}>
-                  {user ? `Welcome, ${user.name}` : 'Not logged in'}
-                </span>
-              </div>
+            <div className="nav-right d-flex align-items-center gap-3">
+              {user && (
+                <div className="user-profile d-flex align-items-center gap-2 bg-light px-3 py-1 rounded-pill">
+                  <div className="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style={{ width: '32px', height: '32px', fontSize: '14px', fontWeight: 'bold' }}>
+                    {user.name.charAt(0).toUpperCase()}
+                  </div>
+                  <span className="small fw-semibold">{user.name}</span>
+                </div>
+              )}
 
               <div className="auth-buttons">
                 {user ? (
-                  <button onClick={logout} className="btn btn-outline-danger btn-sm">Logout</button>
+                  <button onClick={logout} className="btn btn-outline-danger px-4 rounded-pill">Logout</button>
                 ) : (
-                  <>
-                    <button onClick={() => handleAuthOpen('login')} className="btn btn-outline-primary btn-sm me-2">Login</button>
-                    <button onClick={() => handleAuthOpen('register')} className="btn btn-primary btn-sm">Register</button>
-                  </>
+                  <div className="d-flex gap-2">
+                    <button onClick={() => handleAuthOpen('login')} className="btn btn-link text-decoration-none text-dark fw-semibold">Login</button>
+                    <button onClick={() => handleAuthOpen('register')} className="btn btn-primary px-4 rounded-pill">Join Free</button>
+                  </div>
                 )}
               </div>
             </div>

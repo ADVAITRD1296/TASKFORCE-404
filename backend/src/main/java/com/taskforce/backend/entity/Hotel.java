@@ -40,4 +40,7 @@ public class Hotel {
 
     @Column(name = "available_rooms")
     private Integer availableRooms;
+
+    @Column(name = "external_id", unique = true)
+    private String externalId;
 }

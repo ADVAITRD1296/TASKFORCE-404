@@ -6,11 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthRequest {
-    private String email;
-    private String password;
-    private String deviceToken;
+@Builder
+public class ChatMessage {
+    private String sender;
+    private String content;
+    private String type; // CHAT, JOIN, LEAVE
 }

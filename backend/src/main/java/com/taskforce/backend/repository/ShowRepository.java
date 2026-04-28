@@ -10,6 +10,7 @@ import java.util.Optional;
 @Repository
 public interface ShowRepository extends JpaRepository<Show, Long> {
     Optional<Show> findByName(String name);
+    Optional<Show> findByExternalId(String externalId);
     List<Show> findByGenreContainingIgnoreCase(String genre);
     List<Show> findByNameContainingIgnoreCase(String name);
 }

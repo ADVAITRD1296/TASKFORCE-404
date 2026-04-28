@@ -20,6 +20,7 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final WhatsAppService whatsAppService;
 
     public AuthResponse register(RegisterRequest request) {
         if (repository.findByEmail(request.getEmail()).isPresent()) {
@@ -29,10 +30,15 @@ public class AuthenticationService {
                 .name(request.getName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .phone(request.getPhone())
                 .role(Role.USER)
                 .build();
         repository.save(user);
         var jwtToken = jwtService.generateToken(user);
+        
+        // Send WhatsApp Welcome Notification
+        whatsAppService.sendLoginNotification(user.getEmail(), user.getName(), user.getPhone());
+
         return AuthResponse.builder()
                 .token(jwtToken)
                 .name(user.getName())
@@ -50,12 +56,38 @@ public class AuthenticationService {
         );
         var user = repository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new BadRequestException("User not found"));
+        
+        // Device Control Logic
+        if (request.getDeviceToken() != null && !request.getDeviceToken().isEmpty()) {
+            if (user.getDeviceTokens() == null) {
+                user.setDeviceTokens(new java.util.ArrayList<>());
+            }
+            if (!user.getDeviceTokens().contains(request.getDeviceToken())) {
+                if (user.getDeviceTokens().size() >= 2) {
+                    throw new BadRequestException("Maximum device limit reached (2). Please log out from another device to continue.");
+                }
+                user.getDeviceTokens().add(request.getDeviceToken());
+                repository.save(user);
+            }
+        }
+
         var jwtToken = jwtService.generateToken(user);
+
+        // Send WhatsApp Notification
+        whatsAppService.sendLoginNotification(user.getEmail(), user.getName(), user.getPhone());
+
         return AuthResponse.builder()
                 .token(jwtToken)
                 .name(user.getName())
                 .email(user.getEmail())
                 .userId(user.getId())
                 .build();
+    }
+
+    public void logout(User user, String deviceToken) {
+        if (deviceToken != null && user.getDeviceTokens() != null) {
+            user.getDeviceTokens().remove(deviceToken);
+            repository.save(user);
+        }
     }
 }

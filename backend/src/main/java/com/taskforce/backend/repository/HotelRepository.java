@@ -10,6 +10,7 @@ import java.util.Optional;
 @Repository
 public interface HotelRepository extends JpaRepository<Hotel, Long> {
     Optional<Hotel> findByName(String name);
+    Optional<Hotel> findByExternalId(String externalId);
     List<Hotel> findByLocationContainingIgnoreCase(String location);
     List<Hotel> findByRoomTypeContainingIgnoreCase(String roomType);
     List<Hotel> findByLocationContainingIgnoreCaseAndRoomTypeContainingIgnoreCase(String location, String roomType);

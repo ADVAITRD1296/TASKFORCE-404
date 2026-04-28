@@ -1,32 +1,45 @@
 package com.taskforce.backend.config;
 
+import com.taskforce.backend.entity.Train;
+import com.taskforce.backend.entity.Bus;
 import com.taskforce.backend.entity.Flight;
 import com.taskforce.backend.entity.Hotel;
 import com.taskforce.backend.entity.Show;
 import com.taskforce.backend.repository.FlightRepository;
 import com.taskforce.backend.repository.HotelRepository;
 import com.taskforce.backend.repository.ShowRepository;
+import com.taskforce.backend.repository.TrainRepository;
+import com.taskforce.backend.repository.BusRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
 @Component
-@RequiredArgsConstructor
 @Slf4j
 public class DataSeeder implements CommandLineRunner {
 
-    private final FlightRepository flightRepository;
-    private final HotelRepository hotelRepository;
-    private final ShowRepository showRepository;
+    @Autowired
+    private FlightRepository flightRepository;
+    @Autowired
+    private HotelRepository hotelRepository;
+    @Autowired
+    private ShowRepository showRepository;
+    @Autowired
+    private TrainRepository trainRepository;
+    @Autowired
+    private BusRepository busRepository;
 
     @Override
     public void run(String... args) {
         seedFlights();
         seedHotels();
         seedShows();
+        seedTrains();
+        seedBuses();
     }
 
     private void seedFlights() {
@@ -100,6 +113,78 @@ public class DataSeeder implements CommandLineRunner {
             .price(150.0).availableSeats(250).build());
 
         log.info("Shows refreshed.");
+    }
+
+    private void seedTrains() {
+        log.info("Refreshing trains...");
+        trainRepository.deleteAll();
+        LocalDateTime now = LocalDateTime.now();
+
+        trainRepository.save(Train.builder()
+            .trainName("Rajdhani Express").trainNumber("12431").origin("New Delhi").destination("Mumbai")
+            .departureTime(now.plusDays(1)).arrivalTime(now.plusDays(1).plusHours(16))
+            .price(2800.0).availableSeats(45).classType("3A")
+            .imageUrl("https://images.unsplash.com/photo-1532105956626-ce5e407b4975?w=800")
+            .build());
+
+        trainRepository.save(Train.builder()
+            .trainName("Shatabdi Express").trainNumber("12002").origin("New Delhi").destination("Bhopal")
+            .departureTime(now.plusDays(1).plusHours(6)).arrivalTime(now.plusDays(1).plusHours(14))
+            .price(1200.0).availableSeats(80).classType("CC")
+            .imageUrl("https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800")
+            .build());
+
+        trainRepository.save(Train.builder()
+            .trainName("Duronto Express").trainNumber("12213").origin("Chennai").destination("New Delhi")
+            .departureTime(now.plusDays(2)).arrivalTime(now.plusDays(3))
+            .price(3100.0).availableSeats(30).classType("2A")
+            .imageUrl("https://images.unsplash.com/photo-1474487022152-52033878c96f?w=800")
+            .build());
+
+        trainRepository.save(Train.builder()
+            .trainName("Gitanjali Express").trainNumber("12860").origin("Kolkata").destination("Mumbai")
+            .departureTime(now.plusDays(1).plusHours(10)).arrivalTime(now.plusDays(2).plusHours(18))
+            .price(1800.0).availableSeats(55).classType("SL")
+            .imageUrl("https://images.unsplash.com/photo-1474487022152-52033878c96f?w=800")
+            .build());
+
+        log.info("Trains refreshed.");
+    }
+
+    private void seedBuses() {
+        log.info("Refreshing buses...");
+        busRepository.deleteAll();
+        LocalDateTime now = LocalDateTime.now();
+
+        busRepository.save(Bus.builder()
+            .operatorName("Zingbus").busType("AC Sleeper").origin("Delhi").destination("Manali")
+            .departureTime(now.plusDays(1).plusHours(20)).arrivalTime(now.plusDays(2).plusHours(8))
+            .price(1200.0).availableSeats(12)
+            .imageUrl("https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=800")
+            .build());
+
+        busRepository.save(Bus.builder()
+            .operatorName("RedBus").busType("Non-AC Seater").origin("Mumbai").destination("Pune")
+            .departureTime(now.plusHours(4)).arrivalTime(now.plusHours(7))
+            .price(450.0).availableSeats(30)
+            .imageUrl("https://images.unsplash.com/photo-1570125909232-eb263c188f7e?w=800")
+            .build());
+
+        busRepository.save(Bus.builder()
+            .operatorName("VRL Travels").busType("Multi-Axle Volvo").origin("Bengaluru").destination("Chennai")
+            .departureTime(now.plusHours(22)).arrivalTime(now.plusDays(1).plusHours(5))
+            .price(1100.0).availableSeats(15)
+            .imageUrl("https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=800")
+            .build());
+
+        busRepository.save(Bus.builder()
+            .operatorName("Neeta Travels").busType("AC Sleeper").origin("Pune").destination("Ahmedabad")
+            .departureTime(now.plusHours(18)).arrivalTime(now.plusDays(1).plusHours(6))
+            .price(1500.0).availableSeats(8)
+            .imageUrl("https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=800")
+            .build());
+
+        log.info("Buses refreshed.");
     }
 
     private void updateOrCreateShow(String name, String genre, double rating, String url, String summary, double price, int seats) {

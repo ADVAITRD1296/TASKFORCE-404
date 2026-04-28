@@ -22,20 +22,20 @@ async function handleResponse(response) {
 }
 
 // ---- Auth ----
-export async function apiLogin(email, password) {
+export async function apiLogin(email, password, deviceToken) {
   const res = await fetch(`${API_BASE}/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password })
+    body: JSON.stringify({ email, password, deviceToken })
   });
   return handleResponse(res);
 }
 
-export async function apiRegister(name, email, password) {
+export async function apiRegister(name, email, password, phone) {
   const res = await fetch(`${API_BASE}/auth/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, email, password })
+    body: JSON.stringify({ name, email, password, phone })
   });
   return handleResponse(res);
 }
@@ -108,6 +108,52 @@ export async function apiBookShow(movieName, tickets, showtime, pricePerTicket) 
   return handleResponse(res);
 }
 
+// ---- Trains ----
+export async function apiGetTrains() {
+  const res = await fetch(`${API_BASE}/trains`, { headers: { 'Content-Type': 'application/json' } });
+  return handleResponse(res);
+}
+
+export async function apiSearchTrains(origin, destination) {
+  const params = new URLSearchParams();
+  if (origin) params.append('origin', origin);
+  if (destination) params.append('destination', destination);
+  const res = await fetch(`${API_BASE}/trains/search?${params}`, { headers: { 'Content-Type': 'application/json' } });
+  return handleResponse(res);
+}
+
+export async function apiBookTrain(trainId, passengers, classType) {
+  const res = await fetch(`${API_BASE}/trains/book`, {
+    method: 'POST',
+    headers: authHeaders(),
+    body: JSON.stringify({ trainId, passengers, classType: classType || '' })
+  });
+  return handleResponse(res);
+}
+
+// ---- Buses ----
+export async function apiGetBuses() {
+  const res = await fetch(`${API_BASE}/buses`, { headers: { 'Content-Type': 'application/json' } });
+  return handleResponse(res);
+}
+
+export async function apiSearchBuses(origin, destination) {
+  const params = new URLSearchParams();
+  if (origin) params.append('origin', origin);
+  if (destination) params.append('destination', destination);
+  const res = await fetch(`${API_BASE}/buses/search?${params}`, { headers: { 'Content-Type': 'application/json' } });
+  return handleResponse(res);
+}
+
+export async function apiBookBus(busId, seats) {
+  const res = await fetch(`${API_BASE}/buses/book`, {
+    method: 'POST',
+    headers: authHeaders(),
+    body: JSON.stringify({ busId, seats })
+  });
+  return handleResponse(res);
+}
+
 // ---- Bookings ----
 export async function apiGetBookings(type) {
   const params = type ? `?type=${type}` : '';
@@ -148,6 +194,16 @@ export async function apiSubmitContact(name, email, message) {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name, email, message })
+  });
+  return handleResponse(res);
+}
+
+// ---- AI Support Chat ----
+export async function apiSendChatMessage(message) {
+  const res = await fetch(`${API_BASE}/chat/ask`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message })
   });
   return handleResponse(res);
 }

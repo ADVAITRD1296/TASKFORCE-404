@@ -36,4 +36,7 @@ public class Show {
 
     @Column(name = "available_seats")
     private Integer availableSeats;
+
+    @Column(name = "external_id", unique = true)
+    private String externalId;
 }
