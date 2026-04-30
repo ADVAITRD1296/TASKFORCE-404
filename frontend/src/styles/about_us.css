@@ -1,25 +1,26 @@
-/* about_us.css — Page-specific rules only.
-   Global tokens, cards, buttons → design-system.css */
+/* about_us.css — About Us page-specific styles */
 
-/* Hero gradient tint */
+/* ── Hero tint ─────────────────────────────────────────────── */
 .about-us-page .hero {
-    background: linear-gradient(180deg, rgba(249,115,22,0.04), rgba(79,128,200,0.03));
+    background: linear-gradient(180deg,
+            rgba(249, 115, 22, 0.04),
+            rgba(79, 128, 200, 0.03));
 }
 
-/* Pill tags */
+/* ── Pill tag ──────────────────────────────────────────────── */
 .pill {
     display: inline-flex;
     gap: 8px;
     align-items: center;
-    padding: 6px 12px;
+    padding: 6px 14px;
     border-radius: 9999px;
-    background: rgba(249,115,22,0.09);
+    background: rgba(249, 115, 22, 0.09);
     color: var(--clr-accent);
     font-weight: 700;
     font-size: 0.85rem;
 }
 
-/* Accent gradient divider */
+/* ── Accent divider ────────────────────────────────────────── */
 .accent-divider {
     height: 5px;
     background: linear-gradient(90deg, var(--clr-accent), var(--clr-primary));
@@ -27,25 +28,80 @@
     margin: 1.25rem 0;
 }
 
-/* Team grid images */
-.team-grid .card-img-top,
-.card.shadow-sm .card-img-top {
-    height: 240px !important;
-    width: 100% !important;
-    object-fit: cover !important;
-    object-position: top center !important;
-    display: block;
+/* ─────────────────────────────────────────────────────────────
+   TEAM PHOTO FRAME
+   A wrapper div that replaces <Card.Img> for full image control.
+   All images use:
+     • fixed 260 px height (consistent row height)
+     • object-fit: cover  (fill frame, no letterbox)
+     • object-position: center center  (face centred, never cropped)
+     • border-radius only on top corners (matches card shape)
+     • NO oval / circle clipping
+   ──────────────────────────────────────────────────────────── */
+.team-photo-frame {
+    width: 100%;
+    height: 260px;
+    overflow: hidden;
+    border-radius: 16px 16px 0 0;
+    /* top corners match card */
+    background-color: #e8eef5;
+    /* placeholder colour while loading */
+    flex-shrink: 0;
 }
 
-/* Role subtitle */
+.team-photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    /* upper-center — keeps face visible without top-crop */
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+/* Subtle zoom on card hover */
+.team-member-card:hover .team-photo-frame img,
+.leader-card:hover .team-photo-frame img {
+    transform: scale(1.04);
+}
+
+/* Leader card gets a slightly taller frame to show more of the photo */
+.leader-frame {
+    height: 300px;
+    border-radius: 16px 16px 0 0;
+}
+
+/* ── Role subtitle ─────────────────────────────────────────── */
 .role {
     color: var(--clr-muted);
-    font-size: 0.9rem;
+    font-size: 0.88rem;
 }
 
-@media (max-width: 767px) {
-    .team-grid .card-img-top,
-    .card.shadow-sm .card-img-top {
-        height: 200px !important;
+/* ── College card ──────────────────────────────────────────── */
+.college-card {
+    background: var(--clr-surface);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--clr-border);
+    height: 100%;
+}
+
+/* ── Responsive ────────────────────────────────────────────── */
+@media (max-width: 767.98px) {
+    .team-photo-frame {
+        height: 220px;
     }
+
+    .leader-frame {
+        height: 240px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .team-photo-frame {
+        height: 260px;
+    }
+
+    /* full-width on mobile = more height is fine */
 }

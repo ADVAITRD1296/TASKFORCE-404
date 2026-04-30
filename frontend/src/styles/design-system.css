@@ -92,9 +92,16 @@ body {
   font-size: var(--text-md);
   line-height: 1.6;
   color: var(--clr-body);
-  background-color: var(--clr-bg);
-  background-image: linear-gradient(160deg, #f1f5f9 0%, #e8eef7 100%);
+  background-color: #e8ecf4;
+  /* Multi-layer: animated gradient + fixed radial accents */
+  background-image:
+    radial-gradient(ellipse at 15% 5%, rgba(79,128,200,0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 90%, rgba(249,115,22,0.10) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(147,130,220,0.08) 0%, transparent 60%),
+    linear-gradient(135deg, #dce4f2 0%, #e6ddd4 20%, #d4dff0 40%, #e8dce8 60%, #d6e6f0 80%, #e2ddd6 100%);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 400% 400%;
   background-attachment: fixed;
+  animation: bg-drift 25s ease infinite;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   position: relative;
@@ -225,7 +232,7 @@ a:hover {
   color: #333333 !important;
   font-weight: 600;
   font-size: var(--text-sm);
-  padding: 0.45rem 0.85rem !important;
+  padding: 0.5rem 0.9rem !important;
   border-radius: var(--radius-sm);
   position: relative;
   transition: color 0.25s var(--ease);
@@ -336,6 +343,49 @@ a:hover {
   align-items: center;
   gap: var(--space-2);
   flex-shrink: 0;
+}
+
+/* Login — minimal text button */
+.btn-login {
+  color: var(--clr-muted) !important;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  padding: 0.4rem 0.75rem !important;
+  border: none !important;
+  background: transparent !important;
+  transition: color 0.2s var(--ease);
+}
+
+.btn-login:hover {
+  color: var(--clr-primary) !important;
+  background: transparent !important;
+}
+
+/* Join Free — premium CTA with controlled glow */
+.btn-join-free {
+  background: linear-gradient(135deg, #e8803a 0%, #5a8fd4 100%) !important;
+  color: #fff !important;
+  font-weight: 600;
+  font-size: var(--text-sm);
+  border: none !important;
+  padding: 0.5rem 1.4rem !important;
+  border-radius: var(--radius-full) !important;
+  box-shadow: 0 2px 8px rgba(79, 128, 200, 0.15);
+  transition: transform 0.28s var(--ease), box-shadow 0.28s var(--ease);
+  will-change: transform;
+}
+
+.btn-join-free:hover {
+  transform: translateY(-1px) scale(1.04);
+  box-shadow:
+    0 4px 14px rgba(79, 128, 200, 0.20),
+    0 0 20px rgba(79, 128, 200, 0.08);
+  color: #fff !important;
+}
+
+.btn-join-free:active {
+  transform: translateY(0) scale(1);
+  box-shadow: 0 2px 6px rgba(79, 128, 200, 0.12);
 }
 
 /* ── Buttons ──────────────────────────────────────────────── */
@@ -752,10 +802,50 @@ a:hover {
   padding: 0 var(--space-6);
 }
 
-.carousel-item img {
-  height: 480px;
+/* Cinematic keyframes */
+@keyframes ken-burns {
+  from { transform: scale(1); }
+  to   { transform: scale(1.08); }
+}
+
+@keyframes caption-rise {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes label-fade {
+  from { opacity: 0; letter-spacing: 0.28em; }
+  to   { opacity: 1; letter-spacing: 0.18em; }
+}
+
+/* Carousel wrapper */
+.bookzy-carousel {
+  border-radius: var(--radius-2xl) !important;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Smooth fade between slides */
+.bookzy-carousel.carousel-fade .carousel-item {
+  transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Image wrapper — needed for Ken Burns + overlay */
+.carousel-img-wrap {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 500px;
+}
+
+.carousel-img-wrap img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border-radius: var(--radius-2xl);
+  display: block;
+  transform: scale(1);
+  transform-origin: center center;
+  will-change: transform;
 }
 
 /* Gradient overlay for text readability */
