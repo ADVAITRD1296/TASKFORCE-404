@@ -591,22 +591,71 @@ a:hover { color: var(--clr-primary-dark); }
 /* ── Carousel ─────────────────────────────────────────────── */
 .carousel-container { padding: 0 var(--space-6); }
 
+/* Cinematic keyframes */
+@keyframes ken-burns {
+  from { transform: scale(1); }
+  to   { transform: scale(1.08); }
+}
+
+@keyframes caption-rise {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes label-fade {
+  from { opacity: 0; letter-spacing: 0.28em; }
+  to   { opacity: 1; letter-spacing: 0.18em; }
+}
+
+/* Carousel wrapper */
 .bookzy-carousel {
   border-radius: var(--radius-2xl) !important;
   overflow: hidden;
   position: relative;
 }
 
-.bookzy-carousel .carousel-item img {
-  height: 480px;
-  object-fit: cover;
-  width: 100%;
-  display: block;
+/* Smooth fade between slides */
+.bookzy-carousel.carousel-fade .carousel-item {
+  transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-/* Fade transition */
-.bookzy-carousel.carousel-fade .carousel-item {
-  transition: opacity 0.8s ease-in-out !important;
+/* Image wrapper — needed for Ken Burns + overlay */
+.carousel-img-wrap {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 500px;
+}
+
+.carousel-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1);
+  transform-origin: center center;
+  will-change: transform;
+}
+
+/* Ken Burns fires only on the active slide */
+.bookzy-carousel .carousel-item.active .carousel-img-wrap img {
+  animation: ken-burns 6s ease-in-out forwards;
+}
+
+/* Gradient overlay for text readability */
+.carousel-img-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 15, 30, 0.04) 0%,
+    rgba(10, 15, 30, 0.22) 45%,
+    rgba(10, 15, 30, 0.62) 78%,
+    rgba(10, 15, 30, 0.78) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
 }
 
 /* ── Custom Arrow Buttons ─────────────────────────────────── */
@@ -617,40 +666,35 @@ a:hover { color: var(--clr-primary-dark); }
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: rgba(15, 23, 42, 0.50);
+  background: rgba(15, 23, 42, 0.45);
   color: #fff;
   font-size: 1rem;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  transition: all 0.25s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
   cursor: pointer;
 }
 
 .carousel-arrow:hover {
-  background: rgba(15, 23, 42, 0.75);
-  border-color: rgba(255, 255, 255, 0.3);
-  transform: scale(1.08);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  background: rgba(15, 23, 42, 0.72);
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: scale(1.1);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
 }
 
-/* Override Bootstrap's default control positioning */
+/* Bootstrap control positioning */
 .bookzy-carousel .carousel-control-prev,
 .bookzy-carousel .carousel-control-next {
-  width: 60px;
+  width: 64px;
   opacity: 1 !important;
-  z-index: 10;
+  z-index: 20;
 }
 
-.bookzy-carousel .carousel-control-prev {
-  left: 12px;
-}
+.bookzy-carousel .carousel-control-prev { left: 14px;  }
+.bookzy-carousel .carousel-control-next { right: 14px; }
 
-.bookzy-carousel .carousel-control-next {
-  right: 12px;
-}
-
-/* Remove Bootstrap's default icon backgrounds */
+/* Strip Bootstrap's default icon */
 .bookzy-carousel .carousel-control-prev-icon,
 .bookzy-carousel .carousel-control-next-icon {
   background-image: none !important;
@@ -686,31 +730,61 @@ a:hover { color: var(--clr-primary-dark); }
   box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
 }
 
-/* ── Carousel Caption (glassmorphism) ─────────────────────── */
-.carousel-caption.bg-glass {
-  background: rgba(255, 255, 255, 0.82) !important;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-radius: var(--radius-lg) !important;
-  color: var(--clr-dark);
-  bottom: var(--space-8);
-  left: var(--space-8);
-  right: var(--space-8);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+/* ── Cinematic Caption ────────────────────────────────────── */
+.carousel-caption-cinematic {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 2.5rem 3rem;
+  text-align: left;
+  z-index: 10;
+  pointer-events: none;
+  opacity: 0;  /* hidden until slide is active */
 }
 
-.carousel-caption h3 { font-weight: 800; color: var(--clr-dark); }
-.carousel-caption p  { color: var(--clr-muted); margin: 0; }
+/* Animate in when slide becomes active */
+.bookzy-carousel .carousel-item.active .carousel-caption-cinematic {
+  animation: caption-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+}
+
+.carousel-caption-cinematic .carousel-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+  margin-bottom: 0.45rem;
+  display: block;
+  animation: label-fade 0.6s ease 0.35s both;
+}
+
+.carousel-caption-cinematic h3 {
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: 0.45rem;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+
+.carousel-caption-cinematic p {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.80);
+  margin: 0;
+  font-weight: 400;
+}
 
 /* ── Responsive ───────────────────────────────────────────── */
 @media (max-width: 767.98px) {
-  .bookzy-carousel .carousel-item img { height: 280px; }
-  .carousel-arrow { width: 38px; height: 38px; font-size: 0.85rem; }
-  .bookzy-carousel .carousel-control-prev { left: 6px; }
-  .bookzy-carousel .carousel-control-next { right: 6px; }
-  .carousel-caption.bg-glass { bottom: var(--space-3); left: var(--space-3); right: var(--space-3); padding: 0.75rem !important; }
-  .carousel-caption h3 { font-size: 1rem; }
-  .carousel-caption p { font-size: 0.8rem; }
+  .carousel-img-wrap                      { height: 300px; }
+  .carousel-arrow                         { width: 38px; height: 38px; font-size: 0.85rem; }
+  .bookzy-carousel .carousel-control-prev { left: 8px;  }
+  .bookzy-carousel .carousel-control-next { right: 8px; }
+  .carousel-caption-cinematic             { padding: 1.25rem 1.5rem; }
+  .carousel-caption-cinematic h3          { font-size: 1.3rem; }
+  .carousel-caption-cinematic p           { font-size: 0.82rem; }
 }
 
 /* ── Footer ───────────────────────────────────────────────── */

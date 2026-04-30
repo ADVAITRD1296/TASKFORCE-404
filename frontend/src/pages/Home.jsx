@@ -35,32 +35,41 @@ const Home = () => {
         <div className="carousel-container px-md-5">
           <Carousel
             indicators={true}
-            interval={4000}
+            interval={5000}
             pause="hover"
             fade
             controls={true}
             className="bookzy-carousel rounded-5 shadow-lg"
-            prevIcon={<span className="carousel-arrow carousel-arrow-prev"><i className="fa-solid fa-chevron-left"></i></span>}
-            nextIcon={<span className="carousel-arrow carousel-arrow-next"><i className="fa-solid fa-chevron-right"></i></span>}
+            prevIcon={<span className="carousel-arrow"><i className="fa-solid fa-chevron-left"></i></span>}
+            nextIcon={<span className="carousel-arrow"><i className="fa-solid fa-chevron-right"></i></span>}
           >
             <Carousel.Item>
-              <img className="d-block w-100" src={image1} alt="Explore the world" />
-              <Carousel.Caption className="bg-glass rounded-4 p-4 text-dark mb-4 mx-4">
-                <h3 className="fw-bold">Explore the World</h3>
+              <div className="carousel-img-wrap">
+                <img className="d-block w-100" src={image1} alt="Explore the world" />
+              </div>
+              <Carousel.Caption className="carousel-caption-cinematic">
+                <p className="carousel-label">✦ Discover</p>
+                <h3>Explore the World</h3>
                 <p>Discover hidden gems and popular destinations with ease.</p>
               </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item>
-              <img className="d-block w-100" src={image2} alt="Luxury Stays" />
-              <Carousel.Caption className="bg-glass rounded-4 p-4 text-dark mb-4 mx-4">
-                <h3 className="fw-bold">Luxury Stays</h3>
+              <div className="carousel-img-wrap">
+                <img className="d-block w-100" src={image2} alt="Luxury Stays" />
+              </div>
+              <Carousel.Caption className="carousel-caption-cinematic">
+                <p className="carousel-label">✦ Stay</p>
+                <h3>Luxury Stays</h3>
                 <p>Curated hotels for your perfect vacation.</p>
               </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item>
-              <img className="d-block w-100" src={image3} alt="Seamless Travel" />
-              <Carousel.Caption className="bg-glass rounded-4 p-4 text-dark mb-4 mx-4">
-                <h3 className="fw-bold">Seamless Travel</h3>
+              <div className="carousel-img-wrap">
+                <img className="d-block w-100" src={image3} alt="Seamless Travel" />
+              </div>
+              <Carousel.Caption className="carousel-caption-cinematic">
+                <p className="carousel-label">✦ Travel</p>
+                <h3>Seamless Travel</h3>
                 <p>Everything you need for your trip in one place.</p>
               </Carousel.Caption>
             </Carousel.Item>
