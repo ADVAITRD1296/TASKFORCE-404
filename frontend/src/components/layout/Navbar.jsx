@@ -35,14 +35,14 @@ const Navbar = () => {
               <li className="nav-item"><Link to="/shows" className="nav-link">Shows</Link></li>
               <li className="nav-item"><Link to="/hotels" className="nav-link">Hotels</Link></li>
               
-              <li className="nav-item dropdown">
-                <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+              <li className="nav-item dropdown nav-dropdown-wrap">
+                <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Travel
                 </a>
-                <ul className="dropdown-menu border-0 shadow-lg rounded-4 overflow-hidden mt-2">
-                  <li><Link to="/travel/flights" className="dropdown-item py-2 px-4">Flights</Link></li>
-                  <li><Link to="/travel/trains" className="dropdown-item py-2 px-4">Trains</Link></li>
-                  <li><Link to="/travel/buses" className="dropdown-item py-2 px-4">Buses</Link></li>
+                <ul className="dropdown-menu">
+                  <li><Link to="/travel/flights" className="dropdown-item">Flights</Link></li>
+                  <li><Link to="/travel/trains" className="dropdown-item">Trains</Link></li>
+                  <li><Link to="/travel/buses" className="dropdown-item">Buses</Link></li>
                 </ul>
               </li>
 
