@@ -591,41 +591,126 @@ a:hover { color: var(--clr-primary-dark); }
 /* ── Carousel ─────────────────────────────────────────────── */
 .carousel-container { padding: 0 var(--space-6); }
 
-.carousel-item img {
-  height: 480px;
-  object-fit: cover;
-  border-radius: var(--radius-2xl);
+.bookzy-carousel {
+  border-radius: var(--radius-2xl) !important;
+  overflow: hidden;
+  position: relative;
 }
 
+.bookzy-carousel .carousel-item img {
+  height: 480px;
+  object-fit: cover;
+  width: 100%;
+  display: block;
+}
+
+/* Fade transition */
+.bookzy-carousel.carousel-fade .carousel-item {
+  transition: opacity 0.8s ease-in-out !important;
+}
+
+/* ── Custom Arrow Buttons ─────────────────────────────────── */
+.carousel-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.50);
+  color: #fff;
+  font-size: 1rem;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.carousel-arrow:hover {
+  background: rgba(15, 23, 42, 0.75);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Override Bootstrap's default control positioning */
+.bookzy-carousel .carousel-control-prev,
+.bookzy-carousel .carousel-control-next {
+  width: 60px;
+  opacity: 1 !important;
+  z-index: 10;
+}
+
+.bookzy-carousel .carousel-control-prev {
+  left: 12px;
+}
+
+.bookzy-carousel .carousel-control-next {
+  right: 12px;
+}
+
+/* Remove Bootstrap's default icon backgrounds */
+.bookzy-carousel .carousel-control-prev-icon,
+.bookzy-carousel .carousel-control-next-icon {
+  background-image: none !important;
+  background-color: transparent !important;
+  filter: none !important;
+  width: auto;
+  height: auto;
+  padding: 0;
+}
+
+/* ── Dot Indicators ───────────────────────────────────────── */
+.bookzy-carousel .carousel-indicators {
+  bottom: 16px;
+  z-index: 10;
+  margin-bottom: 0;
+  gap: 6px;
+}
+
+.bookzy-carousel .carousel-indicators [data-bs-target] {
+  background-color: rgba(255, 255, 255, 0.45);
+  border-radius: 9999px;
+  width: 10px;
+  height: 10px;
+  border: none;
+  opacity: 1;
+  transition: all 0.3s ease;
+  margin: 0;
+}
+
+.bookzy-carousel .carousel-indicators .active {
+  background-color: #fff;
+  width: 28px;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+/* ── Carousel Caption (glassmorphism) ─────────────────────── */
 .carousel-caption.bg-glass {
   background: rgba(255, 255, 255, 0.82) !important;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-radius: var(--radius-lg) !important;
   color: var(--clr-dark);
-  bottom: var(--space-6);
-  left: var(--space-6);
-  right: var(--space-6);
+  bottom: var(--space-8);
+  left: var(--space-8);
+  right: var(--space-8);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
 }
 
 .carousel-caption h3 { font-weight: 800; color: var(--clr-dark); }
 .carousel-caption p  { color: var(--clr-muted); margin: 0; }
 
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-  background-color: rgba(255,255,255,0.9);
-  border-radius: 50%;
-  padding: 20px;
-  background-size: 40%;
-  filter: invert(0.3);
-}
-
-.carousel-indicators [data-bs-target] {
-  background-color: var(--clr-primary);
-  border-radius: var(--radius-full);
-  width: 8px;
-  height: 8px;
-  border: none;
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 767.98px) {
+  .bookzy-carousel .carousel-item img { height: 280px; }
+  .carousel-arrow { width: 38px; height: 38px; font-size: 0.85rem; }
+  .bookzy-carousel .carousel-control-prev { left: 6px; }
+  .bookzy-carousel .carousel-control-next { right: 6px; }
+  .carousel-caption.bg-glass { bottom: var(--space-3); left: var(--space-3); right: var(--space-3); padding: 0.75rem !important; }
+  .carousel-caption h3 { font-size: 1rem; }
+  .carousel-caption p { font-size: 0.8rem; }
 }
 
 /* ── Footer ───────────────────────────────────────────────── */
