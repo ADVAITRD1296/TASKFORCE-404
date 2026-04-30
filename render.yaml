@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: taskforce-backend
+    env: docker
+    region: ohio
+    plan: free
+    rootDir: backend
+    healthCheckPath: /
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      # You will need to set these environment variables in the Render dashboard:
+      # - SPRING_DATASOURCE_URL
+      # - SPRING_DATASOURCE_USERNAME
+      # - SPRING_DATASOURCE_PASSWORD
+      # - FIREBASE_CREDENTIALS (if applicable)
