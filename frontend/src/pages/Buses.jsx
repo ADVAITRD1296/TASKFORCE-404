@@ -5,13 +5,17 @@ import { apiGetBuses, apiSearchBuses, apiBookBus } from '../services/api';
 import busTravelImg from '../assets/images/bus_travel.png';
 import '../styles/homeCss.css';
 
+import bus1Img from '../assets/images/bus1.jpg';
+import bus2Img from '../assets/images/bus2.jpg';
+import bus3Img from '../assets/images/bus3.jpg';
+
 const MOCK_BUSES = [
-  { id: 1, operatorName: 'Volvo Express', busType: 'AC Sleeper', origin: 'Delhi', destination: 'Jaipur', price: 850, availableSeats: 25, imageUrl: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400' },
-  { id: 2, operatorName: 'RedBus Premium', busType: 'AC Semi-Sleeper', origin: 'Mumbai', destination: 'Pune', price: 450, availableSeats: 40, imageUrl: 'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?w=400' },
-  { id: 3, operatorName: 'Orange Travels', busType: 'Non-AC Seater', origin: 'Hyderabad', destination: 'Bangalore', price: 600, availableSeats: 15, imageUrl: 'https://images.unsplash.com/photo-1557223562-6c77ef16210f?w=400' },
-  { id: 4, operatorName: 'UPSRTC', busType: 'AC Seater', origin: 'Lucknow', destination: 'Delhi', price: 700, availableSeats: 55, imageUrl: 'https://images.unsplash.com/photo-1564694202779-bc908c327862?w=400' },
-  { id: 5, operatorName: 'VRL Travels', busType: 'AC Sleeper', origin: 'Lucknow', destination: 'Indore', price: 1100, availableSeats: 12, imageUrl: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400' },
-  { id: 6, operatorName: 'SRS Travels', busType: 'Multi-Axle Volvo', origin: 'Chennai', destination: 'Bangalore', price: 550, availableSeats: 0, imageUrl: 'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?w=400' },
+  { id: 1, operatorName: 'Volvo Express', busType: 'AC Sleeper', origin: 'Delhi', destination: 'Jaipur', price: 850, availableSeats: 25, imageUrl: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400&q=80' },
+  { id: 2, operatorName: 'RedBus Premium', busType: 'AC Semi-Sleeper', origin: 'Mumbai', destination: 'Pune', price: 450, availableSeats: 40, imageUrl: 'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?w=400&q=80' },
+  { id: 3, operatorName: 'Orange Travels', busType: 'Non-AC Seater', origin: 'Hyderabad', destination: 'Bangalore', price: 600, availableSeats: 15, imageUrl: 'https://images.unsplash.com/photo-1557223562-6c77ef16210f?w=400&q=80' },
+  { id: 4, operatorName: 'UPSRTC', busType: 'AC Seater', origin: 'Lucknow', destination: 'Delhi', price: 700, availableSeats: 55, imageUrl: bus1Img },
+  { id: 5, operatorName: 'VRL Travels', busType: 'AC Sleeper', origin: 'Lucknow', destination: 'Indore', price: 1100, availableSeats: 12, imageUrl: bus2Img },
+  { id: 6, operatorName: 'SRS Travels', busType: 'Multi-Axle Volvo', origin: 'Chennai', destination: 'Bangalore', price: 550, availableSeats: 0, imageUrl: bus3Img },
 ];
 
 const Buses = () => {
@@ -93,11 +97,36 @@ const Buses = () => {
         <div className="hero-dark-overlay"></div>
         <Container className="position-relative" style={{ zIndex: 2 }}>
           <h1 className="fw-bold mb-2" style={{ fontSize: '2rem' }}>🚌 Book Bus Tickets</h1>
-          <p style={{ opacity: 0.9, fontSize: '0.95rem' }}>Affordable and comfortable bus journeys.</p>
+          <p style={{ opacity: 0.9, fontSize: '0.95rem' }}>Affordable, comfortable bus journeys with top operators across India.</p>
+          <div className="d-flex justify-content-center gap-3 flex-wrap mt-3">
+            {['GPS Tracked','Live Seat Map','Operator Ratings','Onboard WiFi*'].map(tag => (
+              <span key={tag} style={{ background: 'rgba(255,255,255,0.18)', border: '1px solid rgba(255,255,255,0.4)', borderRadius: '20px', padding: '4px 14px', fontSize: '12px', fontWeight: 600, color: '#fff' }}>
+                ✓ {tag}
+              </span>
+            ))}
+          </div>
         </Container>
       </div>
 
       <Container className="pb-5">
+        {/* Bus types */}
+        <div className="mb-4 mt-3">
+          <h5 className="fw-bold mb-3" style={{ color: '#1A1A1A' }}>🚌 Bus Types We Offer</h5>
+          <div className="d-flex gap-2 flex-wrap">
+            {[
+              { type: 'AC Sleeper',      icon: 'fa-moon',   color: '#1A73E8', bg: '#E8F1FF' },
+              { type: 'AC Semi-Sleeper', icon: 'fa-couch',  color: '#7B2FBE', bg: '#F3E8FF' },
+              { type: 'Seater AC',       icon: 'fa-chair',  color: '#059669', bg: '#E6F9EE' },
+              { type: 'Non-AC Seater',   icon: 'fa-bus',    color: '#FF6B00', bg: '#FFF0E5' },
+              { type: 'Multi-Axle Volvo',icon: 'fa-star',   color: '#f59e0b', bg: '#FFF8E5' },
+            ].map(({ type, icon, color, bg }) => (
+              <div key={type} style={{ background: bg, border: `1px solid ${color}30`, borderRadius: '10px', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <i className={`fa-solid ${icon}`} style={{ color, fontSize: '14px' }}></i>
+                <span style={{ fontSize: '13px', fontWeight: 600, color: '#1A1A1A' }}>{type}</span>
+              </div>
+            ))}
+          </div>
+        </div>
         <Card className="booking-search-card glass-search-widget border-0">
         <Form onSubmit={handleSearch}>
           <Row className="g-2 align-items-center">

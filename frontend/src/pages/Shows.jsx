@@ -5,13 +5,22 @@ import { apiGetShows, apiBookShow, apiGetBookings } from '../services/api';
 import entertainmentShowsImg from '../assets/images/entertainment_shows.png';
 import '../styles/homeCss.css';
 
+import projectHailMaryImg from '../assets/images/hail mary.jpg';
+import dunePartTwoImg from '../assets/images/dune 2.jpg';
+import animalImg from '../assets/images/animal.jpg';
+import pushpaImg from '../assets/images/pushpa.jpg';
+import streeImg from '../assets/images/stree.jpg';
+import dunkiImg from '../assets/images/dunki.jpg';
+
 const MOCK_SHOWS = [
-  { id: 1, name: 'Pushpa 2: The Rule', genre: 'Action / Drama', price: 250, rating: '8.2', imageUrl: 'https://image.tmdb.org/t/p/w500/bBFC6YOjEJYjnOealIG9ELcHk9g.jpg', summary: 'Pushpa Raj returns in this action-packed sequel, facing new enemies while building his sandalwood empire.' },
-  { id: 2, name: 'Jawan', genre: 'Action / Thriller', price: 300, rating: '7.8', imageUrl: 'https://image.tmdb.org/t/p/w500/jFsBmmGM0Ifspp2WGhNVYy69sjY.jpg', summary: 'A prison warden recruits inmates to commit crimes that expose the corruption plaguing the country.' },
-  { id: 3, name: 'Animal', genre: 'Crime / Drama', price: 350, rating: '7.5', imageUrl: 'https://image.tmdb.org/t/p/w500/sg8YRcaPx1TsME5hSjKylBvGqRb.jpg', summary: 'A son undergoes a transformative journey when he decides to avenge his father against threats.' },
-  { id: 4, name: 'Dunki', genre: 'Comedy / Drama', price: 200, rating: '7.0', imageUrl: 'https://image.tmdb.org/t/p/w500/diyvmLs6CXkKBMhksqpqz2LBSQ0.jpg', summary: 'A group of aspiring immigrants attempt to reach their dream country through unconventional means.' },
+  { id: 1, name: 'Pushpa 2: The Rule', genre: 'Action / Drama', price: 250, rating: '8.2', imageUrl: pushpaImg, summary: 'Pushpa Raj returns in this action-packed sequel, facing new enemies while building his sandalwood empire.' },
+  { id: 2, name: 'Project Hail Mary', genre: 'Sci-Fi / Thriller', price: 300, rating: '8.8', imageUrl: projectHailMaryImg, summary: 'A lone astronaut must save Earth from disaster after waking up amnesiac in a spaceship far from home.' },
+  { id: 3, name: 'Animal', genre: 'Crime / Drama', price: 350, rating: '7.5', imageUrl: animalImg, summary: 'A son undergoes a transformative journey when he decides to avenge his father against threats.' },
+  { id: 4, name: 'Dunki', genre: 'Comedy / Drama', price: 200, rating: '7.0', imageUrl: dunkiImg, summary: 'A group of aspiring immigrants attempt to reach their dream country through unconventional means.' },
   { id: 5, name: 'Oppenheimer', genre: 'Drama / History', price: 400, rating: '9.0', imageUrl: 'https://image.tmdb.org/t/p/w500/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg', summary: 'The story of J. Robert Oppenheimer and his role in the development of the atomic bomb.' },
   { id: 6, name: 'Avengers: Endgame', genre: 'Action / Sci-Fi', price: 350, rating: '8.4', imageUrl: 'https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9sl16pB3iy.jpg', summary: 'The Avengers assemble once more to reverse Thanos\' actions and restore balance to the universe.' },
+  { id: 7, name: 'Stree 2', genre: 'Horror / Comedy', price: 220, rating: '8.5', imageUrl: streeImg, summary: 'The gang returns to Chanderi to face a new supernatural threat while Stree watches over the town.' },
+  { id: 8, name: 'Dune: Part Two', genre: 'Sci-Fi / Epic', price: 420, rating: '8.8', imageUrl: dunePartTwoImg, summary: 'Paul Atreides unites with the Fremen while on a warpath of revenge against the forces that betrayed his family.' },
 ];
 
 const Shows = () => {
@@ -92,36 +101,37 @@ const Shows = () => {
 
   return (
     <>
-      {/* Hero — 220px max, buttons inside */}
+      {/* Hero Section */}
       <div
-        className="booking-hero-bg text-center"
+        className="text-center position-relative d-flex align-items-center justify-content-center"
         style={{
-          '--hero-image': `url(https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?w=1600&q=80)`,
-          height: '220px',
-          maxHeight: '220px',
+          backgroundImage: `url(${entertainmentShowsImg})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          height: '320px',
         }}
       >
-        <div className="hero-dark-overlay" style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.55) 100%)' }}></div>
-        <Container className="position-relative d-flex flex-column align-items-center justify-content-center h-100" style={{ zIndex: 2 }}>
-          <h1 className="fw-bold mb-1" style={{ fontSize: '1.6rem' }}>🎬 Cinema &amp; Shows</h1>
-          <p style={{ opacity: 0.88, fontSize: '0.85rem', marginBottom: '14px' }}>Catch the latest blockbusters and live performances.</p>
-          {/* Action buttons inside hero */}
-          <div className="d-flex gap-2">
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'linear-gradient(to bottom, rgba(15,23,42,0.4), rgba(15,23,42,0.8))' }}></div>
+        <Container className="position-relative" style={{ zIndex: 2 }}>
+          <h1 className="fw-bolder mb-2 text-white" style={{ fontSize: '3rem', letterSpacing: '-0.02em', textShadow: '0 4px 12px rgba(0,0,0,0.3)' }}>
+            Cinema <span style={{ color: '#FF6B00' }}>&amp; Shows</span>
+          </h1>
+          <p className="text-light mb-4" style={{ fontSize: '1.1rem', opacity: 0.9 }}>
+            Catch the latest blockbusters and exclusive live performances.
+          </p>
+          <div className="d-flex gap-3 justify-content-center">
             <Button
               variant="outline-light"
-              size="sm"
-              className="rounded-pill px-3 fw-semibold"
-              style={{ fontSize: '13px', borderColor: 'rgba(255,255,255,0.7)' }}
+              className="rounded-pill px-4 py-2 fw-semibold shadow-sm"
               onClick={() => document.getElementById('bookingSection')?.scrollIntoView({ behavior: 'smooth' })}
             >
               🎟 My Tickets
             </Button>
             <Button
               variant="primary"
-              size="sm"
-              className="rounded-pill px-3 fw-semibold"
-              style={{ fontSize: '13px' }}
+              className="rounded-pill px-4 py-2 fw-bold shadow-sm"
               onClick={() => setShowBooking(true)}
+              style={{ backgroundColor: '#FF6B00', border: 'none' }}
             >
               + Book Tickets
             </Button>
@@ -129,58 +139,61 @@ const Shows = () => {
         </Container>
       </div>
 
-      <Container className="shows-page pb-4" style={{ marginTop: '1.5rem' }}>
+      <Container className="shows-page pb-5" style={{ marginTop: '3.5rem' }}>
+        
+        {/* Section Header & Filters */}
+        <div className="d-flex justify-content-between align-items-center mb-4">
+          <h3 className="fw-bold mb-0" style={{ color: '#1A1A1A' }}>Recommended Movies</h3>
+          <div className="d-none d-md-flex gap-2">
+            <Badge pill bg="dark" text="light" className="px-3 py-2" style={{ cursor: 'pointer' }}>All</Badge>
+            <Badge pill bg="light" text="dark" className="px-3 py-2 border" style={{ cursor: 'pointer' }}>Action</Badge>
+            <Badge pill bg="light" text="dark" className="px-3 py-2 border" style={{ cursor: 'pointer' }}>Sci-Fi</Badge>
+            <Badge pill bg="light" text="dark" className="px-3 py-2 border" style={{ cursor: 'pointer' }}>Comedy</Badge>
+          </div>
+        </div>
 
       {/* Movie cards — 4-col grid, compact */}
       <Row className="g-3 mb-4">
         {shows.map(show => (
           <Col key={show.id} xs={12} sm={6} md={4} lg={3}>
             <div
-              className="h-100 bg-white hover-up"
+              className="h-100 hover-up"
               style={{
-                borderRadius: '12px',
-                border: '1px solid #E2E8F0',
-                boxShadow: '0 2px 10px rgba(0,0,0,0.07)',
-                overflow: 'hidden',
                 cursor: 'pointer',
-                transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                transition: 'transform 0.2s ease',
               }}
               onClick={() => setSelectedShow(show)}
             >
-              {/* Poster image */}
-              <div style={{ position: 'relative' }}>
+              {/* Poster & Rating container */}
+              <div
+                style={{
+                  borderRadius: '12px',
+                  overflow: 'hidden',
+                  position: 'relative',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+                }}
+              >
                 <img
                   src={show.imageUrl}
                   alt={show.name}
-                  style={{ width: '100%', height: '180px', objectFit: 'cover', display: 'block' }}
+                  style={{ width: '100%', aspectRatio: '2/3', objectFit: 'cover', display: 'block' }}
                 />
-                <span
-                  style={{
-                    position: 'absolute', top: '8px', left: '8px',
-                    background: 'rgba(0,0,0,0.65)', color: '#FFD700',
-                    fontSize: '11px', fontWeight: 700, padding: '2px 8px',
-                    borderRadius: '20px', backdropFilter: 'blur(4px)',
-                  }}
-                >
-                  ⭐ {show.rating || 'N/A'}
-                </span>
+                
+                {/* Black rating bar at the bottom */}
+                <div style={{ backgroundColor: '#000', color: '#fff', padding: '8px 12px', display: 'flex', alignItems: 'center', fontSize: '0.85rem' }}>
+                  <i className="fa-solid fa-thumbs-up me-2" style={{ color: '#2DC492' }}></i>
+                  <span>{show.rating ? `${show.rating}/10  50K+ Votes` : '102K+ Likes'}</span>
+                </div>
               </div>
-              {/* Card body */}
-              <div style={{ padding: '10px 12px 12px' }}>
-                <h6 className="fw-bold mb-1" style={{ fontSize: '0.92rem', color: '#1A1A1A', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+
+              {/* Title & Genre outside the container */}
+              <div className="mt-3">
+                <h6 className="fw-bold mb-1" style={{ fontSize: '1.05rem', color: '#1A1A1A', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                   {show.name}
                 </h6>
-                <div className="d-flex justify-content-between align-items-center mb-2">
-                  <span style={{ fontSize: '0.75rem', color: '#888888' }}>{show.genre}</span>
-                  <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#FF6B00' }}>₹{show.price}</span>
+                <div style={{ fontSize: '0.85rem', color: '#666666' }}>
+                  {show.genre}
                 </div>
-                <button
-                  className="btn btn-outline-primary w-100 rounded-pill fw-semibold"
-                  style={{ fontSize: '12px', padding: '5px 0' }}
-                  onClick={(e) => { e.stopPropagation(); setSelectedShow(show); }}
-                >
-                  View Details
-                </button>
               </div>
             </div>
           </Col>

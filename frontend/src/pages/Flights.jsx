@@ -97,11 +97,38 @@ const Flights = () => {
         <div className="hero-dark-overlay"></div>
         <Container className="position-relative" style={{ zIndex: 2 }}>
           <h1 className="fw-bold mb-2" style={{ fontSize: '2rem' }}>✈ Fly Higher</h1>
-          <p style={{ opacity: 0.9, fontSize: '0.95rem' }}>Book the fastest flights at the lowest prices.</p>
+          <p style={{ opacity: 0.9, fontSize: '0.95rem' }}>Search and compare the cheapest flights across all major airlines.</p>
+          <div className="d-flex justify-content-center gap-3 flex-wrap mt-3">
+            {['No Hidden Fees','Instant Confirmation','Free Cancellation*','24/7 Support'].map(tag => (
+              <span key={tag} style={{ background: 'rgba(255,255,255,0.18)', border: '1px solid rgba(255,255,255,0.4)', borderRadius: '20px', padding: '4px 14px', fontSize: '12px', fontWeight: 600, color: '#fff' }}>
+                ✓ {tag}
+              </span>
+            ))}
+          </div>
         </Container>
       </div>
-      
+
       <Container className="pb-5">
+        {/* Popular Routes */}
+        <div className="mb-4 mt-3">
+          <h5 className="fw-bold mb-3" style={{ color: '#1A1A1A' }}>🔥 Popular Routes</h5>
+          <div className="d-flex gap-2 flex-wrap">
+            {[
+              { from: 'DEL', to: 'BOM', label: 'Delhi → Mumbai', price: '₹3,499' },
+              { from: 'BOM', to: 'BLR', label: 'Mumbai → Bangalore', price: '₹2,999' },
+              { from: 'DEL', to: 'GOI', label: 'Delhi → Goa', price: '₹4,299' },
+              { from: 'BLR', to: 'HYD', label: 'Bangalore → Hyderabad', price: '₹1,899' },
+            ].map(({ label, price }) => (
+              <div key={label} style={{ background: '#fff', border: '1px solid #E2E8F0', borderRadius: '10px', padding: '10px 16px', cursor: 'pointer', transition: 'border-color 0.2s ease', display: 'flex', flexDirection: 'column', gap: '2px' }}
+                onMouseEnter={(e) => e.currentTarget.style.borderColor = '#FF6B00'}
+                onMouseLeave={(e) => e.currentTarget.style.borderColor = '#E2E8F0'}
+              >
+                <span style={{ fontSize: '13px', fontWeight: 600, color: '#1A1A1A' }}>{label}</span>
+                <span style={{ fontSize: '12px', color: '#FF6B00', fontWeight: 700 }}>from {price}</span>
+              </div>
+            ))}
+          </div>
+        </div>
         <Card className="booking-search-card glass-search-widget border-0">
         <Form onSubmit={handleSearch}>
           <Row className="g-2 align-items-center">
@@ -152,7 +179,7 @@ const Flights = () => {
               <Col md={4}>
                 <div className="d-flex align-items-center justify-content-between text-center px-4">
                   <div>
-                    <h4 className="fw-bold mb-0">10:00</h4>
+                    <h4 className="fw-bold mb-0">{f.departureTime}</h4>
                     <span className="text-muted small">{f.origin}</span>
                   </div>
                   <div className="flex-grow-1 mx-3 position-relative">
@@ -160,14 +187,14 @@ const Flights = () => {
                     <i className="fa-solid fa-plane text-primary position-absolute top-50 start-50 translate-middle px-2" style={{ fontSize: '12px', backgroundColor: 'var(--clr-surface)' }}></i>
                   </div>
                   <div>
-                    <h4 className="fw-bold mb-0">13:00</h4>
+                    <h4 className="fw-bold mb-0">{f.arrivalTime}</h4>
                     <span className="text-muted small">{f.destination}</span>
                   </div>
                 </div>
               </Col>
               <Col md={2} className="text-center">
                 <Badge bg="primary-subtle" text="primary" className="rounded-pill px-3 py-2 mb-2">Non-stop</Badge>
-                <div className="text-muted small">2h 30m</div>
+                <div className="text-muted small">{f.duration}</div>
               </Col>
               <Col md={3}>
                 <div className="d-flex align-items-center justify-content-end gap-3">

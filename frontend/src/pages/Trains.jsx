@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Form, Button, Table, Modal } from 'react-bootstrap';
+import { Container, Row, Col, Card, Form, Button, Table, Modal, Badge } from 'react-bootstrap';
 import { useAuth } from '../context/AuthContext';
 import { apiGetTrains, apiSearchTrains, apiBookTrain } from '../services/api';
 import flightSunsetImg from '../assets/images/flight_sunset.png';
 import '../styles/homeCss.css';
 
 const MOCK_TRAINS = [
-  { id: 1, trainName: 'Rajdhani Express', trainNumber: '12309', origin: 'Delhi', destination: 'Mumbai', price: 1800, availableSeats: 120 },
-  { id: 2, trainName: 'Shatabdi Express', trainNumber: '12001', origin: 'Delhi', destination: 'Lucknow', price: 950, availableSeats: 85 },
-  { id: 3, trainName: 'Duronto Express', trainNumber: '12213', origin: 'Mumbai', destination: 'Delhi', price: 2100, availableSeats: 45 },
-  { id: 4, trainName: 'Gatimaan Express', trainNumber: '12049', origin: 'Delhi', destination: 'Agra', price: 750, availableSeats: 200 },
-  { id: 5, trainName: 'Lucknow Mail', trainNumber: '12229', origin: 'Lucknow', destination: 'Mumbai', price: 1200, availableSeats: 60 },
-  { id: 6, trainName: 'Howrah Express', trainNumber: '12311', origin: 'Kolkata', destination: 'Delhi', price: 1500, availableSeats: 30 },
-  { id: 7, trainName: 'Vande Bharat', trainNumber: '22436', origin: 'Lucknow', destination: 'Indore', price: 1100, availableSeats: 150 },
-  { id: 8, trainName: 'Tamil Nadu Express', trainNumber: '12621', origin: 'Delhi', destination: 'Chennai', price: 2400, availableSeats: 0 },
+  { id: 1, trainName: 'Rajdhani Express', trainNumber: '12309', origin: 'Delhi', destination: 'Mumbai', price: 1800, availableSeats: 120, departureTime: '16:30', arrivalTime: '08:15', duration: '15h 45m' },
+  { id: 2, trainName: 'Shatabdi Express', trainNumber: '12001', origin: 'Delhi', destination: 'Lucknow', price: 950, availableSeats: 85, departureTime: '06:00', arrivalTime: '12:30', duration: '6h 30m' },
+  { id: 3, trainName: 'Duronto Express', trainNumber: '12213', origin: 'Mumbai', destination: 'Delhi', price: 2100, availableSeats: 45, departureTime: '23:15', arrivalTime: '16:50', duration: '17h 35m' },
+  { id: 4, trainName: 'Gatimaan Express', trainNumber: '12049', origin: 'Delhi', destination: 'Agra', price: 750, availableSeats: 200, departureTime: '08:10', arrivalTime: '09:50', duration: '1h 40m' },
+  { id: 5, trainName: 'Lucknow Mail', trainNumber: '12229', origin: 'Lucknow', destination: 'Mumbai', price: 1200, availableSeats: 60, departureTime: '22:00', arrivalTime: '20:15', duration: '22h 15m' },
+  { id: 6, trainName: 'Howrah Express', trainNumber: '12311', origin: 'Kolkata', destination: 'Delhi', price: 1500, availableSeats: 30, departureTime: '19:40', arrivalTime: '15:20', duration: '19h 40m' },
+  { id: 7, trainName: 'Vande Bharat', trainNumber: '22436', origin: 'Lucknow', destination: 'Indore', price: 1100, availableSeats: 150, departureTime: '05:50', arrivalTime: '14:30', duration: '8h 40m' },
+  { id: 8, trainName: 'Tamil Nadu Express', trainNumber: '12621', origin: 'Delhi', destination: 'Chennai', price: 2400, availableSeats: 0, departureTime: '21:05', arrivalTime: '07:15', duration: '34h 10m' },
 ];
 
 const Trains = () => {
@@ -95,11 +95,36 @@ const Trains = () => {
         <div className="hero-dark-overlay"></div>
         <Container className="position-relative" style={{ zIndex: 2 }}>
           <h1 className="fw-bold mb-2" style={{ fontSize: '2rem' }}>🚂 Book Your Train</h1>
-          <p style={{ opacity: 0.9, fontSize: '0.95rem' }}>Comfortable train journeys across the country.</p>
+          <p style={{ opacity: 0.9, fontSize: '0.95rem' }}>Comfortable, affordable train journeys to every corner of India.</p>
+          <div className="d-flex justify-content-center gap-3 flex-wrap mt-3">
+            {['PNR Status Tracking','Seat Availability Live','e-Ticket on Email','Instant Refunds'].map(tag => (
+              <span key={tag} style={{ background: 'rgba(255,255,255,0.18)', border: '1px solid rgba(255,255,255,0.4)', borderRadius: '20px', padding: '4px 14px', fontSize: '12px', fontWeight: 600, color: '#fff' }}>
+                ✓ {tag}
+              </span>
+            ))}
+          </div>
         </Container>
       </div>
 
       <Container className="pb-5">
+        {/* Travel class info */}
+        <div className="mb-4 mt-3">
+          <h5 className="fw-bold mb-3" style={{ color: '#1A1A1A' }}>🛏️ Travel Classes Available</h5>
+          <div className="d-flex gap-2 flex-wrap">
+            {[
+              { cls: 'SL',  label: 'Sleeper',       desc: 'Most economical', color: '#059669', bg: '#E6F9EE' },
+              { cls: '3A',  label: '3-Tier AC',     desc: 'Popular choice',  color: '#1A73E8', bg: '#E8F1FF' },
+              { cls: '2A',  label: '2-Tier AC',     desc: 'Extra comfort',   color: '#7B2FBE', bg: '#F3E8FF' },
+              { cls: '1A',  label: '1st Class AC',  desc: 'Premium travel',  color: '#FF6B00', bg: '#FFF0E5' },
+            ].map(({ cls, label, desc, color, bg }) => (
+              <div key={cls} style={{ background: bg, border: `1px solid ${color}30`, borderRadius: '10px', padding: '10px 16px', minWidth: '120px' }}>
+                <span style={{ fontSize: '13px', fontWeight: 800, color }}>{cls}</span>
+                <div style={{ fontSize: '12px', fontWeight: 600, color: '#1A1A1A', marginTop: '2px' }}>{label}</div>
+                <div style={{ fontSize: '11px', color: '#888' }}>{desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
         <Card className="booking-search-card glass-search-widget border-0">
         <Form onSubmit={handleSearch}>
           <Row className="g-2 align-items-center">
@@ -132,48 +157,65 @@ const Trains = () => {
         </div>
       )}
 
-      <div className="table-responsive rounded-4 shadow-sm overflow-hidden border border-secondary" style={{ backgroundColor: 'var(--clr-surface)' }}>
-        <Table hover variant="dark" className="mb-0">
-          <thead className="text-white" style={{ backgroundColor: 'var(--clr-primary)' }}>
-            <tr>
-              <th>Train Name</th>
-              <th>Number</th>
-              <th>Origin</th>
-              <th>Destination</th>
-              <th>Price</th>
-              <th>Seats</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {trains.map(t => (
-              <tr key={t.id} className="align-middle">
-                <td>
-                  <div className="fw-bold">{t.trainName}</div>
-                </td>
-                <td><span className="badge bg-primary">{t.trainNumber}</span></td>
-                <td>{t.origin}</td>
-                <td>{t.destination}</td>
-                <td className="text-primary fw-bold">₹{t.price}</td>
-                <td>{t.availableSeats}</td>
-                <td>
+      <div className="d-flex flex-column gap-4">
+        {trains.map(t => (
+          <Card key={t.id} className="border-0 shadow-sm rounded-4 overflow-hidden hover-up p-4" style={{ backgroundColor: 'var(--clr-surface)' }}>
+            <Row className="align-items-center g-3">
+              <Col md={3}>
+                <div className="d-flex align-items-center gap-3">
+                  <div className="airline-logo-box p-3 rounded-4" style={{ backgroundColor: '#FFF0E5' }}>
+                    <i className="fa-solid fa-train text-primary fa-2x"></i>
+                  </div>
+                  <div>
+                    <h5 className="fw-bold mb-0 text-dark">{t.trainName}</h5>
+                    <span className="badge bg-primary mt-1">{t.trainNumber}</span>
+                  </div>
+                </div>
+              </Col>
+              <Col md={4}>
+                <div className="d-flex align-items-center justify-content-between text-center px-4">
+                  <div>
+                    <h4 className="fw-bold mb-0 text-dark">{t.departureTime || '10:00'}</h4>
+                    <span className="text-muted small">{t.origin}</span>
+                  </div>
+                  <div className="flex-grow-1 mx-3 position-relative">
+                    <div className="border-bottom w-100" style={{ borderStyle: 'dashed !important', borderColor: '#ccc' }}></div>
+                    <div className="text-muted small position-absolute top-50 start-50 translate-middle" style={{ backgroundColor: 'var(--clr-surface)', padding: '0 4px', marginTop: '-12px' }}>{t.duration || '10h'}</div>
+                  </div>
+                  <div>
+                    <h4 className="fw-bold mb-0 text-dark">{t.arrivalTime || '20:00'}</h4>
+                    <span className="text-muted small">{t.destination}</span>
+                  </div>
+                </div>
+              </Col>
+              <Col md={2} className="text-center">
+                <Badge bg="success-subtle" text="success" className="rounded-pill px-3 py-2 mb-2">Runs Daily</Badge>
+                <div className="text-muted small fw-bold" style={{ color: t.availableSeats > 20 ? 'green' : 'orange' }}>
+                  {t.availableSeats} Seats Left
+                </div>
+              </Col>
+              <Col md={3}>
+                <div className="d-flex align-items-center justify-content-end gap-3">
+                  <div className="text-end">
+                    <h4 className="fw-bold text-primary mb-0">₹{t.price}</h4>
+                    <span className="text-muted small">Starting</span>
+                  </div>
                   <Button 
                     variant="primary" 
-                    size="sm" 
-                    className="px-3 rounded-pill"
+                    className="rounded-pill px-4 fw-bold" 
                     onClick={() => handleBook(t)}
                     disabled={t.availableSeats <= 0}
                   >
                     {t.availableSeats > 0 ? 'Book' : 'Full'}
                   </Button>
-                </td>
-              </tr>
-            ))}
-            {trains.length === 0 && (
-              <tr><td colSpan="7" className="text-center py-5 text-muted">No trains found</td></tr>
-            )}
-          </tbody>
-        </Table>
+                </div>
+              </Col>
+            </Row>
+          </Card>
+        ))}
+        {trains.length === 0 && (
+          <div className="text-center py-5 text-muted">No trains found</div>
+        )}
       </div>
 
       {/* Booking Details Modal */}

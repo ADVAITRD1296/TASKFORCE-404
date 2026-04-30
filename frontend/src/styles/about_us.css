@@ -2,106 +2,103 @@
 
 /* ── Hero tint ─────────────────────────────────────────────── */
 .about-us-page .hero {
-    background: linear-gradient(180deg,
-            rgba(249, 115, 22, 0.04),
-            rgba(79, 128, 200, 0.03));
+  background: linear-gradient(
+    180deg,
+    rgba(249, 115, 22, 0.04),
+    rgba(79, 128, 200, 0.03)
+  );
+}
+
+/* ── Circular team avatar ─────────────────────────────────────
+   140×140 on desktop, 110×110 on tablet, 90×90 on mobile
+   Centred above the name card
+─────────────────────────────────────────────────────────────── */
+.team-avatar {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  border: 4px solid #fff;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);
+  display: block;
+  background-color: #eef2f7;
+  flex-shrink: 0;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.team-avatar:hover {
+  transform: scale(1.06);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
+}
+
+@media (max-width: 991.98px) {
+  .team-avatar {
+    width: 110px;
+    height: 110px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .team-avatar {
+    width: 90px;
+    height: 90px;
+  }
+}
+
+/* ── Rectangular photo frame — hero & story section ─────────── */
+/*   (used for the travel/campus images, not team avatars)       */
+.team-photo-frame-rect {
+  width: 100%;
+  height: 260px;
+  overflow: hidden;
+  border-radius: 12px 12px 0 0;
+  background-color: #e8eef5;
+}
+
+.team-photo-frame-rect img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+  transition: transform 0.4s ease;
 }
 
 /* ── Pill tag ──────────────────────────────────────────────── */
 .pill {
-    display: inline-flex;
-    gap: 8px;
-    align-items: center;
-    padding: 6px 14px;
-    border-radius: 9999px;
-    background: rgba(249, 115, 22, 0.09);
-    color: var(--clr-accent);
-    font-weight: 700;
-    font-size: 0.85rem;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  background: rgba(249, 115, 22, 0.09);
+  color: var(--clr-accent);
+  font-weight: 700;
+  font-size: 0.85rem;
 }
 
 /* ── Accent divider ────────────────────────────────────────── */
 .accent-divider {
-    height: 5px;
-    background: linear-gradient(90deg, var(--clr-accent), var(--clr-primary));
-    border-radius: 4px;
-    margin: 1.25rem 0;
+  height: 5px;
+  background: linear-gradient(90deg, var(--clr-accent), var(--clr-primary));
+  border-radius: 4px;
+  margin: 1.25rem 0;
 }
 
-/* ─────────────────────────────────────────────────────────────
-   TEAM PHOTO FRAME
-   A wrapper div that replaces <Card.Img> for full image control.
-   All images use:
-     • fixed 260 px height (consistent row height)
-     • object-fit: cover  (fill frame, no letterbox)
-     • object-position: center center  (face centred, never cropped)
-     • border-radius only on top corners (matches card shape)
-     • NO oval / circle clipping
-   ──────────────────────────────────────────────────────────── */
-.team-photo-frame {
-    width: 100%;
-    height: 260px;
-    overflow: hidden;
-    border-radius: 16px 16px 0 0;
-    /* top corners match card */
-    background-color: #e8eef5;
-    /* placeholder colour while loading */
-    flex-shrink: 0;
-}
-
-.team-photo-frame img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 20%;
-    /* upper-center — keeps face visible without top-crop */
-    display: block;
-    transition: transform 0.4s ease;
-}
-
-/* Subtle zoom on card hover */
-.team-member-card:hover .team-photo-frame img,
-.leader-card:hover .team-photo-frame img {
-    transform: scale(1.04);
-}
-
-/* Leader card gets a slightly taller frame to show more of the photo */
-.leader-frame {
-    height: 300px;
-    border-radius: 16px 16px 0 0;
-}
-
-/* ── Role subtitle ─────────────────────────────────────────── */
-.role {
-    color: var(--clr-muted);
-    font-size: 0.88rem;
-}
-
-/* ── College card ──────────────────────────────────────────── */
+/* ── College / mission card ────────────────────────────────── */
 .college-card {
-    background: var(--clr-surface);
-    border-radius: 16px;
-    padding: 2rem;
-    box-shadow: var(--shadow-md);
-    border: 1px solid var(--clr-border);
-    height: 100%;
+  background: var(--clr-surface);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--clr-border);
+  height: 100%;
 }
 
-/* ── Responsive ────────────────────────────────────────────── */
-@media (max-width: 767.98px) {
-    .team-photo-frame {
-        height: 220px;
-    }
-
-    .leader-frame {
-        height: 240px;
-    }
-}
-
+/* ── Responsive adjustments ────────────────────────────────── */
 @media (max-width: 575.98px) {
-    .team-photo-frame {
-        height: 260px;
-    }
-
-    /* full-width on mobile = more height is fine */
+  .team-photo-frame-rect {
+    height: 220px;
+  }
 }

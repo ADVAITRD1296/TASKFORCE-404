@@ -1740,3 +1740,103 @@ footer .border-top {
 .card-body {
   padding: 1rem !important;
 }
+
+/* ── Nav Tab Pills — desktop icon+label buttons ────────────── */
+.nav-tab-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 12px 4px;
+  border-radius: 9999px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: #666666;
+  text-decoration: none;
+  transition: background 0.18s ease, color 0.18s ease;
+  white-space: nowrap;
+  gap: 2px;
+  line-height: 1;
+}
+
+.nav-tab-pill i {
+  font-size: 14px;
+  margin-bottom: 1px;
+}
+
+.nav-tab-pill span {
+  font-size: 0.58rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.nav-tab-pill:hover {
+  background: rgba(255, 107, 0, 0.08);
+  color: var(--clr-primary);
+  text-decoration: none;
+}
+
+.nav-tab-pill.active {
+  background: #FFF0E5;
+  color: var(--clr-primary) !important;
+}
+
+.nav-tab-pill.active i {
+  color: var(--clr-primary);
+}
+
+/* ── Mobile nav slide-down animation ───────────────────────── */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Hide scrollbar utility ─────────────────────────────────── */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Uniform section spacing (base-8 scale) ─────────────────── */
+section {
+  padding-top: 48px;
+  padding-bottom: 48px;
+}
+
+@media (max-width: 767.98px) {
+  section {
+    padding-top: 32px;
+    padding-bottom: 32px;
+  }
+}
+
+/* ── Responsive container padding ───────────────────────────── */
+@media (max-width: 575.98px) {
+  .container,
+  .container-fluid {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 991.98px) {
+  .container {
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+}
+
+/* ── Footer border-top colour fix ───────────────────────────── */
+footer .border-top {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
