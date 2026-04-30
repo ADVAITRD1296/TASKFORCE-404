@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Form, Button, Modal } from 'react-bootstrap';
 import { useAuth } from '../context/AuthContext';
 import { apiGetBuses, apiSearchBuses, apiBookBus } from '../services/api';
+import busTravelImg from '../assets/images/bus_travel.png';
+import '../styles/homeCss.css';
 
 const MOCK_BUSES = [
   { id: 1, operatorName: 'Volvo Express', busType: 'AC Sleeper', origin: 'Delhi', destination: 'Jaipur', price: 850, availableSeats: 25, imageUrl: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400' },
@@ -86,16 +88,22 @@ const Buses = () => {
   };
 
   return (
-    <Container className="py-5">
-      <h1 className="text-center mb-5" style={{ fontWeight: 800 }}>Bus Tickets</h1>
-      
-      <Card className="p-4 mb-5 shadow-sm border-0 bg-light rounded-4">
+    <>
+      <div className="booking-hero-bg text-center" style={{ '--hero-image': `url(https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=1600&q=80)` }}>
+        <div className="hero-dark-overlay"></div>
+        <Container className="position-relative" style={{ zIndex: 2 }}>
+          <h1 className="fw-bold mb-2" style={{ fontSize: '2rem' }}>🚌 Book Bus Tickets</h1>
+          <p style={{ opacity: 0.9, fontSize: '0.95rem' }}>Affordable and comfortable bus journeys.</p>
+        </Container>
+      </div>
+
+      <Container className="pb-5">
+        <Card className="booking-search-card glass-search-widget border-0">
         <Form onSubmit={handleSearch}>
-          <Row className="g-3">
+          <Row className="g-2 align-items-center">
             <Col md={5}>
               <Form.Control 
                 placeholder="From City" 
-                className="rounded-3 border-0 shadow-sm"
                 value={search.origin} 
                 onChange={(e) => setSearch({ ...search, origin: e.target.value })}
               />
@@ -103,13 +111,12 @@ const Buses = () => {
             <Col md={5}>
               <Form.Control 
                 placeholder="To City" 
-                className="rounded-3 border-0 shadow-sm"
                 value={search.destination} 
                 onChange={(e) => setSearch({ ...search, destination: e.target.value })}
               />
             </Col>
             <Col md={2}>
-              <Button variant="primary" type="submit" className="w-100 rounded-3 shadow-sm" disabled={loading}>
+              <Button variant="primary" type="submit" className="w-100 rounded-3 fw-bold" disabled={loading}>
                 Search
               </Button>
             </Col>
@@ -153,8 +160,8 @@ const Buses = () => {
                         <span className="fw-semibold" style={{ fontSize: '0.9rem' }}>{b.destination}</span>
                       </div>
                     </div>
-                    <div className="d-flex justify-content-between align-items-center mt-2 pt-2" style={{ borderTop: '1px solid #f0f0f0' }}>
-                      <span className="text-muted" style={{ fontSize: '0.8rem' }}>{b.availableSeats} seats left</span>
+                    <div className="d-flex justify-content-between align-items-center mt-2 pt-2" style={{ borderTop: '1px solid var(--clr-border)' }}>
+                      <span className="text-primary fw-bold" style={{ fontSize: '0.8rem' }}>{b.availableSeats} seats left</span>
                       <Button 
                         variant="primary" 
                         size="sm" 
@@ -208,7 +215,8 @@ const Buses = () => {
           <Button variant="primary" onClick={confirmBooking} className="rounded-3 px-4 shadow-sm">Confirm Booking</Button>
         </Modal.Footer>
       </Modal>
-    </Container>
+      </Container>
+    </>
   );
 };
 

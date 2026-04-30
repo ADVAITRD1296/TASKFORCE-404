@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Form, Button, Table, Modal } from 'react-bootstrap';
 import { useAuth } from '../context/AuthContext';
 import { apiGetTrains, apiSearchTrains, apiBookTrain } from '../services/api';
+import flightSunsetImg from '../assets/images/flight_sunset.png';
+import '../styles/homeCss.css';
 
 const MOCK_TRAINS = [
   { id: 1, trainName: 'Rajdhani Express', trainNumber: '12309', origin: 'Delhi', destination: 'Mumbai', price: 1800, availableSeats: 120 },
@@ -88,16 +90,22 @@ const Trains = () => {
   };
 
   return (
-    <Container className="py-5">
-      <h1 className="text-center mb-5" style={{ fontWeight: 800 }}>Train Tickets</h1>
-      
-      <Card className="p-4 mb-5 shadow-sm border-0 bg-light rounded-4">
+    <>
+      <div className="booking-hero-bg text-center" style={{ '--hero-image': `url(https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=1600&q=80)` }}>
+        <div className="hero-dark-overlay"></div>
+        <Container className="position-relative" style={{ zIndex: 2 }}>
+          <h1 className="fw-bold mb-2" style={{ fontSize: '2rem' }}>🚂 Book Your Train</h1>
+          <p style={{ opacity: 0.9, fontSize: '0.95rem' }}>Comfortable train journeys across the country.</p>
+        </Container>
+      </div>
+
+      <Container className="pb-5">
+        <Card className="booking-search-card glass-search-widget border-0">
         <Form onSubmit={handleSearch}>
-          <Row className="g-3">
+          <Row className="g-2 align-items-center">
             <Col md={5}>
               <Form.Control 
                 placeholder="From Station" 
-                className="rounded-3 border-0 shadow-sm"
                 value={search.origin} 
                 onChange={(e) => setSearch({ ...search, origin: e.target.value })}
               />
@@ -105,13 +113,12 @@ const Trains = () => {
             <Col md={5}>
               <Form.Control 
                 placeholder="To Station" 
-                className="rounded-3 border-0 shadow-sm"
                 value={search.destination} 
                 onChange={(e) => setSearch({ ...search, destination: e.target.value })}
               />
             </Col>
             <Col md={2}>
-              <Button variant="primary" type="submit" className="w-100 rounded-3 shadow-sm" disabled={loading}>
+              <Button variant="primary" type="submit" className="w-100 rounded-3 fw-bold" disabled={loading}>
                 Search
               </Button>
             </Col>
@@ -125,9 +132,9 @@ const Trains = () => {
         </div>
       )}
 
-      <div className="table-responsive bg-white rounded-4 shadow-sm overflow-hidden border">
-        <Table hover className="mb-0">
-          <thead className="bg-primary text-white">
+      <div className="table-responsive rounded-4 shadow-sm overflow-hidden border border-secondary" style={{ backgroundColor: 'var(--clr-surface)' }}>
+        <Table hover variant="dark" className="mb-0">
+          <thead className="text-white" style={{ backgroundColor: 'var(--clr-primary)' }}>
             <tr>
               <th>Train Name</th>
               <th>Number</th>
@@ -144,7 +151,7 @@ const Trains = () => {
                 <td>
                   <div className="fw-bold">{t.trainName}</div>
                 </td>
-                <td><span className="badge bg-secondary">{t.trainNumber}</span></td>
+                <td><span className="badge bg-primary">{t.trainNumber}</span></td>
                 <td>{t.origin}</td>
                 <td>{t.destination}</td>
                 <td className="text-primary fw-bold">₹{t.price}</td>
@@ -213,7 +220,8 @@ const Trains = () => {
           <Button variant="primary" onClick={confirmBooking} className="rounded-3 px-4 shadow-sm">Confirm Booking</Button>
         </Modal.Footer>
       </Modal>
-    </Container>
+      </Container>
+    </>
   );
 };
 
