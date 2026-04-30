@@ -1,48 +1,18 @@
-/* Global styles */
-:root {
-  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
-}
+/* index.css — App-level layout + Auth Modal only.
+   All design tokens, components → design-system.css */
 
-body {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
+/* App shell */
 .app-container {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-.content {
-  flex: 1;
-}
+.content { flex: 1; }
 
-/* Custom button styles to match original */
-.btn-primary {
-  background-color: #4f80c8;
-  border: none;
-  padding: 8px 20px;
-  border-radius: 6px;
-  font-weight: 600;
-}
-
-.btn-outline-primary {
-  color: #4f80c8;
-  border: 2px solid #4f80c8;
-  padding: 6px 18px;
-  border-radius: 6px;
-  font-weight: 600;
-}
-
-/* Forced visibility for Bootstrap Modals */
-.modal {
-  z-index: 10050 !important;
-}
-.modal-backdrop {
-  z-index: 10040 !important;
-}
+/* Modal z-index overrides (Bootstrap conflict fix) */
+.modal           { z-index: 10050 !important; }
+.modal-backdrop  { z-index: 10040 !important; }
 .modal.show {
   display: block !important;
   opacity: 1 !important;
@@ -50,120 +20,128 @@ body {
 }
 .modal-dialog {
   z-index: 10060 !important;
-  margin-top: 10% !important;
+  margin-top: 8% !important;
 }
 
-/* AUTH MODAL CUSTOM STYLES */
+/* ── Auth Modal ─────────────────────────────────────────── */
 .auth-modal .modal-content {
-    border-radius: 24px;
-    border: none;
-    overflow: hidden;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-    background: #ffffff;
+  border-radius: 24px !important;
+  border: none !important;
+  overflow: hidden;
+  box-shadow: 0 25px 60px rgba(15,23,42,0.2) !important;
+  background: #ffffff;
 }
 
 .auth-modal .modal-header {
-    border-bottom: none;
-    padding: 40px 40px 10px;
-    position: relative;
-    justify-content: center;
+  border-bottom: none !important;
+  padding: 2.5rem 2.5rem 0.75rem !important;
+  position: relative;
+  justify-content: center;
 }
 
 .auth-modal .modal-header .btn-close {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background-color: #f1f5f9;
-    padding: 8px;
-    border-radius: 50%;
-    opacity: 1;
-    font-size: 10px;
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  background-color: #f1f5f9;
+  padding: 8px;
+  border-radius: 50%;
+  opacity: 1;
+  font-size: 10px;
 }
 
 .auth-modal .modal-title {
-    font-weight: 800;
-    font-size: 1.8rem;
-    color: #0f172a;
-    width: 100%;
-    text-align: center;
+  font-weight: 800;
+  font-size: 1.75rem;
+  color: #0f172a;
+  width: 100%;
+  text-align: center;
 }
 
 .auth-modal .modal-body {
-    padding: 20px 40px 40px;
+  padding: 1rem 2.5rem 2.5rem !important;
 }
 
 .auth-modal .form-label {
-    font-weight: 600;
-    font-size: 0.9rem;
-    color: #475569;
-    margin-bottom: 8px;
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
 }
 
 .auth-modal .form-control {
-    border-radius: 12px;
-    padding: 12px 16px;
-    border: 2px solid #e2e8f0;
-    background: #f8fafc;
-    transition: all 0.2s;
+  border-radius: 12px !important;
+  padding: 12px 16px !important;
+  border: 1.5px solid #e2e8f0 !important;
+  background: #f8fafc !important;
+  transition: all 0.2s;
+  font-size: 0.95rem !important;
 }
 
 .auth-modal .form-control:focus {
-    border-color: #4f80c8;
-    box-shadow: 0 0 0 4px rgba(79, 128, 200, 0.15);
-    background: #fff;
-    outline: none;
+  border-color: #4f80c8 !important;
+  box-shadow: 0 0 0 4px rgba(79,128,200,0.15) !important;
+  background: #fff !important;
+  outline: none !important;
 }
 
 .auth-modal .btn-auth-primary {
-    background: linear-gradient(135deg, #ff6600 0%, #4f80c8 100%);
-    border: none;
-    border-radius: 12px;
-    padding: 14px;
-    font-weight: 700;
-    color: white;
-    width: 100%;
-    margin-top: 20px;
-    transition: transform 0.2s, box-shadow 0.2s;
+  background: linear-gradient(135deg, #f97316 0%, #4f80c8 100%);
+  border: none;
+  border-radius: 12px;
+  padding: 14px;
+  font-weight: 700;
+  font-size: 1rem;
+  color: white;
+  width: 100%;
+  margin-top: 1.25rem;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .auth-modal .btn-auth-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 15px -3px rgba(79, 128, 200, 0.3);
-    color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(79,128,200,0.3);
+  color: white;
 }
 
 .auth-modal .btn-auth-secondary {
-    color: #64748b;
-    font-weight: 600;
-    font-size: 0.9rem;
-    text-decoration: none;
-    display: block;
-    text-align: center;
-    margin-top: 20px;
-    background: none;
-    border: none;
-    width: 100%;
+  color: #64748b;
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-decoration: none;
+  display: block;
+  text-align: center;
+  margin-top: 1.25rem;
+  background: none;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+  transition: color 0.2s;
 }
 
-.auth-modal .btn-auth-secondary:hover {
-    color: #4f80c8;
-}
+.auth-modal .btn-auth-secondary:hover { color: #4f80c8; }
 
+/* Auth message feedback */
 .auth-msg {
-    padding: 12px;
-    border-radius: 12px;
-    margin-top: 20px;
-    font-weight: 600;
-    text-align: center;
-    font-size: 0.9rem;
+  padding: 12px 16px;
+  border-radius: 12px;
+  margin-top: 1.25rem;
+  font-weight: 600;
+  text-align: center;
+  font-size: 0.875rem;
 }
 
 .auth-msg.success {
-    background: #ecfdf5;
-    color: #059669;
+  background: #ecfdf5;
+  color: #059669;
+  border: 1px solid #a7f3d0;
 }
 
 .auth-msg.error {
-    background: #fef2f2;
-    color: #dc2626;
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
 }

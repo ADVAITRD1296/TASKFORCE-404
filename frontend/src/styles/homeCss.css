@@ -1,165 +1,24 @@
-:root {
-    --primary: #4f80c8;
-    --accent: #ff6600;
-    --dark: #111827;
-    --light: #f8fafc;
-    --white: #ffffff;
-    --gray: #64748b;
-    --glass: rgba(255, 255, 255, 0.8);
-    --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+/* homeCss.css — Page-specific rules only.
+   Global tokens, navbar, buttons, cards, forms → design-system.css */
+
+/* Carousel image gradient dark overlay */
+.bg-gradient-dark {
+    background: linear-gradient(to top, rgba(15,23,42,0.85) 0%, transparent 100%);
 }
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+/* Info section on Home */
+.info-section {
+    padding: 0.5rem 0;
 }
 
-body {
-    background-color: #f1f5f9;
-    background-image: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
-    background-attachment: fixed;
-    color: var(--dark);
-    min-height: 100vh;
+.info-section .description {
+    line-height: 1.85;
 }
 
-/* Premium Navbar */
-.navbar {
-    background: rgba(255, 255, 255, 0.92) !important;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-    padding: 0.75rem 2rem !important;
-    box-shadow: var(--shadow);
-}
+/* Service cards on Home */
+.mycontainer { max-width: 1200px; }
 
-/* Ensure the collapse fills available space for proper centering */
-.navbar-collapse {
-    display: flex !important;
-    align-items: center;
-    justify-content: space-between;
-    flex-grow: 1;
-}
-
-.navbar-nav {
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    margin: 0 auto !important;
-    gap: 0.25rem;
-}
-
-.navbar-brand {
-    font-weight: 800 !important;
-    font-size: 1.5rem !important;
-    background: linear-gradient(90deg, var(--accent), var(--primary));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    letter-spacing: -0.5px;
-    flex-shrink: 0;
-}
-
-.nav-link {
-    color: var(--dark) !important;
-    font-weight: 600;
-    padding: 0.45rem 0.9rem !important;
-    transition: all 0.3s ease;
-    border-radius: 8px;
-    white-space: nowrap;
-}
-
-.nav-link:hover {
-    background: rgba(79, 128, 200, 0.08);
-    color: var(--primary) !important;
-    transform: translateY(-1px);
-}
-
-/* Modern Buttons */
-.btn-primary {
-    background: linear-gradient(135deg, var(--primary), #3a6aaa) !important;
-    border: none !important;
-    padding: 0.6rem 1.5rem !important;
-    font-weight: 600 !important;
-    border-radius: 12px !important;
-    box-shadow: 0 4px 12px rgba(79, 128, 200, 0.25) !important;
-    transition: all 0.3s ease !important;
-}
-
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(79, 128, 200, 0.35) !important;
-}
-
-/* Glass Cards */
-.card {
-    background: var(--glass) !important;
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.4) !important;
-    border-radius: 20px !important;
-    box-shadow: var(--shadow-lg) !important;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1) !important;
-}
-
-/* Custom Utilities */
-.text-gradient {
-    background: linear-gradient(90deg, var(--primary), var(--accent));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.bg-glass {
-    background: var(--glass);
-    backdrop-filter: blur(12px);
-}
-
-/* Forms */
-.form-control {
-    border-radius: 12px !important;
-    padding: 0.75rem 1.25rem !important;
-    border: 1px solid #e2e8f0 !important;
-    background: rgba(255, 255, 255, 0.9) !important;
-}
-
-.form-control:focus {
-    box-shadow: 0 0 0 4px rgba(79, 128, 200, 0.15) !important;
-    border-color: var(--primary) !important;
-}
-
-/* Footer */
-footer {
-    background: var(--dark);
-    color: var(--white);
-    padding: 4rem 0 2rem 0;
-    margin-top: 5rem;
-}
-
-.footer-link {
-    color: #94a3b8;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.footer-link:hover {
-    color: var(--white);
-}
-
-/* Hero Section (if any) */
-.hero-section {
-    padding: 6rem 0;
-    text-align: center;
-    background: radial-gradient(circle at top right, rgba(79, 128, 200, 0.06), transparent);
-}
-
-.hero-title {
-    font-size: 4rem;
-    font-weight: 900;
-    margin-bottom: 1.5rem;
-    letter-spacing: -1.5px;
+/* Flight card left-border accent */
+.flight-card {
+    border-left: 4px solid var(--clr-primary) !important;
 }
