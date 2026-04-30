@@ -2,32 +2,32 @@ import React from 'react';
 import { Container, Row, Col, Card, Badge } from 'react-bootstrap';
 import '../styles/about_us.css';
 
-import tflogo      from '../assets/images/tflogo.png';
-import travel      from '../assets/images/travel.jpg';
+import tflogo from '../assets/images/tflogo.png';
+import travel from '../assets/images/travel.jpg';
 import iiitLucknow from '../assets/images/IIIT-Lucknow.jpg';
-import advait      from '../assets/images/Advait.jpeg';
-import ranveer     from '../assets/images/ranveer.jpeg';
-import pruthviraj  from '../assets/images/pruthviraj.jpeg';
-import ayan        from '../assets/images/ayan.jpeg';
-import arijeet     from '../assets/images/arijeet.jpeg';
-import ketan       from '../assets/images/ketan.jpeg';
-import krish       from '../assets/images/krish.jpeg';
-import suryansh    from '../assets/images/suryansh.jpeg';
-import piyush      from '../assets/images/piyush.jpeg';
-import rishab      from '../assets/images/rishab.jpeg';
+import advait from '../assets/images/Advait.jpeg';
+import ranveer from '../assets/images/ranveer.jpeg';
+import pruthviraj from '../assets/images/pruthviraj.jpeg';
+import ayan from '../assets/images/ayan.jpeg';
+import arijeet from '../assets/images/arijeet.jpeg';
+import ketan from '../assets/images/ketan.jpeg';
+import krish from '../assets/images/krish.jpeg';
+import suryansh from '../assets/images/suryansh.jpeg';
+import piyush from '../assets/images/piyush.jpeg';
+import rishab from '../assets/images/rishab.jpeg';
 
 const AboutUs = () => {
-  // pos = per-photo object-position override (only for photos where face is cut off)
+  // zoom = true → uses object-fit:contain (shows full image, no face cropping)
   const team = [
-    { name: 'Ranveer Hajari',       role: 'Beed, Maharashtra • IIIT Lucknow',      desc: 'Idea & design specialist. Enjoys gaming and movies.',                   img: ranveer,    pos: 'center 30%' },
-    { name: 'Pruthviraj Mane',      role: 'Nanded, Maharashtra • IIIT Lucknow',     desc: 'Creative contributor — front-end and UI work.',                         img: pruthviraj                    },
-    { name: 'Ayan Saha',            role: 'Durgapur, West Bengal • IIIT Lucknow',   desc: 'Developer & integrator — loves travel and food.',                       img: ayan                          },
-    { name: 'Arijeet Mukherjee',    role: 'Indore, Madhya Pradesh • IIIT Lucknow',  desc: 'Provides insights that guide product choices and helps in design.',     img: arijeet                       },
-    { name: 'Ketan Mishra',         role: 'Lucknow, Uttar Pradesh • IIIT Lucknow',  desc: 'Ensures smooth workflows and helps in creation of forms.',              img: ketan,      pos: 'center 30%' },
-    { name: 'Krrish Dixit',         role: 'Lucknow, Uttar Pradesh • IIIT Lucknow',  desc: 'Key member of our team who helps in coding and support.',               img: krish                         },
-    { name: 'Suryansh Kumar Singh', role: 'Lucknow, Uttar Pradesh • IIIT Lucknow',  desc: 'JavaScript expert.',                                                   img: suryansh,   pos: 'center 35%' },
-    { name: 'Piyush Singh',         role: 'Prayagraj, Uttar Pradesh • IIIT Lucknow', desc: 'Helps in designing web pages.',                                        img: piyush                        },
-    { name: 'Rishab Shaukya',       role: 'Ujjain, Rajasthan • IIIT Lucknow',       desc: 'Fosters a positive team environment and always helps with debugging.', img: rishab,     pos: 'center 30%' },
+    { name: 'Ranveer Hajari', role: 'Beed, Maharashtra • IIIT Lucknow', desc: 'Idea & design specialist. Enjoys gaming and movies.', img: ranveer, zoom: true },
+    { name: 'Pruthviraj Mane', role: 'Nanded, Maharashtra • IIIT Lucknow', desc: 'Creative contributor — front-end and UI work.', img: pruthviraj },
+    { name: 'Ayan Saha', role: 'Durgapur, West Bengal • IIIT Lucknow', desc: 'Developer & integrator — loves travel and food.', img: ayan, zoom: true },
+    { name: 'Arijeet Mukherjee', role: 'Indore, Madhya Pradesh • IIIT Lucknow', desc: 'Provides insights that guide product choices and helps in design.', img: arijeet, zoom: true },
+    { name: 'Ketan Mishra', role: 'Lucknow, Uttar Pradesh • IIIT Lucknow', desc: 'Ensures smooth workflows and helps in creation of forms.', img: ketan },
+    { name: 'Krrish Dixit', role: 'Lucknow, Uttar Pradesh • IIIT Lucknow', desc: 'Key member of our team who helps in coding and support.', img: krish },
+    { name: 'Suryansh Kumar Singh', role: 'Lucknow, Uttar Pradesh • IIIT Lucknow', desc: 'JavaScript expert.', img: suryansh, zoom: true },
+    { name: 'Piyush Singh', role: 'Prayagraj, Uttar Pradesh • IIIT Lucknow', desc: 'Helps in designing web pages.', img: piyush },
+    { name: 'Rishab Shaukya', role: 'Ujjain, Rajasthan • IIIT Lucknow', desc: 'Fosters a positive team environment and always helps with debugging.', img: rishab, zoom: true },
   ];
 
   return (
@@ -152,8 +152,12 @@ const AboutUs = () => {
             {team.map((member, index) => (
               <Col key={index} xs={12} sm={6} md={4}>
                 <Card className="h-100 shadow-sm border-0 team-member-card">
-                  <div className="team-photo-frame">
-                    <img src={member.img} alt={member.name} style={member.pos ? { objectPosition: member.pos } : undefined} />
+                  <div className="team-photo-frame" style={member.zoom ? { backgroundColor: '#eef2f7' } : undefined}>
+                    <img
+                      src={member.img}
+                      alt={member.name}
+                      style={member.zoom ? { objectFit: 'contain', objectPosition: 'center center' } : undefined}
+                    />
                   </div>
                   <Card.Body className="pt-3">
                     <Card.Title className="fw-bold mb-1" style={{ fontSize: '1rem' }}>
