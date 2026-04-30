@@ -25,6 +25,7 @@ public class BusService {
     private final UserRepository userRepository;
     private final ExternalApiService apiService;
     private final FirebaseService firebaseService;
+    private final WhatsAppService whatsAppService;
 
     public List<Bus> getAllBuses() {
         return busRepository.findAll();
@@ -32,12 +33,11 @@ public class BusService {
 
     public List<Bus> searchBuses(String origin, String destination) {
         List<Bus> dbBuses = busRepository.findByOriginContainingIgnoreCaseAndDestinationContainingIgnoreCase(
-            origin != null ? origin : "", 
+            origin != null ? origin : "",
             destination != null ? destination : ""
         );
 
         if (dbBuses.isEmpty() && (origin != null || destination != null)) {
-            // Fallback to real-time API
             List<Bus> apiBuses = apiService.fetchBuses(origin, destination);
             if (!apiBuses.isEmpty()) {
                 busRepository.saveAll(apiBuses);
@@ -80,14 +80,20 @@ public class BusService {
 
         Booking savedBooking = bookingRepository.save(booking);
 
+        // Firebase push notification
         if (user.getDeviceTokens() != null) {
             for (String token : user.getDeviceTokens()) {
-                firebaseService.sendPushNotification(token, 
-                    "Bus Booking Confirmed!", 
-                    "Your bus ticket " + savedBooking.getBookingReference() + " is confirmed."
-                );
+                firebaseService.sendPushNotification(token,
+                    "Bus Booking Confirmed!",
+                    "Your bus ticket " + savedBooking.getBookingReference() + " is confirmed.");
             }
         }
+
+        // WhatsApp confirmation
+        whatsAppService.sendBusBookingConfirmation(
+            user.getName(), user.getPhone(),
+            savedBooking.getBookingReference(), details, savedBooking.getTotalPrice()
+        );
 
         return savedBooking;
     }

@@ -35,9 +35,9 @@ public class AuthenticationService {
                 .build();
         repository.save(user);
         var jwtToken = jwtService.generateToken(user);
-        
-        // Send WhatsApp Welcome Notification
-        whatsAppService.sendLoginNotification(user.getEmail(), user.getName(), user.getPhone());
+
+        // Send WhatsApp Welcome Message on registration
+        whatsAppService.sendRegistrationNotification(user.getName(), user.getPhone());
 
         return AuthResponse.builder()
                 .token(jwtToken)
@@ -56,7 +56,7 @@ public class AuthenticationService {
         );
         var user = repository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new BadRequestException("User not found"));
-        
+
         // Device Control Logic
         if (request.getDeviceToken() != null && !request.getDeviceToken().isEmpty()) {
             if (user.getDeviceTokens() == null) {
@@ -73,7 +73,7 @@ public class AuthenticationService {
 
         var jwtToken = jwtService.generateToken(user);
 
-        // Send WhatsApp Notification
+        // Send WhatsApp Login Alert
         whatsAppService.sendLoginNotification(user.getEmail(), user.getName(), user.getPhone());
 
         return AuthResponse.builder()

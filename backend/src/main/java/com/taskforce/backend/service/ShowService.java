@@ -23,6 +23,7 @@ public class ShowService {
     private final ShowRepository showRepository;
     private final BookingRepository bookingRepository;
     private final UserRepository userRepository;
+    private final WhatsAppService whatsAppService;
 
     public List<Show> getAllShows() {
         return showRepository.findAll();
@@ -56,6 +57,14 @@ public class ShowService {
                 .status(BookingStatus.CONFIRMED)
                 .build();
 
-        return bookingRepository.save(booking);
+        Booking savedBooking = bookingRepository.save(booking);
+
+        // WhatsApp confirmation
+        whatsAppService.sendShowBookingConfirmation(
+            user.getName(), user.getPhone(),
+            savedBooking.getBookingReference(), details, savedBooking.getTotalPrice()
+        );
+
+        return savedBooking;
     }
 }

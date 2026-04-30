@@ -171,7 +171,7 @@ const Flights = () => {
                     <i className="fa-solid fa-plane text-primary fa-2x"></i>
                   </div>
                   <div>
-                    <h5 className="fw-bold mb-0">{f.airline}</h5>
+                            <h5 className="fw-bold mb-0" style={{fontSize: '1rem'}}>{f.airline}</h5>
                     <span className="text-muted small">{f.flightNumber}</span>
                   </div>
                 </div>

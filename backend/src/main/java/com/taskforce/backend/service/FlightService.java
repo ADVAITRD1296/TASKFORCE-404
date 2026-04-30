@@ -25,6 +25,7 @@ public class FlightService {
     private final UserRepository userRepository;
     private final ExternalApiService apiService;
     private final FirebaseService firebaseService;
+    private final WhatsAppService whatsAppService;
 
     public List<Flight> getAllFlights() {
         return flightRepository.findAll();
@@ -32,7 +33,7 @@ public class FlightService {
 
     public List<Flight> searchFlights(String origin, String destination) {
         List<Flight> dbFlights = flightRepository.findByOriginContainingIgnoreCaseAndDestinationContainingIgnoreCase(
-            origin != null ? origin : "", 
+            origin != null ? origin : "",
             destination != null ? destination : ""
         );
 
@@ -80,14 +81,20 @@ public class FlightService {
 
         Booking savedBooking = bookingRepository.save(booking);
 
+        // Firebase push notification
         if (user.getDeviceTokens() != null) {
             for (String token : user.getDeviceTokens()) {
-                firebaseService.sendPushNotification(token, 
-                    "Flight Booking Confirmed!", 
-                    "Your flight ticket " + savedBooking.getBookingReference() + " is confirmed."
-                );
+                firebaseService.sendPushNotification(token,
+                    "Flight Booking Confirmed!",
+                    "Your flight ticket " + savedBooking.getBookingReference() + " is confirmed.");
             }
         }
+
+        // WhatsApp confirmation
+        whatsAppService.sendFlightBookingConfirmation(
+            user.getName(), user.getPhone(),
+            savedBooking.getBookingReference(), details, savedBooking.getTotalPrice()
+        );
 
         return savedBooking;
     }

@@ -12,9 +12,9 @@ import bus3Img from '../assets/images/bus3.jpg';
 const MOCK_BUSES = [
   { id: 1, operatorName: 'Volvo Express', busType: 'AC Sleeper', origin: 'Delhi', destination: 'Jaipur', price: 850, availableSeats: 25, imageUrl: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400&q=80' },
   { id: 2, operatorName: 'RedBus Premium', busType: 'AC Semi-Sleeper', origin: 'Mumbai', destination: 'Pune', price: 450, availableSeats: 40, imageUrl: 'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?w=400&q=80' },
-  { id: 3, operatorName: 'Orange Travels', busType: 'Non-AC Seater', origin: 'Hyderabad', destination: 'Bangalore', price: 600, availableSeats: 15, imageUrl: 'https://images.unsplash.com/photo-1557223562-6c77ef16210f?w=400&q=80' },
-  { id: 4, operatorName: 'UPSRTC', busType: 'AC Seater', origin: 'Lucknow', destination: 'Delhi', price: 700, availableSeats: 55, imageUrl: bus1Img },
-  { id: 5, operatorName: 'VRL Travels', busType: 'AC Sleeper', origin: 'Lucknow', destination: 'Indore', price: 1100, availableSeats: 12, imageUrl: bus2Img },
+  { id: 3, operatorName: 'Orange Travels', busType: 'Non-AC Seater', origin: 'Hyderabad', destination: 'Bangalore', price: 600, availableSeats: 15, imageUrl: bus1Img },
+  { id: 4, operatorName: 'UPSRTC', busType: 'AC Seater', origin: 'Lucknow', destination: 'Delhi', price: 700, availableSeats: 55, imageUrl: bus2Img },
+  { id: 5, operatorName: 'VRL Travels', busType: 'AC Sleeper', origin: 'Lucknow', destination: 'Indore', price: 1100, availableSeats: 12, imageUrl: bus3Img },
   { id: 6, operatorName: 'SRS Travels', busType: 'Multi-Axle Volvo', origin: 'Chennai', destination: 'Bangalore', price: 550, availableSeats: 0, imageUrl: bus3Img },
 ];
 

@@ -25,6 +25,7 @@ public class TrainService {
     private final UserRepository userRepository;
     private final ExternalApiService apiService;
     private final FirebaseService firebaseService;
+    private final WhatsAppService whatsAppService;
 
     public List<Train> getAllTrains() {
         return trainRepository.findAll();
@@ -32,12 +33,11 @@ public class TrainService {
 
     public List<Train> searchTrains(String origin, String destination) {
         List<Train> dbTrains = trainRepository.findByOriginContainingIgnoreCaseAndDestinationContainingIgnoreCase(
-            origin != null ? origin : "", 
+            origin != null ? origin : "",
             destination != null ? destination : ""
         );
 
         if (dbTrains.isEmpty() && (origin != null || destination != null)) {
-            // Fallback to real-time API
             List<Train> apiTrains = apiService.fetchTrains(origin, destination);
             if (!apiTrains.isEmpty()) {
                 trainRepository.saveAll(apiTrains);
@@ -81,14 +81,20 @@ public class TrainService {
 
         Booking savedBooking = bookingRepository.save(booking);
 
+        // Firebase push notification
         if (user.getDeviceTokens() != null) {
             for (String token : user.getDeviceTokens()) {
-                firebaseService.sendPushNotification(token, 
-                    "Train Booking Confirmed!", 
-                    "Your train ticket " + savedBooking.getBookingReference() + " is confirmed."
-                );
+                firebaseService.sendPushNotification(token,
+                    "Train Booking Confirmed!",
+                    "Your train ticket " + savedBooking.getBookingReference() + " is confirmed.");
             }
         }
+
+        // WhatsApp confirmation
+        whatsAppService.sendTrainBookingConfirmation(
+            user.getName(), user.getPhone(),
+            savedBooking.getBookingReference(), details, savedBooking.getTotalPrice()
+        );
 
         return savedBooking;
     }

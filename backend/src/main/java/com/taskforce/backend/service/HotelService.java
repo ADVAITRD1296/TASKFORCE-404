@@ -27,6 +27,7 @@ public class HotelService {
     private final UserRepository userRepository;
     private final ExternalApiService apiService;
     private final FirebaseService firebaseService;
+    private final WhatsAppService whatsAppService;
 
     @Cacheable(value = "hotels")
     public List<Hotel> getAllHotels() {
@@ -35,7 +36,7 @@ public class HotelService {
 
     public List<Hotel> searchHotels(String location, String roomType) {
         List<Hotel> dbHotels = hotelRepository.findByLocationContainingIgnoreCaseAndRoomTypeContainingIgnoreCase(
-            location != null ? location : "", 
+            location != null ? location : "",
             roomType != null ? roomType : ""
         );
 
@@ -72,7 +73,6 @@ public class HotelService {
                 hotel.getName(), hotel.getLocation(), checkin, checkout,
                 guests != null ? guests : "1", roomType != null ? roomType : hotel.getRoomType());
 
-        // Calculate nights (simple estimation)
         double totalPrice = hotel.getPricePerNight();
 
         Booking booking = Booking.builder()
@@ -86,14 +86,20 @@ public class HotelService {
 
         Booking savedBooking = bookingRepository.save(booking);
 
+        // Firebase push notification
         if (user.getDeviceTokens() != null) {
             for (String token : user.getDeviceTokens()) {
-                firebaseService.sendPushNotification(token, 
-                    "Hotel Booking Confirmed!", 
-                    "Your hotel booking " + savedBooking.getBookingReference() + " is confirmed."
-                );
+                firebaseService.sendPushNotification(token,
+                    "Hotel Booking Confirmed!",
+                    "Your hotel booking " + savedBooking.getBookingReference() + " is confirmed.");
             }
         }
+
+        // WhatsApp confirmation
+        whatsAppService.sendHotelBookingConfirmation(
+            user.getName(), user.getPhone(),
+            savedBooking.getBookingReference(), details, savedBooking.getTotalPrice()
+        );
 
         return savedBooking;
     }
