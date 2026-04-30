@@ -64,9 +64,9 @@ const Navbar = () => {
                 {user ? (
                   <button onClick={logout} className="btn btn-outline-danger px-4 rounded-pill">Logout</button>
                 ) : (
-                  <div className="d-flex gap-2">
-                    <button onClick={() => handleAuthOpen('login')} className="btn btn-link text-decoration-none text-dark fw-semibold">Login</button>
-                    <button onClick={() => handleAuthOpen('register')} className="btn btn-primary px-4 rounded-pill">Join Free</button>
+                  <div className="d-flex gap-2 align-items-center">
+                    <button onClick={() => handleAuthOpen('login')} className="btn btn-link btn-login text-decoration-none fw-semibold">Login</button>
+                    <button onClick={() => handleAuthOpen('register')} className="btn btn-join-free px-4 rounded-pill">Join Free</button>
                   </div>
                 )}
               </div>
