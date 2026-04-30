@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import AuthModal from '../common/AuthModal';
 import logo from '../../assets/images/logo.png';
@@ -9,71 +9,166 @@ const Navbar = () => {
   const { user, logout } = useAuth();
   const [showAuth, setShowAuth] = useState(false);
   const [authType, setAuthType] = useState('login');
-  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleAuthOpen = (type) => {
     setAuthType(type);
     setShowAuth(true);
   };
 
+  const isActive  = (path) => location.pathname.includes(path) ? 'active' : '';
+  const isHome    = location.pathname === '/' ? 'active' : '';
+
   return (
-    <header className="site-header sticky-top">
-      <nav className="navbar navbar-expand-lg py-3" aria-label="Main navigation">
-        <div className="container">
-          <Link to="/" className="navbar-brand d-flex align-items-center gap-2">
-            <img src={logo} height="40px" style={{ borderRadius: '8px' }} alt="Logo" />
-            <span className="d-none d-sm-inline">BOOKZY</span>
+    <header
+      className="site-header sticky-top"
+      style={{
+        backgroundColor: '#fff',
+        borderBottom: '1px solid #E2E8F0',
+        boxShadow: '0 1px 8px rgba(0,0,0,0.07)',
+        height: '56px',
+        display: 'flex',
+        alignItems: 'center',
+      }}
+    >
+      <div className="container-fluid px-3 d-flex align-items-center" style={{ gap: '10px', height: '100%' }}>
+
+        {/* ── Logo ── */}
+        <Link to="/" className="flex-shrink-0 text-decoration-none me-2">
+          <img src={logo} height="32px" style={{ borderRadius: '7px', display: 'block' }} alt="Bookzy" />
+        </Link>
+
+        {/* ── Desktop icon-tab pills (hidden on mobile) ── */}
+        <div
+          className="d-none d-md-flex align-items-center rounded-pill px-1 flex-grow-1 justify-content-center"
+          style={{ backgroundColor: '#F5F7FA', border: '1px solid #E2E8F0', gap: '2px', maxWidth: '640px' }}
+        >
+          <Link to="/" className={`nav-tab-pill ${isHome} d-flex flex-column align-items-center text-decoration-none`}>
+            <i className="fa-solid fa-house"></i>
+            <span>Home</span>
           </Link>
-          
-          <button className="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span className="navbar-toggler-icon"></span>
-          </button>
-
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav mx-auto mb-2 mb-lg-0 gap-2">
-              <li className="nav-item"><Link to="/" className="nav-link">Home</Link></li>
-              <li className="nav-item"><Link to="/shows" className="nav-link">Shows</Link></li>
-              <li className="nav-item"><Link to="/hotels" className="nav-link">Hotels</Link></li>
-              
-              <li className="nav-item dropdown nav-dropdown-wrap">
-                <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Travel
-                </a>
-                <ul className="dropdown-menu">
-                  <li><Link to="/travel/flights" className="dropdown-item">Flights</Link></li>
-                  <li><Link to="/travel/trains" className="dropdown-item">Trains</Link></li>
-                  <li><Link to="/travel/buses" className="dropdown-item">Buses</Link></li>
-                </ul>
-              </li>
-
-              <li className="nav-item"><Link to="/offers" className="nav-link">Offers</Link></li>
-              <li className="nav-item"><Link to="/about" className="nav-link">About Us</Link></li>
-            </ul>
-
-            <div className="nav-right d-flex align-items-center gap-3">
-              {user && (
-                <div className="user-profile d-flex align-items-center gap-2 bg-light px-3 py-1 rounded-pill">
-                  <div className="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style={{ width: '32px', height: '32px', fontSize: '14px', fontWeight: 'bold' }}>
-                    {user.name.charAt(0).toUpperCase()}
-                  </div>
-                  <span className="small fw-semibold">{user.name}</span>
-                </div>
-              )}
-
-              <div className="auth-buttons">
-                {user ? (
-                  <button onClick={logout} className="btn btn-outline-danger px-4 rounded-pill">Logout</button>
-                ) : (
-                  <div className="d-flex gap-2 align-items-center">
-                    <button onClick={() => handleAuthOpen('login')} className="btn btn-link btn-login text-decoration-none fw-semibold">Login</button>
-                    <button onClick={() => handleAuthOpen('register')} className="btn btn-join-free px-4 rounded-pill">Join Free</button>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
+          <Link to="/travel/flights" className={`nav-tab-pill ${isActive('/flights')} d-flex flex-column align-items-center text-decoration-none`}>
+            <i className="fa-solid fa-plane"></i>
+            <span>Flights</span>
+          </Link>
+          <Link to="/hotels" className={`nav-tab-pill ${isActive('/hotels')} d-flex flex-column align-items-center text-decoration-none`}>
+            <i className="fa-solid fa-hotel"></i>
+            <span>Hotels</span>
+          </Link>
+          <Link to="/travel/trains" className={`nav-tab-pill ${isActive('/trains')} d-flex flex-column align-items-center text-decoration-none`}>
+            <i className="fa-solid fa-train"></i>
+            <span>Trains</span>
+          </Link>
+          <Link to="/travel/buses" className={`nav-tab-pill ${isActive('/buses')} d-flex flex-column align-items-center text-decoration-none`}>
+            <i className="fa-solid fa-bus"></i>
+            <span>Buses</span>
+          </Link>
+          <Link to="/shows" className={`nav-tab-pill ${isActive('/shows')} d-flex flex-column align-items-center text-decoration-none`}>
+            <i className="fa-solid fa-ticket"></i>
+            <span>Shows</span>
+          </Link>
+          <Link to="/offers" className={`nav-tab-pill ${isActive('/offers')} d-flex flex-column align-items-center text-decoration-none`}>
+            <i className="fa-solid fa-percent"></i>
+            <span>Offers</span>
+          </Link>
+          <Link to="/about" className={`nav-tab-pill ${isActive('/about')} d-flex flex-column align-items-center text-decoration-none`}>
+            <i className="fa-solid fa-circle-info"></i>
+            <span>About</span>
+          </Link>
         </div>
-      </nav>
+
+        {/* ── Right side auth — pushed to far right ── */}
+        <div className="d-flex align-items-center ms-auto" style={{ gap: '8px' }}>
+          {user ? (
+            <div className="dropdown">
+              <button
+                className="btn rounded-pill d-flex align-items-center gap-2 dropdown-toggle"
+                style={{ background: '#FFF0E5', border: '1.5px solid #FF6B00', padding: '5px 14px', fontSize: '13px' }}
+                data-bs-toggle="dropdown"
+              >
+                <div
+                  className="rounded-circle d-flex align-items-center justify-content-center fw-bold text-white"
+                  style={{ width: '22px', height: '22px', fontSize: '11px', background: '#FF6B00', flexShrink: 0 }}
+                >
+                  {user.name.charAt(0).toUpperCase()}
+                </div>
+                <span className="fw-semibold" style={{ color: '#1A1A1A', fontSize: '13px' }}>
+                  {user.name.split(' ')[0]}
+                </span>
+              </button>
+              <ul className="dropdown-menu dropdown-menu-end shadow border-0 mt-2 rounded-3" style={{ minWidth: '170px' }}>
+                <li>
+                  <Link className="dropdown-item py-2 fw-semibold" to="/profile">
+                    <i className="fa-solid fa-user me-2" style={{ color: '#FF6B00' }}></i>Profile
+                  </Link>
+                </li>
+                <li>
+                  <Link className="dropdown-item py-2 fw-semibold" to="/bookings">
+                    <i className="fa-solid fa-suitcase-rolling me-2" style={{ color: '#FF6B00' }}></i>My Bookings
+                  </Link>
+                </li>
+                <li><hr className="dropdown-divider" /></li>
+                <li>
+                  <button className="dropdown-item py-2 text-danger fw-bold" onClick={logout}>
+                    <i className="fa-solid fa-right-from-bracket me-2"></i>Logout
+                  </button>
+                </li>
+              </ul>
+            </div>
+          ) : (
+            <div className="d-flex gap-2">
+              <button
+                onClick={() => handleAuthOpen('login')}
+                className="btn btn-link fw-semibold text-decoration-none"
+                style={{ fontSize: '13px', color: '#1A1A1A', padding: '6px 10px' }}
+              >
+                Login
+              </button>
+              <button
+                onClick={() => handleAuthOpen('register')}
+                className="btn btn-primary rounded-pill fw-semibold"
+                style={{ fontSize: '13px', padding: '6px 16px' }}
+              >
+                Join Free
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* ── Mobile bottom tab bar ── */}
+      <div
+        className="d-md-none d-flex overflow-auto hide-scrollbar"
+        style={{
+          backgroundColor: '#fff',
+          borderTop: '1px solid #E2E8F0',
+          position: 'fixed',
+          bottom: 0, left: 0, right: 0,
+          zIndex: 999,
+          padding: '4px 6px',
+          gap: '2px',
+          boxShadow: '0 -2px 10px rgba(0,0,0,0.06)',
+        }}
+      >
+        <Link to="/" className={`nav-tab-pill mobile ${isHome} d-flex align-items-center gap-1 text-decoration-none px-3 py-1 rounded-pill`}>
+          <i className="fa-solid fa-house"></i><span>Home</span>
+        </Link>
+        <Link to="/travel/flights" className={`nav-tab-pill mobile ${isActive('/flights')} d-flex align-items-center gap-1 text-decoration-none px-3 py-1 rounded-pill`}>
+          <i className="fa-solid fa-plane"></i><span>Flights</span>
+        </Link>
+        <Link to="/hotels" className={`nav-tab-pill mobile ${isActive('/hotels')} d-flex align-items-center gap-1 text-decoration-none px-3 py-1 rounded-pill`}>
+          <i className="fa-solid fa-hotel"></i><span>Hotels</span>
+        </Link>
+        <Link to="/travel/trains" className={`nav-tab-pill mobile ${isActive('/trains')} d-flex align-items-center gap-1 text-decoration-none px-3 py-1 rounded-pill`}>
+          <i className="fa-solid fa-train"></i><span>Trains</span>
+        </Link>
+        <Link to="/travel/buses" className={`nav-tab-pill mobile ${isActive('/buses')} d-flex align-items-center gap-1 text-decoration-none px-3 py-1 rounded-pill`}>
+          <i className="fa-solid fa-bus"></i><span>Buses</span>
+        </Link>
+        <Link to="/shows" className={`nav-tab-pill mobile ${isActive('/shows')} d-flex align-items-center gap-1 text-decoration-none px-3 py-1 rounded-pill`}>
+          <i className="fa-solid fa-ticket"></i><span>Shows</span>
+        </Link>
+      </div>
 
       <AuthModal show={showAuth} handleClose={() => setShowAuth(false)} type={authType} />
     </header>

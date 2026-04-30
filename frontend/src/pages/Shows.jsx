@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Button, Form, Modal, Badge } from 'react-bootstrap';
 import { useAuth } from '../context/AuthContext';
 import { apiGetShows, apiBookShow, apiGetBookings } from '../services/api';
+import entertainmentShowsImg from '../assets/images/entertainment_shows.png';
 import '../styles/homeCss.css';
 
 const MOCK_SHOWS = [
@@ -90,54 +91,105 @@ const Shows = () => {
   };
 
   return (
-    <Container className="shows-page py-5">
-      <div className="text-center mb-5">
-        <h1 className="display-4 fw-bold mb-3">Cinema & <span className="text-gradient">Shows</span></h1>
-        <p className="text-muted lead">Catch the latest blockbusters and live performances.</p>
+    <>
+      {/* Hero — 220px max, buttons inside */}
+      <div
+        className="booking-hero-bg text-center"
+        style={{
+          '--hero-image': `url(https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?w=1600&q=80)`,
+          height: '220px',
+          maxHeight: '220px',
+        }}
+      >
+        <div className="hero-dark-overlay" style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.55) 100%)' }}></div>
+        <Container className="position-relative d-flex flex-column align-items-center justify-content-center h-100" style={{ zIndex: 2 }}>
+          <h1 className="fw-bold mb-1" style={{ fontSize: '1.6rem' }}>🎬 Cinema &amp; Shows</h1>
+          <p style={{ opacity: 0.88, fontSize: '0.85rem', marginBottom: '14px' }}>Catch the latest blockbusters and live performances.</p>
+          {/* Action buttons inside hero */}
+          <div className="d-flex gap-2">
+            <Button
+              variant="outline-light"
+              size="sm"
+              className="rounded-pill px-3 fw-semibold"
+              style={{ fontSize: '13px', borderColor: 'rgba(255,255,255,0.7)' }}
+              onClick={() => document.getElementById('bookingSection')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              🎟 My Tickets
+            </Button>
+            <Button
+              variant="primary"
+              size="sm"
+              className="rounded-pill px-3 fw-semibold"
+              style={{ fontSize: '13px' }}
+              onClick={() => setShowBooking(true)}
+            >
+              + Book Tickets
+            </Button>
+          </div>
+        </Container>
       </div>
 
-      <div className="d-flex justify-content-end gap-3 mb-5">
-        <Button variant="outline-primary" className="rounded-pill px-4" onClick={() => document.getElementById('bookingSection')?.scrollIntoView({ behavior: 'smooth' })}>
-          My Tickets
-        </Button>
-        <Button variant="primary" className="rounded-pill px-4" onClick={() => setShowBooking(true)}>
-          Book Tickets
-        </Button>
-      </div>
+      <Container className="shows-page pb-4" style={{ marginTop: '1.5rem' }}>
 
-      <Row className="g-4 mb-5">
+      {/* Movie cards — 4-col grid, compact */}
+      <Row className="g-3 mb-4">
         {shows.map(show => (
           <Col key={show.id} xs={12} sm={6} md={4} lg={3}>
-            <Card className="h-100 border-0 shadow-lg rounded-5 overflow-hidden hover-up bg-white movie-card" onClick={() => setSelectedShow(show)}>
-              <div className="position-relative">
-                <Card.Img variant="top" src={show.imageUrl} alt={show.name} style={{ height: '400px', objectFit: 'cover' }} />
-                <div className="position-absolute bottom-0 start-0 end-0 p-3 bg-gradient-dark text-white">
-                  <Badge bg="warning" text="dark" className="rounded-pill px-3 py-2 shadow-sm mb-2">
-                    ⭐ {show.rating || 'N/A'}
-                  </Badge>
-                  <h5 className="fw-bold mb-0">{show.name}</h5>
-                </div>
+            <div
+              className="h-100 bg-white hover-up"
+              style={{
+                borderRadius: '12px',
+                border: '1px solid #E2E8F0',
+                boxShadow: '0 2px 10px rgba(0,0,0,0.07)',
+                overflow: 'hidden',
+                cursor: 'pointer',
+                transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+              }}
+              onClick={() => setSelectedShow(show)}
+            >
+              {/* Poster image */}
+              <div style={{ position: 'relative' }}>
+                <img
+                  src={show.imageUrl}
+                  alt={show.name}
+                  style={{ width: '100%', height: '180px', objectFit: 'cover', display: 'block' }}
+                />
+                <span
+                  style={{
+                    position: 'absolute', top: '8px', left: '8px',
+                    background: 'rgba(0,0,0,0.65)', color: '#FFD700',
+                    fontSize: '11px', fontWeight: 700, padding: '2px 8px',
+                    borderRadius: '20px', backdropFilter: 'blur(4px)',
+                  }}
+                >
+                  ⭐ {show.rating || 'N/A'}
+                </span>
               </div>
-              <Card.Body className="p-4">
-                <div className="d-flex justify-content-between align-items-center mb-3">
-                  <span className="text-muted small">{show.genre}</span>
-                  <span className="text-primary fw-bold">₹{show.price}</span>
+              {/* Card body */}
+              <div style={{ padding: '10px 12px 12px' }}>
+                <h6 className="fw-bold mb-1" style={{ fontSize: '0.92rem', color: '#1A1A1A', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  {show.name}
+                </h6>
+                <div className="d-flex justify-content-between align-items-center mb-2">
+                  <span style={{ fontSize: '0.75rem', color: '#888888' }}>{show.genre}</span>
+                  <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#FF6B00' }}>₹{show.price}</span>
                 </div>
-                <Button variant="outline-primary" className="w-100 rounded-pill" onClick={(e) => {
-                  e.stopPropagation();
-                  setSelectedShow(show);
-                }}>
+                <button
+                  className="btn btn-outline-primary w-100 rounded-pill fw-semibold"
+                  style={{ fontSize: '12px', padding: '5px 0' }}
+                  onClick={(e) => { e.stopPropagation(); setSelectedShow(show); }}
+                >
                   View Details
-                </Button>
-              </Card.Body>
-            </Card>
+                </button>
+              </div>
+            </div>
           </Col>
         ))}
       </Row>
 
       {/* Booked Tickets Section */}
       <div id="bookingSection" className="pt-5">
-        <div className="bg-glass rounded-5 p-5 shadow-sm border">
+        <div className="card-glass rounded-5 p-5 shadow-sm border">
           <h3 className="fw-bold mb-4">Your <span className="text-gradient">Booked Tickets</span></h3>
           <Row className="g-4">
             {bookings.length === 0 ? (
@@ -145,7 +197,7 @@ const Shows = () => {
             ) : (
               bookings.map((b, i) => (
                 <Col md={6} key={i}>
-                  <Card className="border-0 shadow-sm rounded-4 p-4 bg-white">
+                  <Card className="border-0 shadow-sm rounded-4 p-4">
                     <div className="d-flex justify-content-between align-items-start mb-3">
                       <div>
                         <h5 className="fw-bold mb-1">{b.details.split('|')[0]}</h5>
@@ -239,7 +291,8 @@ const Shows = () => {
           </Form>
         </Modal.Body>
       </Modal>
-    </Container>
+      </Container>
+    </>
   );
 };
 

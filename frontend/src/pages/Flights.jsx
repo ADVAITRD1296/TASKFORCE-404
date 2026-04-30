@@ -3,6 +3,7 @@ import { Container, Row, Col, Card, Form, Button, Badge, Modal } from 'react-boo
 import { useAuth } from '../context/AuthContext';
 import { apiGetFlights, apiSearchFlights, apiBookFlight } from '../services/api';
 import { WhatsappShareButton, TwitterShareButton, WhatsappIcon, TwitterIcon } from 'react-share';
+import flightSunsetImg from '../assets/images/flight_sunset.png';
 import '../styles/homeCss.css';
 
 const MOCK_FLIGHTS = [
@@ -91,36 +92,36 @@ const Flights = () => {
   };
 
   return (
-    <Container className="py-5">
-      <div className="text-center mb-5">
-        <h1 className="display-4 fw-bold mb-3">Fly <span className="text-gradient">Higher</span></h1>
-        <p className="text-muted lead">Book the fastest flights at the lowest prices.</p>
+    <>
+      <div className="booking-hero-bg text-center" style={{ '--hero-image': `url(https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1600&q=80)` }}>
+        <div className="hero-dark-overlay"></div>
+        <Container className="position-relative" style={{ zIndex: 2 }}>
+          <h1 className="fw-bold mb-2" style={{ fontSize: '2rem' }}>✈ Fly Higher</h1>
+          <p style={{ opacity: 0.9, fontSize: '0.95rem' }}>Book the fastest flights at the lowest prices.</p>
+        </Container>
       </div>
       
-      <Card className="p-4 mb-5 shadow-lg border-0 bg-white rounded-5">
+      <Container className="pb-5">
+        <Card className="booking-search-card glass-search-widget border-0">
         <Form onSubmit={handleSearch}>
-          <Row className="g-3 align-items-end">
+          <Row className="g-2 align-items-center">
             <Col md={5}>
-              <Form.Label className="small fw-bold text-muted ms-2 text-uppercase">Origin</Form.Label>
               <Form.Control 
-                placeholder="From (Origin)" 
-                className="bg-light border-0 py-3"
+                placeholder="From — Origin city or airport" 
                 value={search.origin} 
                 onChange={(e) => setSearch({ ...search, origin: e.target.value })}
               />
             </Col>
             <Col md={5}>
-              <Form.Label className="small fw-bold text-muted ms-2 text-uppercase">Destination</Form.Label>
               <Form.Control 
-                placeholder="To (Destination)" 
-                className="bg-light border-0 py-3"
+                placeholder="To — Destination city or airport" 
                 value={search.destination} 
                 onChange={(e) => setSearch({ ...search, destination: e.target.value })}
               />
             </Col>
             <Col md={2}>
-              <Button variant="primary" type="submit" className="w-100 py-3 rounded-4 fw-bold shadow-sm" disabled={loading}>
-                {loading ? '...' : 'Search'}
+              <Button variant="primary" type="submit" className="w-100 rounded-3 fw-bold" disabled={loading}>
+                {loading ? '...' : '🔍 Search'}
               </Button>
             </Col>
           </Row>
@@ -135,11 +136,11 @@ const Flights = () => {
 
       <div className="d-flex flex-column gap-4">
         {flights.map(f => (
-          <Card key={f.id} className="border-0 shadow-sm rounded-5 overflow-hidden hover-up flight-card bg-white p-4">
+          <Card key={f.id} className="border-0 shadow-sm rounded-5 overflow-hidden hover-up flight-card p-4">
             <Row className="align-items-center g-4">
               <Col md={3}>
                 <div className="d-flex align-items-center gap-3">
-                  <div className="bg-light p-3 rounded-4">
+                  <div className="airline-logo-box p-3 rounded-4">
                     <i className="fa-solid fa-plane text-primary fa-2x"></i>
                   </div>
                   <div>
@@ -156,7 +157,7 @@ const Flights = () => {
                   </div>
                   <div className="flex-grow-1 mx-3 position-relative">
                     <div className="border-bottom w-100" style={{ borderStyle: 'dashed !important' }}></div>
-                    <i className="fa-solid fa-plane text-primary position-absolute top-50 start-50 translate-middle bg-white px-2" style={{ fontSize: '12px' }}></i>
+                    <i className="fa-solid fa-plane text-primary position-absolute top-50 start-50 translate-middle px-2" style={{ fontSize: '12px', backgroundColor: 'var(--clr-surface)' }}></i>
                   </div>
                   <div>
                     <h4 className="fw-bold mb-0">13:00</h4>
@@ -236,7 +237,8 @@ const Flights = () => {
           <Button variant="primary" onClick={confirmBooking} className="rounded-3 px-4 shadow-sm">Confirm Booking</Button>
         </Modal.Footer>
       </Modal>
-    </Container>
+      </Container>
+    </>
   );
 };
 

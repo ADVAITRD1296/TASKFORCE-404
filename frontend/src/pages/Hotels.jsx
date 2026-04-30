@@ -3,6 +3,7 @@ import { Container, Row, Col, Card, Form, Button, Badge, Modal } from 'react-boo
 import { useAuth } from '../context/AuthContext';
 import { apiGetHotels, apiSearchHotels, apiBookHotel } from '../services/api';
 import { WhatsappShareButton, TwitterShareButton, WhatsappIcon, TwitterIcon } from 'react-share';
+import hotelResortImg from '../assets/images/hotel_resort.png';
 import '../styles/homeCss.css';
 
 const MOCK_HOTELS = [
@@ -115,15 +116,17 @@ const Hotels = () => {
   };
 
   return (
-    <div className="hotels-page py-5">
-      <Container>
-        <div className="text-center mb-5">
-          <h1 className="display-4 fw-bold mb-3">Find Your <span className="text-gradient">Perfect Stay</span></h1>
-          <p className="text-muted lead">Discover luxury hotels and cozy retreats around the world.</p>
-        </div>
+    <div className="hotels-page">
+      <div className="booking-hero-bg text-center" style={{ '--hero-image': `url(${hotelResortImg})` }}>
+        <Container>
+          <h1 className="display-4 fw-bold mb-3">Find Your Perfect Stay</h1>
+          <p className="lead">Discover luxury hotels and cozy retreats around the world.</p>
+        </Container>
+      </div>
 
+      <Container className="pb-5">
         {/* Modern Search Bar */}
-        <Card className="border-0 shadow-lg rounded-5 p-4 mb-5 bg-white">
+        <Card className="booking-search-card border-0 p-4">
           <Form onSubmit={handleSearch}>
             <Row className="g-3">
               <Col lg={3}>
