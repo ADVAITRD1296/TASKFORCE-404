@@ -84,22 +84,27 @@ body {
   font-size: var(--text-md);
   line-height: 1.6;
   color: var(--clr-body);
-  background-color: #edf1f7;
-  background-image: linear-gradient(135deg, #eef2f8 0%, #e4ecf5 25%, #f0ece6 50%, #e8eef7 75%, #edf1f8 100%);
-  background-size: 400% 400%;
+  background-color: #e8ecf4;
+  /* Multi-layer: animated gradient + fixed radial accents */
+  background-image:
+    radial-gradient(ellipse at 15% 5%, rgba(79,128,200,0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 90%, rgba(249,115,22,0.10) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(147,130,220,0.08) 0%, transparent 60%),
+    linear-gradient(135deg, #dce4f2 0%, #e6ddd4 20%, #d4dff0 40%, #e8dce8 60%, #d6e6f0 80%, #e2ddd6 100%);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 400% 400%;
   background-attachment: fixed;
-  animation: bg-drift 20s ease infinite;
+  animation: bg-drift 25s ease infinite;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   position: relative;
   overflow-x: hidden;
 }
 
-/* Slow animated gradient drift */
+/* Slow animated gradient drift — only the linear-gradient layer moves */
 @keyframes bg-drift {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0%   { background-position: 0 0, 100% 100%, 50% 50%, 0% 50%; }
+  50%  { background-position: 0 0, 100% 100%, 50% 50%, 100% 50%; }
+  100% { background-position: 0 0, 100% 100%, 50% 50%, 0% 50%; }
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -534,9 +539,9 @@ a:hover { color: var(--clr-primary-dark); }
   text-align: center;
   position: relative;
   overflow: hidden;
-  background: radial-gradient(ellipse at 60% 0%, rgba(79,128,200,0.10) 0%, transparent 60%),
-              radial-gradient(ellipse at 20% 80%, rgba(249,115,22,0.07) 0%, transparent 50%),
-              radial-gradient(circle at 80% 50%, rgba(79,128,200,0.05) 0%, transparent 40%);
+  background: radial-gradient(ellipse at 55% 0%, rgba(79,128,200,0.18) 0%, transparent 55%),
+              radial-gradient(ellipse at 15% 85%, rgba(249,115,22,0.12) 0%, transparent 45%),
+              radial-gradient(circle at 80% 40%, rgba(147,130,220,0.10) 0%, transparent 50%);
 }
 
 /* Floating blobs behind hero */
@@ -545,27 +550,26 @@ a:hover { color: var(--clr-primary-dark); }
   content: '';
   position: absolute;
   border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.45;
+  filter: blur(70px);
   pointer-events: none;
   will-change: transform;
 }
 
 .hero-section::before {
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(79,128,200,0.25) 0%, transparent 70%);
-  top: -120px;
-  right: -100px;
+  width: 550px;
+  height: 550px;
+  background: radial-gradient(circle, rgba(79,128,200,0.30) 0%, transparent 65%);
+  top: -140px;
+  right: -80px;
   animation: blob-float-1 18s ease-in-out infinite;
 }
 
 .hero-section::after {
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(249,115,22,0.18) 0%, transparent 70%);
-  bottom: -80px;
-  left: -60px;
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(249,115,22,0.22) 0%, transparent 65%);
+  bottom: -100px;
+  left: -80px;
   animation: blob-float-2 22s ease-in-out infinite;
 }
 
@@ -966,18 +970,18 @@ footer .border-top {
 }
 
 .bg-blobs::before {
-  width: 380px;
-  height: 380px;
-  background: rgba(79,128,200,0.12);
-  top: 10%;
-  right: -8%;
+  width: 420px;
+  height: 420px;
+  background: rgba(79,128,200,0.22);
+  top: 8%;
+  right: -6%;
   animation: blob-float-1 20s ease-in-out infinite;
 }
 
 .bg-blobs::after {
-  width: 320px;
-  height: 320px;
-  background: rgba(249,115,22,0.09);
+  width: 360px;
+  height: 360px;
+  background: rgba(249,115,22,0.16);
   bottom: 5%;
   left: -5%;
   animation: blob-float-2 24s ease-in-out infinite;
@@ -1057,13 +1061,13 @@ footer .border-top {
 .about-us-page::before {
   content: '';
   position: fixed;
-  width: 600px;
-  height: 600px;
+  width: 650px;
+  height: 650px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(79,128,200,0.07) 0%, transparent 70%);
-  top: 20%;
+  background: radial-gradient(circle, rgba(79,128,200,0.18) 0%, transparent 65%);
+  top: 15%;
   left: -10%;
-  filter: blur(60px);
+  filter: blur(50px);
   pointer-events: none;
   z-index: 0;
   animation: blob-float-3 25s ease-in-out infinite;
@@ -1074,13 +1078,13 @@ footer .border-top {
 .about-us-page::after {
   content: '';
   position: fixed;
-  width: 500px;
-  height: 500px;
+  width: 550px;
+  height: 550px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(249,115,22,0.05) 0%, transparent 70%);
-  bottom: 10%;
-  right: -8%;
-  filter: blur(60px);
+  background: radial-gradient(circle, rgba(249,115,22,0.13) 0%, transparent 65%);
+  bottom: 8%;
+  right: -6%;
+  filter: blur(50px);
   pointer-events: none;
   z-index: 0;
   animation: blob-float-1 30s ease-in-out infinite;
