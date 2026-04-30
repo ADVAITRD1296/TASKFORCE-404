@@ -21,7 +21,7 @@ body {
 
 /* Custom button styles to match original */
 .btn-primary {
-  background-color: #0d6efd;
+  background-color: #4f80c8;
   border: none;
   padding: 8px 20px;
   border-radius: 6px;
@@ -29,8 +29,8 @@ body {
 }
 
 .btn-outline-primary {
-  color: #0d6efd;
-  border: 2px solid #0d6efd;
+  color: #4f80c8;
+  border: 2px solid #4f80c8;
   padding: 6px 18px;
   border-radius: 6px;
   font-weight: 600;
@@ -108,14 +108,14 @@ body {
 }
 
 .auth-modal .form-control:focus {
-    border-color: #0046FF;
-    box-shadow: 0 0 0 4px rgba(0, 70, 255, 0.1);
+    border-color: #4f80c8;
+    box-shadow: 0 0 0 4px rgba(79, 128, 200, 0.15);
     background: #fff;
     outline: none;
 }
 
 .auth-modal .btn-auth-primary {
-    background: linear-gradient(135deg, #ff6600 0%, #0046FF 100%);
+    background: linear-gradient(135deg, #ff6600 0%, #4f80c8 100%);
     border: none;
     border-radius: 12px;
     padding: 14px;
@@ -128,7 +128,7 @@ body {
 
 .auth-modal .btn-auth-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 15px -3px rgba(0, 70, 255, 0.3);
+    box-shadow: 0 10px 15px -3px rgba(79, 128, 200, 0.3);
     color: white;
 }
 
@@ -146,7 +146,7 @@ body {
 }
 
 .auth-modal .btn-auth-secondary:hover {
-    color: #0046FF;
+    color: #4f80c8;
 }
 
 .auth-msg {

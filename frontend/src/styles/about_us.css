@@ -1,6 +1,6 @@
  :root {
      --accent: #ff6600;
-     --blue: #0046FF;
+     --blue: #4f80c8;
      --muted: #6b6b6b;
      --card-shadow: 0 6px 20px rgba(20, 20, 20, 0.08);
      --glass: rgba(255, 255, 255, 0.7);
@@ -100,8 +100,10 @@
  }
 
  .card .avatar {
-     height: 200px;
+     height: 220px;
+     width: 100%;
      object-fit: cover;
+     object-position: top center;
      border-top-left-radius: 12px;
      border-top-right-radius: 12px
  }
@@ -168,10 +170,11 @@
  }
 
  .card .avatar {
-     height: 200px;
+     height: 220px;
      width: 100%;
-     object-fit: contain;
-     background-color: #f5f5f5;
+     object-fit: cover;
+     object-position: top center;
+     background-color: #f0f4f8;
      border-top-left-radius: 12px;
      border-top-right-radius: 12px;
  }

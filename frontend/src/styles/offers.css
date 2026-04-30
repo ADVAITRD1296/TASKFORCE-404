@@ -28,7 +28,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: linear-gradient(90deg, #ff6600, #0046FF);
+    background: linear-gradient(90deg, #ff6600, #4f80c8);
     color: #fff;
     padding: 10px 18px;
     gap: 16px;
@@ -290,7 +290,7 @@ body {
     margin-bottom: 10px;
 }
 
-.bank-badge.hdfc { background-color: #0046FF; }
+.bank-badge.hdfc { background-color: #4f80c8; }
 .bank-badge.sbi { background-color: #00d2ff; color: black; }
 .bank-badge.axis { background-color: #9c27b0; }
 .bank-badge.gpay { background-color: #ff9800; color: black;}
@@ -309,7 +309,7 @@ body {
 
 
 .combo-card-wide {
-    background: linear-gradient(to right, #0046FF, #00c6ff);
+    background: linear-gradient(to right, #4f80c8, #5ba8d4);
     color: white;
     border-radius: 15px;
     padding: 30px;
@@ -332,7 +332,7 @@ body {
 
 .tag-bestseller {
     background-color: white;
-    color: #0046FF;
+    color: #4f80c8;
     padding: 3px 8px;
     border-radius: 4px;
     font-size: 0.9rem;
@@ -342,7 +342,7 @@ body {
 
 .btn-combo {
     background-color: white;
-    color: #0046FF;
+    color: #4f80c8;
     border: none;
     padding: 10px 20px;
     font-weight: bold;
@@ -405,7 +405,7 @@ body {
 
 :root {
     --accent: #ff6600;
-    --blue: #0046FF;
+    --blue: #4f80c8;
     --muted: #6b6b6b;
     --card-shadow: 0 6px 20px rgba(20, 20, 20, 0.08);
     --glass: rgba(255, 255, 255, 0.7);

@@ -1,5 +1,5 @@
 :root {
-    --primary: #0046FF;
+    --primary: #4f80c8;
     --accent: #ff6600;
     --dark: #111827;
     --light: #f8fafc;
@@ -27,12 +27,28 @@ body {
 
 /* Premium Navbar */
 .navbar {
-    background: rgba(255, 255, 255, 0.8) !important;
+    background: rgba(255, 255, 255, 0.92) !important;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-    padding: 1rem 2rem !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    padding: 0.75rem 2rem !important;
     box-shadow: var(--shadow);
+}
+
+/* Ensure the collapse fills available space for proper centering */
+.navbar-collapse {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+
+.navbar-nav {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    margin: 0 auto !important;
+    gap: 0.25rem;
 }
 
 .navbar-brand {
@@ -42,36 +58,38 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: -0.5px;
+    flex-shrink: 0;
 }
 
 .nav-link {
     color: var(--dark) !important;
     font-weight: 600;
-    padding: 0.5rem 1rem !important;
+    padding: 0.45rem 0.9rem !important;
     transition: all 0.3s ease;
     border-radius: 8px;
+    white-space: nowrap;
 }
 
 .nav-link:hover {
-    background: rgba(0, 70, 255, 0.05);
+    background: rgba(79, 128, 200, 0.08);
     color: var(--primary) !important;
     transform: translateY(-1px);
 }
 
 /* Modern Buttons */
 .btn-primary {
-    background: linear-gradient(135deg, var(--primary), #0036cc) !important;
+    background: linear-gradient(135deg, var(--primary), #3a6aaa) !important;
     border: none !important;
     padding: 0.6rem 1.5rem !important;
     font-weight: 600 !important;
     border-radius: 12px !important;
-    box-shadow: 0 4px 12px rgba(0, 70, 255, 0.25) !important;
+    box-shadow: 0 4px 12px rgba(79, 128, 200, 0.25) !important;
     transition: all 0.3s ease !important;
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 70, 255, 0.35) !important;
+    box-shadow: 0 6px 20px rgba(79, 128, 200, 0.35) !important;
 }
 
 /* Glass Cards */
@@ -110,7 +128,7 @@ body {
 }
 
 .form-control:focus {
-    box-shadow: 0 0 0 4px rgba(0, 70, 255, 0.1) !important;
+    box-shadow: 0 0 0 4px rgba(79, 128, 200, 0.15) !important;
     border-color: var(--primary) !important;
 }
 
@@ -136,7 +154,7 @@ footer {
 .hero-section {
     padding: 6rem 0;
     text-align: center;
-    background: radial-gradient(circle at top right, rgba(0, 70, 255, 0.05), transparent);
+    background: radial-gradient(circle at top right, rgba(79, 128, 200, 0.06), transparent);
 }
 
 .hero-title {

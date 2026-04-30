@@ -79,7 +79,7 @@ const AboutUs = () => {
           <Row className="align-items-center g-4">
             <Col lg={6}>
               <div className="college-card p-4">
-                <h3 className="text-primary mb-3" style={{ fontWeight: 800 }}>About IIIT Lucknow</h3>
+                <h3 className="mb-3" style={{ fontWeight: 800, color: '#4f80c8' }}>About IIIT Lucknow</h3>
                 <p className="text-muted">
                   IIIT Lucknow is a premier institute focused on information technology education and research. 
                   Our campus encourages innovation, collaboration and practical learning.
@@ -101,14 +101,14 @@ const AboutUs = () => {
       <section id="team" className="py-5">
         <Container>
           <div className="text-center mb-5">
-            <h2 className="text-primary" style={{ fontWeight: 800 }}>Meet the Team</h2>
+            <h2 style={{ fontWeight: 800, color: '#4f80c8' }}>Meet the Team</h2>
             <p className="text-muted">A product-minded team from IIIT Lucknow.</p>
           </div>
 
           <Row className="justify-content-center mb-5">
             <Col md={6} lg={4}>
               <Card className="h-100 text-center shadow-sm">
-                <Card.Img variant="top" src={advait} className="mx-auto mt-3 rounded-circle" style={{ width: '150px', height: '150px', objectFit: 'cover' }} />
+                <Card.Img variant="top" src={advait} className="mx-auto mt-3 rounded-circle" style={{ width: '150px', height: '150px', objectFit: 'cover', objectPosition: 'top center', display: 'block' }} />
                 <Card.Body>
                   <Card.Title>Advait Deshpande <Badge bg="warning" text="dark">Leader</Badge></Card.Title>
                   <p className="small text-muted">Sambhajinagar, Maharashtra • IIIT Lucknow</p>
@@ -122,7 +122,7 @@ const AboutUs = () => {
             {team.map((member, index) => (
               <Col key={index} xs={12} md={4}>
                 <Card className="h-100 shadow-sm border-0">
-                  <Card.Img variant="top" src={member.img} style={{ height: '250px', objectFit: 'cover' }} />
+                  <Card.Img variant="top" src={member.img} style={{ height: '240px', width: '100%', objectFit: 'cover', objectPosition: 'top center' }} />
                   <Card.Body>
                     <Card.Title>{member.name}</Card.Title>
                     <p className="small text-muted mb-2">{member.role}</p>
