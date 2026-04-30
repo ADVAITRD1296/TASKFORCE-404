@@ -2,9 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Form, Button, Modal } from 'react-bootstrap';
 import { useAuth } from '../context/AuthContext';
 import { apiGetBuses, apiSearchBuses, apiBookBus } from '../services/api';
+
+const MOCK_BUSES = [
+  { id: 1, operatorName: 'Volvo Express', busType: 'AC Sleeper', origin: 'Delhi', destination: 'Jaipur', price: 850, availableSeats: 25, imageUrl: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400' },
+  { id: 2, operatorName: 'RedBus Premium', busType: 'AC Semi-Sleeper', origin: 'Mumbai', destination: 'Pune', price: 450, availableSeats: 40, imageUrl: 'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?w=400' },
+  { id: 3, operatorName: 'Orange Travels', busType: 'Non-AC Seater', origin: 'Hyderabad', destination: 'Bangalore', price: 600, availableSeats: 15, imageUrl: 'https://images.unsplash.com/photo-1557223562-6c77ef16210f?w=400' },
+  { id: 4, operatorName: 'UPSRTC', busType: 'AC Seater', origin: 'Lucknow', destination: 'Delhi', price: 700, availableSeats: 55, imageUrl: 'https://images.unsplash.com/photo-1564694202779-bc908c327862?w=400' },
+  { id: 5, operatorName: 'VRL Travels', busType: 'AC Sleeper', origin: 'Lucknow', destination: 'Indore', price: 1100, availableSeats: 12, imageUrl: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400' },
+  { id: 6, operatorName: 'SRS Travels', busType: 'Multi-Axle Volvo', origin: 'Chennai', destination: 'Bangalore', price: 550, availableSeats: 0, imageUrl: 'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?w=400' },
+];
+
 const Buses = () => {
   const { user } = useAuth();
   const [buses, setBuses] = useState([]);
+  const [allBuses, setAllBuses] = useState([]);
   const [search, setSearch] = useState({ origin: '', destination: '' });
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState({ text: '', color: '' });
@@ -22,19 +33,33 @@ const Buses = () => {
     try {
       const data = await apiGetBuses();
       setBuses(data);
+      setAllBuses(data);
     } catch (err) {
-      console.error(err);
+      console.warn('Backend unavailable, using demo data');
+      setBuses(MOCK_BUSES);
+      setAllBuses(MOCK_BUSES);
     }
   };
 
   const handleSearch = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setMsg({ text: '', color: '' });
     try {
       const data = await apiSearchBuses(search.origin, search.destination);
       setBuses(data);
     } catch (err) {
-      setMsg({ text: 'Search failed', color: 'red' });
+      const filtered = allBuses.filter(b => {
+        const matchOrigin = !search.origin || b.origin.toLowerCase().includes(search.origin.toLowerCase());
+        const matchDest = !search.destination || b.destination.toLowerCase().includes(search.destination.toLowerCase());
+        return matchOrigin && matchDest;
+      });
+      setBuses(filtered);
+      if (filtered.length === 0) {
+        setMsg({ text: 'No buses found for this route', color: 'orange' });
+      } else {
+        setMsg({ text: `Found ${filtered.length} bus(es)`, color: 'green' });
+      }
     } finally {
       setLoading(false);
     }
@@ -101,43 +126,44 @@ const Buses = () => {
       <Row className="g-4">
         {buses.map(b => (
           <Col md={6} key={b.id}>
-            <Card className="h-100 border-0 shadow-sm rounded-4 overflow-hidden bus-card">
+            <Card className="h-100 border-0 shadow-sm rounded-4 overflow-hidden">
               <Row className="g-0 h-100">
-                <Col md={4}>
+                <Col xs={4}>
                   <div 
-                    className="h-100 bg-cover" 
                     style={{ 
                       backgroundImage: `url(${b.imageUrl})`,
-                      minHeight: '150px',
+                      height: '100%',
+                      minHeight: '180px',
                       backgroundSize: 'cover',
                       backgroundPosition: 'center'
                     }}
                   />
                 </Col>
-                <Col md={8}>
-                  <Card.Body className="d-flex flex-col justify-between p-4">
+                <Col xs={8}>
+                  <Card.Body className="p-3 d-flex flex-column justify-content-between h-100">
                     <div>
-                      <div className="d-flex justify-between items-start mb-2">
-                        <h5 className="fw-bold mb-0">{b.operatorName}</h5>
-                        <span className="text-primary fw-bold">₹{b.price}</span>
+                      <div className="d-flex justify-content-between align-items-start mb-1">
+                        <h5 className="fw-bold mb-0" style={{ fontSize: '1rem' }}>{b.operatorName}</h5>
+                        <span className="text-primary fw-bold" style={{ fontSize: '1rem', whiteSpace: 'nowrap' }}>₹{b.price}</span>
                       </div>
-                      <p className="text-muted small mb-3">{b.busType}</p>
-                      <div className="d-flex items-center gap-2 mb-4">
-                        <span className="fw-medium">{b.origin}</span>
-                        <i className="fa-solid fa-arrow-right text-muted small"></i>
-                        <span className="fw-medium">{b.destination}</span>
+                      <p className="text-muted small mb-2" style={{ fontSize: '0.8rem' }}>{b.busType}</p>
+                      <div className="d-flex align-items-center gap-2 mb-2">
+                        <span className="fw-semibold" style={{ fontSize: '0.9rem' }}>{b.origin}</span>
+                        <span className="text-muted">→</span>
+                        <span className="fw-semibold" style={{ fontSize: '0.9rem' }}>{b.destination}</span>
                       </div>
                     </div>
-                    <div className="d-flex justify-between items-center mt-auto">
-                      <span className="text-muted small">{b.availableSeats} seats left</span>
+                    <div className="d-flex justify-content-between align-items-center mt-2 pt-2" style={{ borderTop: '1px solid #f0f0f0' }}>
+                      <span className="text-muted" style={{ fontSize: '0.8rem' }}>{b.availableSeats} seats left</span>
                       <Button 
                         variant="primary" 
                         size="sm" 
-                        className="px-4 rounded-pill"
+                        className="px-3 rounded-pill fw-bold"
+                        style={{ fontSize: '0.8rem' }}
                         onClick={() => handleBook(b)}
                         disabled={b.availableSeats <= 0}
                       >
-                        Book Now
+                        {b.availableSeats > 0 ? 'Book Now' : 'Full'}
                       </Button>
                     </div>
                   </Card.Body>

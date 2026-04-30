@@ -5,9 +5,21 @@ import { apiGetFlights, apiSearchFlights, apiBookFlight } from '../services/api'
 import { WhatsappShareButton, TwitterShareButton, WhatsappIcon, TwitterIcon } from 'react-share';
 import '../styles/homeCss.css';
 
+const MOCK_FLIGHTS = [
+  { id: 1, airline: 'Air India', flightNumber: 'AI-302', origin: 'Delhi', destination: 'Mumbai', price: 4500, availableSeats: 42, departureTime: '06:00', arrivalTime: '08:15', duration: '2h 15m' },
+  { id: 2, airline: 'IndiGo', flightNumber: '6E-221', origin: 'Mumbai', destination: 'Bangalore', price: 3800, availableSeats: 18, departureTime: '10:30', arrivalTime: '12:45', duration: '2h 15m' },
+  { id: 3, airline: 'SpiceJet', flightNumber: 'SG-145', origin: 'Delhi', destination: 'Goa', price: 5200, availableSeats: 7, departureTime: '14:00', arrivalTime: '16:30', duration: '2h 30m' },
+  { id: 4, airline: 'Vistara', flightNumber: 'UK-819', origin: 'Bangalore', destination: 'Delhi', price: 6100, availableSeats: 30, departureTime: '07:45', arrivalTime: '10:30', duration: '2h 45m' },
+  { id: 5, airline: 'Air India', flightNumber: 'AI-505', origin: 'Lucknow', destination: 'Mumbai', price: 5800, availableSeats: 22, departureTime: '09:00', arrivalTime: '11:15', duration: '2h 15m' },
+  { id: 6, airline: 'IndiGo', flightNumber: '6E-789', origin: 'Lucknow', destination: 'Indore', price: 3200, availableSeats: 35, departureTime: '13:00', arrivalTime: '14:30', duration: '1h 30m' },
+  { id: 7, airline: 'GoAir', flightNumber: 'G8-412', origin: 'Hyderabad', destination: 'Chennai', price: 2900, availableSeats: 50, departureTime: '16:00', arrivalTime: '17:15', duration: '1h 15m' },
+  { id: 8, airline: 'Vistara', flightNumber: 'UK-623', origin: 'Kolkata', destination: 'Delhi', price: 5500, availableSeats: 0, departureTime: '20:00', arrivalTime: '22:30', duration: '2h 30m' },
+];
+
 const Flights = () => {
   const { user } = useAuth();
   const [flights, setFlights] = useState([]);
+  const [allFlights, setAllFlights] = useState([]);
   const [search, setSearch] = useState({ origin: '', destination: '' });
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState({ text: '', color: '' });
@@ -25,19 +37,34 @@ const Flights = () => {
     try {
       const data = await apiGetFlights();
       setFlights(data);
+      setAllFlights(data);
     } catch (err) {
-      console.error(err);
+      console.warn('Backend unavailable, using demo data');
+      setFlights(MOCK_FLIGHTS);
+      setAllFlights(MOCK_FLIGHTS);
     }
   };
 
   const handleSearch = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setMsg({ text: '', color: '' });
     try {
       const data = await apiSearchFlights(search.origin, search.destination);
       setFlights(data);
     } catch (err) {
-      setMsg({ text: 'Search failed', color: 'danger' });
+      // Fallback: filter mock data locally
+      const filtered = allFlights.filter(f => {
+        const matchOrigin = !search.origin || f.origin.toLowerCase().includes(search.origin.toLowerCase());
+        const matchDest = !search.destination || f.destination.toLowerCase().includes(search.destination.toLowerCase());
+        return matchOrigin && matchDest;
+      });
+      setFlights(filtered);
+      if (filtered.length === 0) {
+        setMsg({ text: 'No flights found for this route', color: 'warning' });
+      } else {
+        setMsg({ text: `Found ${filtered.length} flight(s)`, color: 'primary' });
+      }
     } finally {
       setLoading(false);
     }

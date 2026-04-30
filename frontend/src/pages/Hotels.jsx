@@ -5,6 +5,15 @@ import { apiGetHotels, apiSearchHotels, apiBookHotel } from '../services/api';
 import { WhatsappShareButton, TwitterShareButton, WhatsappIcon, TwitterIcon } from 'react-share';
 import '../styles/homeCss.css';
 
+const MOCK_HOTELS = [
+  { id: 1, name: 'Taj Palace', location: 'Delhi', pricePerNight: 8500, rating: '4.8', roomType: 'Deluxe Room', imageUrl: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600' },
+  { id: 2, name: 'The Oberoi', location: 'Mumbai', pricePerNight: 12000, rating: '4.9', roomType: 'Suite', imageUrl: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600' },
+  { id: 3, name: 'ITC Grand Chola', location: 'Chennai', pricePerNight: 9500, rating: '4.7', roomType: 'Premium Room', imageUrl: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600' },
+  { id: 4, name: 'Radisson Blu', location: 'Lucknow', pricePerNight: 4500, rating: '4.3', roomType: 'Standard Room', imageUrl: 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=600' },
+  { id: 5, name: 'Hotel Marriott', location: 'Goa', pricePerNight: 7000, rating: '4.6', roomType: 'Sea View Room', imageUrl: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=600' },
+  { id: 6, name: 'Lemon Tree', location: 'Bangalore', pricePerNight: 3200, rating: '4.1', roomType: 'Standard Room', imageUrl: 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=600' },
+];
+
 const Hotels = () => {
   const { user } = useAuth();
   const [formData, setFormData] = useState({
@@ -16,6 +25,7 @@ const Hotels = () => {
   });
   const [msg, setMsg] = useState({ text: '', color: '' });
   const [hotels, setHotels] = useState([]);
+  const [allHotels, setAllHotels] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   // Booking Modal State
@@ -41,20 +51,33 @@ const Hotels = () => {
     try {
       const data = await apiGetHotels();
       setHotels(data);
+      setAllHotels(data);
     } catch (err) {
-      console.error('Error loading hotels:', err);
+      console.warn('Backend unavailable, using demo data');
+      setHotels(MOCK_HOTELS);
+      setAllHotels(MOCK_HOTELS);
     }
   };
 
   const handleSearch = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    setMsg({ text: '', color: '' });
     try {
       const results = await apiSearchHotels(formData.destination, formData.roomType);
       setHotels(results);
       setMsg({ text: `Found ${results.length} hotels in ${formData.destination}`, color: 'primary' });
     } catch (err) {
-      setMsg({ text: 'Search failed. Please try again.', color: 'danger' });
+      const filtered = allHotels.filter(h => {
+        const matchLocation = !formData.destination || h.location.toLowerCase().includes(formData.destination.toLowerCase());
+        return matchLocation;
+      });
+      setHotels(filtered);
+      if (filtered.length === 0) {
+        setMsg({ text: 'No hotels found for this destination', color: 'warning' });
+      } else {
+        setMsg({ text: `Found ${filtered.length} hotel(s) in ${formData.destination || 'all locations'}`, color: 'primary' });
+      }
     } finally {
       setIsLoading(false);
     }

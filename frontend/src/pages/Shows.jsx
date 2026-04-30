@@ -4,6 +4,15 @@ import { useAuth } from '../context/AuthContext';
 import { apiGetShows, apiBookShow, apiGetBookings } from '../services/api';
 import '../styles/homeCss.css';
 
+const MOCK_SHOWS = [
+  { id: 1, name: 'Pushpa 2: The Rule', genre: 'Action / Drama', price: 250, rating: '8.2', imageUrl: 'https://image.tmdb.org/t/p/w500/bBFC6YOjEJYjnOealIG9ELcHk9g.jpg', summary: 'Pushpa Raj returns in this action-packed sequel, facing new enemies while building his sandalwood empire.' },
+  { id: 2, name: 'Jawan', genre: 'Action / Thriller', price: 300, rating: '7.8', imageUrl: 'https://image.tmdb.org/t/p/w500/jFsBmmGM0Ifspp2WGhNVYy69sjY.jpg', summary: 'A prison warden recruits inmates to commit crimes that expose the corruption plaguing the country.' },
+  { id: 3, name: 'Animal', genre: 'Crime / Drama', price: 350, rating: '7.5', imageUrl: 'https://image.tmdb.org/t/p/w500/sg8YRcaPx1TsME5hSjKylBvGqRb.jpg', summary: 'A son undergoes a transformative journey when he decides to avenge his father against threats.' },
+  { id: 4, name: 'Dunki', genre: 'Comedy / Drama', price: 200, rating: '7.0', imageUrl: 'https://image.tmdb.org/t/p/w500/diyvmLs6CXkKBMhksqpqz2LBSQ0.jpg', summary: 'A group of aspiring immigrants attempt to reach their dream country through unconventional means.' },
+  { id: 5, name: 'Oppenheimer', genre: 'Drama / History', price: 400, rating: '9.0', imageUrl: 'https://image.tmdb.org/t/p/w500/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg', summary: 'The story of J. Robert Oppenheimer and his role in the development of the atomic bomb.' },
+  { id: 6, name: 'Avengers: Endgame', genre: 'Action / Sci-Fi', price: 350, rating: '8.4', imageUrl: 'https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9sl16pB3iy.jpg', summary: 'The Avengers assemble once more to reverse Thanos\' actions and restore balance to the universe.' },
+];
+
 const Shows = () => {
   const { user, token } = useAuth();
   const [shows, setShows] = useState([]);
@@ -26,7 +35,13 @@ const Shows = () => {
           setBookingForm(prev => ({ ...prev, movie: data[0].id.toString() }));
         }
       })
-      .catch(err => console.error('Error fetching shows:', err));
+      .catch(err => {
+        console.warn('Backend unavailable, using demo data');
+        setShows(MOCK_SHOWS);
+        if (MOCK_SHOWS.length > 0) {
+          setBookingForm(prev => ({ ...prev, movie: MOCK_SHOWS[0].id.toString() }));
+        }
+      });
   }, []);
 
   useEffect(() => {

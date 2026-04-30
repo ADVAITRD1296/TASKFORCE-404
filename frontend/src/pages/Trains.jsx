@@ -2,9 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Form, Button, Table, Modal } from 'react-bootstrap';
 import { useAuth } from '../context/AuthContext';
 import { apiGetTrains, apiSearchTrains, apiBookTrain } from '../services/api';
+
+const MOCK_TRAINS = [
+  { id: 1, trainName: 'Rajdhani Express', trainNumber: '12309', origin: 'Delhi', destination: 'Mumbai', price: 1800, availableSeats: 120 },
+  { id: 2, trainName: 'Shatabdi Express', trainNumber: '12001', origin: 'Delhi', destination: 'Lucknow', price: 950, availableSeats: 85 },
+  { id: 3, trainName: 'Duronto Express', trainNumber: '12213', origin: 'Mumbai', destination: 'Delhi', price: 2100, availableSeats: 45 },
+  { id: 4, trainName: 'Gatimaan Express', trainNumber: '12049', origin: 'Delhi', destination: 'Agra', price: 750, availableSeats: 200 },
+  { id: 5, trainName: 'Lucknow Mail', trainNumber: '12229', origin: 'Lucknow', destination: 'Mumbai', price: 1200, availableSeats: 60 },
+  { id: 6, trainName: 'Howrah Express', trainNumber: '12311', origin: 'Kolkata', destination: 'Delhi', price: 1500, availableSeats: 30 },
+  { id: 7, trainName: 'Vande Bharat', trainNumber: '22436', origin: 'Lucknow', destination: 'Indore', price: 1100, availableSeats: 150 },
+  { id: 8, trainName: 'Tamil Nadu Express', trainNumber: '12621', origin: 'Delhi', destination: 'Chennai', price: 2400, availableSeats: 0 },
+];
+
 const Trains = () => {
   const { user } = useAuth();
   const [trains, setTrains] = useState([]);
+  const [allTrains, setAllTrains] = useState([]);
   const [search, setSearch] = useState({ origin: '', destination: '' });
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState({ text: '', color: '' });
@@ -22,19 +35,33 @@ const Trains = () => {
     try {
       const data = await apiGetTrains();
       setTrains(data);
+      setAllTrains(data);
     } catch (err) {
-      console.error(err);
+      console.warn('Backend unavailable, using demo data');
+      setTrains(MOCK_TRAINS);
+      setAllTrains(MOCK_TRAINS);
     }
   };
 
   const handleSearch = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setMsg({ text: '', color: '' });
     try {
       const data = await apiSearchTrains(search.origin, search.destination);
       setTrains(data);
     } catch (err) {
-      setMsg({ text: 'Search failed', color: 'red' });
+      const filtered = allTrains.filter(t => {
+        const matchOrigin = !search.origin || t.origin.toLowerCase().includes(search.origin.toLowerCase());
+        const matchDest = !search.destination || t.destination.toLowerCase().includes(search.destination.toLowerCase());
+        return matchOrigin && matchDest;
+      });
+      setTrains(filtered);
+      if (filtered.length === 0) {
+        setMsg({ text: 'No trains found for this route', color: 'orange' });
+      } else {
+        setMsg({ text: `Found ${filtered.length} train(s)`, color: 'green' });
+      }
     } finally {
       setLoading(false);
     }

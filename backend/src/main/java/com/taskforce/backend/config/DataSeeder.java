@@ -90,27 +90,39 @@ public class DataSeeder implements CommandLineRunner {
 
         showRepository.save(Show.builder()
             .name("Inception").genre("Sci-Fi/Thriller").rating(8.8)
-            .imageUrl("https://image.tmdb.org/t/p/w500/9gk7Fn9sVAsOX73qb1M6zLthQvX.jpg")
+            .imageUrl("https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500")
             .summary("A thief who steals corporate secrets through dream-sharing technology is given the task of planting an idea into the mind of a CEO.")
             .price(250.0).availableSeats(200).build());
 
         showRepository.save(Show.builder()
             .name("Interstellar").genre("Sci-Fi/Adventure").rating(8.7)
-            .imageUrl("https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6vCU6mgQbpvCO.jpg")
+            .imageUrl("https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=500")
             .summary("A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.")
             .price(200.0).availableSeats(180).build());
 
         showRepository.save(Show.builder()
             .name("Dune").genre("Sci-Fi/Drama").rating(8.0)
-            .imageUrl("https://image.tmdb.org/t/p/w500/d5NXSklZfs7qyiooasHnfm6M1S1.jpg")
+            .imageUrl("https://images.unsplash.com/photo-1509347528160-9a9e33742cdb?w=500")
             .summary("A noble family becomes embroiled in a war for control over the galaxy's most valuable asset.")
             .price(180.0).availableSeats(150).build());
 
         showRepository.save(Show.builder()
             .name("Avatar").genre("Sci-Fi/Action").rating(7.9)
-            .imageUrl("https://image.tmdb.org/t/p/w500/6EiRUJTLs7FwZpbtZmQoq1ZQCp6.jpg")
+            .imageUrl("https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=500")
             .summary("A paraplegic Marine dispatched to the moon Pandora on a unique mission becomes torn between following his orders and protecting the world he feels is his home.")
             .price(150.0).availableSeats(250).build());
+
+        showRepository.save(Show.builder()
+            .name("The Dark Knight").genre("Action/Crime").rating(9.0)
+            .imageUrl("https://images.unsplash.com/photo-1531259683007-016a7b628fc3?w=500")
+            .summary("When the menace known as the Joker wreaks havoc on Gotham, Batman must face one of the greatest tests of his ability to fight injustice.")
+            .price(300.0).availableSeats(160).build());
+
+        showRepository.save(Show.builder()
+            .name("Oppenheimer").genre("Drama/History").rating(8.5)
+            .imageUrl("https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=500")
+            .summary("The story of J. Robert Oppenheimer and his role in the development of the atomic bomb during World War II.")
+            .price(350.0).availableSeats(140).build());
 
         log.info("Shows refreshed.");
     }
