@@ -1,4 +1,4 @@
-const API_BASE = 'http://localhost:8080/api';
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api';
 
 function getToken() {
   return localStorage.getItem('token');
@@ -43,6 +43,15 @@ export async function apiRegister(name, email, password, phone) {
 export async function apiGetMe() {
   const res = await fetch(`${API_BASE}/auth/me`, {
     headers: authHeaders()
+  });
+  return handleResponse(res);
+}
+
+export async function apiLogout(deviceToken) {
+  const res = await fetch(`${API_BASE}/auth/logout`, {
+    method: 'POST',
+    headers: authHeaders(),
+    body: JSON.stringify({ deviceToken })
   });
   return handleResponse(res);
 }

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { apiLogin, apiRegister, apiGetMe } from '../services/api';
+import { apiLogin, apiRegister, apiGetMe, apiLogout } from '../services/api';
 
 const AuthContext = createContext();
 
@@ -67,14 +67,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const deviceToken = localStorage.getItem('deviceToken');
       if (deviceToken) {
-        await fetch('http://localhost:8080/api/auth/logout', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-          },
-          body: JSON.stringify({ deviceToken })
-        });
+        await apiLogout(deviceToken);
       }
     } catch (e) {
       console.error("Logout error", e);
