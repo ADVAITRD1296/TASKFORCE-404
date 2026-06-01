@@ -33,6 +33,8 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                         // Public auth endpoints
                         .requestMatchers("/api/auth/register", "/api/auth/login", "/ws/**").permitAll()
+                        // Public root endpoint for health checks
+                        .requestMatchers("/", "/health").permitAll()
                         // Public read endpoints - flights, hotels, shows listing/search
                         .requestMatchers(HttpMethod.GET, "/api/flights/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/hotels/**").permitAll()
