@@ -1,4 +1,7 @@
-const API_BASE = import.meta.env.VITE_API_BASE_URL || 'https://taskforce-404-tdse.onrender.com/api';
+let API_BASE = import.meta.env.VITE_API_BASE_URL || 'https://taskforce-404-tdse.onrender.com/api';
+if (import.meta.env.PROD && API_BASE.includes('localhost')) {
+  API_BASE = 'https://taskforce-404-tdse.onrender.com/api';
+}
 
 function getToken() {
   return localStorage.getItem('token');
