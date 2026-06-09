@@ -458,7 +458,6 @@ a:hover {
 .card {
   background: #FFFFFF !important;
   border: 1px solid var(--clr-border) !important;
-  border-left: 3px solid var(--clr-primary) !important;
   border-radius: var(--radius-lg) !important;
   box-shadow: var(--shadow-sm) !important;
   transition: transform var(--duration) var(--ease), box-shadow var(--duration) var(--ease) !important;
@@ -679,7 +678,9 @@ a:hover {
 
 /* ── Flight Cards ─────────────────────────────────────────── */
 .flight-card {
+  border: 1px solid var(--clr-border) !important;
   border-left: 4px solid var(--clr-primary) !important;
+  background: #fff !important;
 }
 
 .flight-card .airline-logo-box {
@@ -687,9 +688,29 @@ a:hover {
   border-radius: var(--radius-md);
   width: 56px;
   height: 56px;
+  min-width: 56px;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+}
+
+.train-card {
+  border: 1px solid var(--clr-border) !important;
+  border-left: 4px solid #1A73E8 !important;
+  background: #fff !important;
+}
+
+.train-card .train-logo-box {
+  background: #E8F1FF;
+  border-radius: var(--radius-md);
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .flight-route-line {
@@ -707,6 +728,65 @@ a:hover {
   padding: 0 8px;
   color: var(--clr-primary);
   font-size: 14px;
+}
+
+/* Route timeline */
+.route-timeline {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+}
+
+.route-timeline .rt-time {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #1A1A1A;
+  line-height: 1;
+}
+
+.route-timeline .rt-city {
+  font-size: 0.75rem;
+  color: var(--clr-muted);
+  margin-top: 3px;
+}
+
+.route-timeline .rt-line {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.route-timeline .rt-line .rt-dashes {
+  width: 100%;
+  border-top: 2px dashed #D0D7E4;
+  position: relative;
+  margin-bottom: 4px;
+}
+
+.route-timeline .rt-line .rt-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 0 6px;
+  color: var(--clr-primary);
+  font-size: 13px;
+  line-height: 0;
+}
+
+.route-timeline .rt-line .rt-icon.train-icon {
+  color: #1A73E8;
+}
+
+.route-timeline .rt-duration {
+  font-size: 0.72rem;
+  color: var(--clr-muted);
+  font-weight: 600;
+  margin-top: 2px;
 }
 
 /* ── Hotel Cards ──────────────────────────────────────────── */
