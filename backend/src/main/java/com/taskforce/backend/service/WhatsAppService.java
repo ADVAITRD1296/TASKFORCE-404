@@ -23,7 +23,7 @@ public class WhatsAppService {
 
     @PostConstruct
     public void init() {
-        if (!accountSid.equals("AC_PLACEHOLDER")) {
+        if (!accountSid.equals("AC_PLACEHOLDER") && !accountSid.equals("TWILIO_NOT_CONFIGURED")) {
             Twilio.init(accountSid, authToken);
             log.info("Twilio WhatsApp service initialized.");
         } else {
