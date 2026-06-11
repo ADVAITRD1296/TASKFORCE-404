@@ -36,7 +36,7 @@ public class WhatsAppService {
     private void sendMessage(String userPhone, String messageBody) {
         log.info("WhatsApp Message: {}", messageBody);
         try {
-            if (!accountSid.equals("AC_PLACEHOLDER") && userPhone != null && !userPhone.isBlank()) {
+            if (!accountSid.equals("AC_PLACEHOLDER") && !accountSid.equals("TWILIO_NOT_CONFIGURED") && userPhone != null && !userPhone.isBlank()) {
                 String formattedTo = userPhone.trim().startsWith("+") ? userPhone.trim() : "+" + userPhone.trim();
                 if (!formattedTo.startsWith("whatsapp:")) {
                     formattedTo = "whatsapp:" + formattedTo;
