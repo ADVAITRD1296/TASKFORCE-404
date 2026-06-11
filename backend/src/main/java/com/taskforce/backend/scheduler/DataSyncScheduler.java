@@ -73,49 +73,45 @@ public class DataSyncScheduler {
     private void saveHotels(List<Hotel> hotels) {
         for (Hotel hotel : hotels) {
             hotelRepository.findByExternalId(hotel.getExternalId()).ifPresentOrElse(
-                existing -> {
-                    existing.setPricePerNight(hotel.getPricePerNight());
-                    existing.setRating(hotel.getRating());
-                    hotelRepository.save(existing);
-                },
-                () -> hotelRepository.save(hotel)
-            );
+                    existing -> {
+                        existing.setPricePerNight(hotel.getPricePerNight());
+                        existing.setRating(hotel.getRating());
+                        hotelRepository.save(existing);
+                    },
+                    () -> hotelRepository.save(hotel));
         }
     }
 
     private void saveFlights(List<Flight> flights) {
         for (Flight flight : flights) {
             flightRepository.findByExternalId(flight.getExternalId()).ifPresentOrElse(
-                existing -> {
-                    existing.setPrice(flight.getPrice());
-                    flightRepository.save(existing);
-                },
-                () -> flightRepository.save(flight)
-            );
+                    existing -> {
+                        existing.setPrice(flight.getPrice());
+                        flightRepository.save(existing);
+                    },
+                    () -> flightRepository.save(flight));
         }
     }
 
     private void saveTrains(List<Train> trains) {
         for (Train train : trains) {
             trainRepository.findByExternalId(train.getExternalId()).ifPresentOrElse(
-                existing -> {
-                    existing.setPrice(train.getPrice());
-                    trainRepository.save(existing);
-                },
-                () -> trainRepository.save(train)
-            );
+                    existing -> {
+                        existing.setPrice(train.getPrice());
+                        trainRepository.save(existing);
+                    },
+                    () -> trainRepository.save(train));
         }
     }
 
     private void saveBuses(List<Bus> buses) {
         for (Bus bus : buses) {
             busRepository.findByExternalId(bus.getExternalId()).ifPresentOrElse(
-                existing -> {
-                    existing.setPrice(bus.getPrice());
-                    busRepository.save(existing);
-                },
-                () -> busRepository.save(bus)
-            );
+                    existing -> {
+                        existing.setPrice(bus.getPrice());
+                        busRepository.save(existing);
+                    },
+                    () -> busRepository.save(bus));
         }
     }
 }

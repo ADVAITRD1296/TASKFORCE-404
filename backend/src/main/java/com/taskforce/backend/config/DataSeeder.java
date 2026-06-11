@@ -43,8 +43,11 @@ public class DataSeeder implements CommandLineRunner {
     }
 
     private void seedFlights() {
-        log.info("Refreshing flights...");
-        flightRepository.deleteAll();
+        if (flightRepository.count() > 0) {
+            log.info("Flights already seeded, skipping.");
+            return;
+        }
+        log.info("Seeding flights...");
         
         LocalDateTime now = LocalDateTime.now();
 
@@ -87,8 +90,11 @@ public class DataSeeder implements CommandLineRunner {
     }
 
     private void seedHotels() {
-        log.info("Refreshing hotels...");
-        hotelRepository.deleteAll();
+        if (hotelRepository.count() > 0) {
+            log.info("Hotels already seeded, skipping.");
+            return;
+        }
+        log.info("Seeding hotels...");
 
         hotelRepository.save(Hotel.builder()
             .name("Sea View Resort").location("Goa, India").rating(4.7).pricePerNight(3999.0)
@@ -106,8 +112,11 @@ public class DataSeeder implements CommandLineRunner {
     }
 
     private void seedShows() {
-        log.info("Refreshing shows...");
-        showRepository.deleteAll();
+        if (showRepository.count() > 0) {
+            log.info("Shows already seeded, skipping.");
+            return;
+        }
+        log.info("Seeding shows...");
 
         showRepository.save(Show.builder()
             .name("Inception").genre("Sci-Fi/Thriller").rating(8.8)
@@ -149,8 +158,11 @@ public class DataSeeder implements CommandLineRunner {
     }
 
     private void seedTrains() {
-        log.info("Refreshing trains...");
-        trainRepository.deleteAll();
+        if (trainRepository.count() > 0) {
+            log.info("Trains already seeded, skipping.");
+            return;
+        }
+        log.info("Seeding trains...");
         LocalDateTime now = LocalDateTime.now();
 
         trainRepository.save(Train.builder()
@@ -185,8 +197,11 @@ public class DataSeeder implements CommandLineRunner {
     }
 
     private void seedBuses() {
-        log.info("Refreshing buses...");
-        busRepository.deleteAll();
+        if (busRepository.count() > 0) {
+            log.info("Buses already seeded, skipping.");
+            return;
+        }
+        log.info("Seeding buses...");
         LocalDateTime now = LocalDateTime.now();
 
         busRepository.save(Bus.builder()
