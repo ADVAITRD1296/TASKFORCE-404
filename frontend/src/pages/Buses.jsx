@@ -83,7 +83,7 @@ const Buses = () => {
   const confirmBooking = async () => {
     try {
       const res = await apiBookBus(selectedBus.id, numSeats);
-      setMsg({ text: `Bus booked! Reference: ${res.bookingReference}`, color: 'green' });
+      alert(`✅ Bus booked successfully! Booking Reference: ${res.bookingReference}`);
       setShowModal(false);
       loadBuses();
     } catch (err) {

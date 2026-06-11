@@ -107,7 +107,7 @@ const Hotels = () => {
         tempBooking.guests, 
         selectedHotel.roomType
       );
-      setMsg({ text: `Success! Booking ID: ${res.bookingReference}`, color: 'success' });
+      alert(`✅ Hotel booked successfully! Booking Reference: ${res.bookingReference}`);
       setShowModal(false);
       loadInitialHotels();
     } catch (err) {

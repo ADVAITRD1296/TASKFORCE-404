@@ -61,6 +61,27 @@ public class DataSeeder implements CommandLineRunner {
             .price(5200.0).availableSeats(180).classType("Economy")
             .imageUrl("https://images.unsplash.com/photo-1556388158-158ea5ccacbd?w=800")
             .build());
+
+        flightRepository.save(Flight.builder()
+            .airline("Vistara").flightNumber("UK-919").origin("New Delhi").destination("Mumbai")
+            .departureTime(now.plusDays(3)).arrivalTime(now.plusDays(3).plusHours(2))
+            .price(6100.0).availableSeats(40).classType("Premium Economy")
+            .imageUrl("https://images.unsplash.com/photo-1436491865332-7a61a109db05?w=800")
+            .build());
+
+        flightRepository.save(Flight.builder()
+            .airline("SpiceJet").flightNumber("SG-145").origin("Mumbai").destination("Goa")
+            .departureTime(now.plusDays(1).plusHours(5)).arrivalTime(now.plusDays(1).plusHours(6).plusMinutes(30))
+            .price(3500.0).availableSeats(12).classType("Economy")
+            .imageUrl("https://images.unsplash.com/photo-1556388158-158ea5ccacbd?w=800")
+            .build());
+
+        flightRepository.save(Flight.builder()
+            .airline("Air India").flightNumber("AI-302").origin("Bengaluru").destination("Mumbai")
+            .departureTime(now.plusDays(4)).arrivalTime(now.plusDays(4).plusHours(1).plusMinutes(45))
+            .price(4800.0).availableSeats(25).classType("Economy")
+            .imageUrl("https://images.unsplash.com/photo-1436491865332-7a61a109db05?w=800")
+            .build());
             
         log.info("Flights refreshed.");
     }
