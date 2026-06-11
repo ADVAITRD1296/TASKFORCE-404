@@ -32,7 +32,7 @@ const formatDuration = (dep, arr, stored) => {
   if (dep && arr && dep.includes('T') && arr.includes('T')) {
     const d1 = new Date(dep), d2 = new Date(arr);
     if (!isNaN(d1) && !isNaN(d2)) {
-      let diff = (d2 - d1) / 60000; // minutes
+      let diff = Math.round((d2 - d1) / 60000); // round to nearest minute
       if (diff < 0) diff += 1440;   // overnight
       const h = Math.floor(diff / 60), m = diff % 60;
       return `${h}h ${m > 0 ? m + 'm' : ''}`;
