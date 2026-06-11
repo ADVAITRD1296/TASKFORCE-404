@@ -9,6 +9,8 @@ import Hotels from './pages/Hotels';
 import Flights from './pages/Flights';
 import Trains from './pages/Trains';
 import Buses from './pages/Buses';
+import Profile from './pages/Profile';
+import Bookings from './pages/Bookings';
 import MigrationPlaceholder from './components/common/MigrationPlaceholder';
 import ChatWindow from './components/ChatWindow';
 
@@ -25,6 +27,8 @@ function App() {
             <Route path="/travel/trains" element={<Trains />} />
             <Route path="/travel/buses" element={<Buses />} />
             <Route path="/about" element={<AboutUs />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/bookings" element={<Bookings />} />
           </Routes>
           <ChatWindow />
         </Layout>
