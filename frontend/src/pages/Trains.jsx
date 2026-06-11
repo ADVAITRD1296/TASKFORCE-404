@@ -47,11 +47,11 @@ const MOCK_TRAINS = [
 ];
 
 const TRAIN_THEMES = {
-  'Rajdhani Express': { bg: '#FFF0E5', color: '#FF6B00', emoji: '🔴' },
-  'Shatabdi Express': { bg: '#E8F1FF', color: '#1A73E8', emoji: '🔵' },
-  'Duronto Express':  { bg: '#F3E8FF', color: '#7B2FBE', emoji: '🟣' },
-  'Gatimaan Express': { bg: '#E6F9EE', color: '#059669', emoji: '🟢' },
-  'Vande Bharat':     { bg: '#FEF9E7', color: '#D4AC0D', emoji: '🟡' },
+  'Rajdhani Express': { bg: '#FFF0E5', color: '#FF6B00', icon: 'fa-train' },
+  'Shatabdi Express': { bg: '#E8F1FF', color: '#1A73E8', icon: 'fa-train' },
+  'Duronto Express':  { bg: '#F3E8FF', color: '#7B2FBE', icon: 'fa-train' },
+  'Gatimaan Express': { bg: '#E6F9EE', color: '#059669', icon: 'fa-train' },
+  'Vande Bharat':     { bg: '#FEF9E7', color: '#D4AC0D', icon: 'fa-train' },
 };
 
 const CLASSES = [
@@ -128,7 +128,7 @@ const Trains = () => {
       <div className="booking-hero-bg text-center" style={{ '--hero-image': `url(https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=1600&q=80)` }}>
         <div className="hero-dark-overlay" />
         <Container className="position-relative" style={{ zIndex: 2 }}>
-          <h1 className="fw-bold mb-2" style={{ fontSize: '2.2rem' }}>🚂 Book Your Train</h1>
+          <h1 className="fw-bold mb-2" style={{ fontSize: '2.2rem' }}><i className="fa-solid fa-train"></i> Book Your Train</h1>
           <p style={{ opacity: 0.9, fontSize: '0.95rem' }}>Comfortable, affordable train journeys to every corner of India.</p>
           <div className="d-flex justify-content-center gap-3 flex-wrap mt-3">
             {['PNR Status Tracking', 'Seat Availability Live', 'e-Ticket on Email', 'Instant Refunds'].map(tag => (
@@ -185,7 +185,7 @@ const Trains = () => {
         {/* Train Cards */}
         <div className="d-flex flex-column gap-3">
           {trains.map(t => {
-            const theme = TRAIN_THEMES[t.trainName] || { bg: '#E8F1FF', color: '#1A73E8', emoji: '🚂' };
+            const theme = TRAIN_THEMES[t.trainName] || { bg: '#E8F1FF', color: '#1A73E8', icon: 'fa-train' };
             const isFull = t.availableSeats <= 0;
             const isLow = t.availableSeats > 0 && t.availableSeats <= 20;
             return (
@@ -205,8 +205,8 @@ const Trains = () => {
 
                   {/* Train Logo */}
                   <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: '0 0 200px', minWidth: '160px' }}>
-                    <div style={{ background: theme.bg, borderRadius: '12px', width: '52px', height: '52px', minWidth: '52px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '22px' }}>
-                      {theme.emoji}
+                    <div style={{ background: theme.bg, borderRadius: '12px', width: '52px', height: '52px', minWidth: '52px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '22px', color: theme.color }}>
+                      <i className={`fa-solid ${theme.icon}`}></i>
                     </div>
                     <div>
                       <div style={{ fontWeight: 700, fontSize: '0.95rem', color: '#1A1A1A', lineHeight: 1.2 }}>{t.trainName}</div>
@@ -228,7 +228,7 @@ const Trains = () => {
                     <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '0 8px', minWidth: '50px' }}>
                       <div style={{ position: 'relative', width: '100%', height: '2px', marginBottom: '5px' }}>
                         <div style={{ position: 'absolute', top: 0, left: 0, right: 0, borderTop: '2px dashed #D0D7E4' }} />
-                        <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', background: '#fff', padding: '0 5px', color: '#1A73E8', fontSize: '12px', lineHeight: 1 }}>🚂</span>
+                        <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', background: '#fff', padding: '0 5px', color: '#1A73E8', fontSize: '12px', lineHeight: 1 }}><i className="fa-solid fa-train"></i></span>
                       </div>
                       <div style={{ fontSize: '0.65rem', color: '#bbb', fontWeight: 600, whiteSpace: 'nowrap' }}>{formatDuration(t.departureTime, t.arrivalTime, t.duration)}</div>
                     </div>
@@ -278,7 +278,7 @@ const Trains = () => {
           })}
           {trains.length === 0 && (
             <div className="text-center py-5 text-muted">
-              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🚂</div>
+              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}><i className="fa-solid fa-train"></i></div>
               <div style={{ fontWeight: 600 }}>No trains found for this route</div>
             </div>
           )}

@@ -47,11 +47,11 @@ const MOCK_FLIGHTS = [
 ];
 
 const AIRLINE_COLORS = {
-  'Air India': { bg: '#FFF0E5', color: '#FF6B00', emoji: '🔴' },
-  'IndiGo':    { bg: '#E8F1FF', color: '#1A73E8', emoji: '🔵' },
-  'SpiceJet':  { bg: '#FFF3E0', color: '#F57C00', emoji: '🟠' },
-  'Vistara':   { bg: '#F3E8FF', color: '#7B2FBE', emoji: '🟣' },
-  'GoAir':     { bg: '#E6F9EE', color: '#059669', emoji: '🟢' },
+  'Air India': { bg: '#FFF0E5', color: '#FF6B00', icon: 'fa-plane' },
+  'IndiGo':    { bg: '#E8F1FF', color: '#1A73E8', icon: 'fa-plane' },
+  'SpiceJet':  { bg: '#FFF3E0', color: '#F57C00', icon: 'fa-plane' },
+  'Vistara':   { bg: '#F3E8FF', color: '#7B2FBE', icon: 'fa-plane' },
+  'GoAir':     { bg: '#E6F9EE', color: '#059669', icon: 'fa-plane' },
 };
 
 const Flights = () => {
@@ -121,7 +121,7 @@ const Flights = () => {
       <div className="booking-hero-bg text-center" style={{ '--hero-image': `url(https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1600&q=80)` }}>
         <div className="hero-dark-overlay" />
         <Container className="position-relative" style={{ zIndex: 2 }}>
-          <h1 className="fw-bold mb-2" style={{ fontSize: '2.2rem' }}>✈️ Fly Higher</h1>
+          <h1 className="fw-bold mb-2" style={{ fontSize: '2.2rem' }}><i className="fa-solid fa-plane"></i> Fly Higher</h1>
           <p style={{ opacity: 0.9, fontSize: '0.95rem' }}>Search and compare the cheapest flights across all major airlines.</p>
           <div className="d-flex justify-content-center gap-3 flex-wrap mt-3">
             {['No Hidden Fees', 'Instant Confirmation', 'Free Cancellation*', '24/7 Support'].map(tag => (
@@ -184,7 +184,7 @@ const Flights = () => {
         {/* Flight Cards */}
         <div className="d-flex flex-column gap-3">
           {flights.map(f => {
-            const theme = AIRLINE_COLORS[f.airline] || { bg: '#F5F7FA', color: '#555', emoji: '✈️' };
+            const theme = AIRLINE_COLORS[f.airline] || { bg: '#F5F7FA', color: '#555', icon: 'fa-plane' };
             const isFull = f.availableSeats <= 0;
             const isLow = f.availableSeats > 0 && f.availableSeats <= 10;
             return (
@@ -204,8 +204,8 @@ const Flights = () => {
 
                   {/* Airline Logo */}
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0, width: '180px' }}>
-                    <div style={{ background: theme.bg, borderRadius: '12px', width: '46px', height: '46px', minWidth: '46px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', flexShrink: 0 }}>
-                      {theme.emoji}
+                    <div style={{ background: theme.bg, borderRadius: '12px', width: '46px', height: '46px', minWidth: '46px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', flexShrink: 0, color: theme.color }}>
+                      <i className={`fa-solid ${theme.icon}`}></i>
                     </div>
                     <div style={{ minWidth: 0 }}>
                       <div style={{ fontWeight: 700, fontSize: '0.88rem', color: '#1A1A1A', lineHeight: 1.2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{f.airline}</div>
@@ -225,7 +225,7 @@ const Flights = () => {
                     <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '0 8px', minWidth: '50px' }}>
                       <div style={{ position: 'relative', width: '100%', height: '2px', marginBottom: '5px' }}>
                         <div style={{ position: 'absolute', top: 0, left: 0, right: 0, borderTop: '2px dashed #D0D7E4' }} />
-                        <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', background: '#fff', padding: '0 5px', color: '#FF6B00', fontSize: '12px', lineHeight: 1 }}>✈</span>
+                        <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', background: '#fff', padding: '0 5px', color: '#FF6B00', fontSize: '12px', lineHeight: 1 }}><i className="fa-solid fa-plane"></i></span>
                       </div>
                       <div style={{ fontSize: '0.65rem', color: '#bbb', fontWeight: 600, whiteSpace: 'nowrap' }}>{formatDuration(f.departureTime, f.arrivalTime, f.duration)}</div>
                     </div>
@@ -267,7 +267,7 @@ const Flights = () => {
           })}
           {flights.length === 0 && (
             <div className="text-center py-5 text-muted">
-              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>✈️</div>
+              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}><i className="fa-solid fa-plane"></i></div>
               <div style={{ fontWeight: 600 }}>No flights found for this route</div>
             </div>
           )}
