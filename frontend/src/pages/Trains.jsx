@@ -114,7 +114,7 @@ const Trains = () => {
   const confirmBooking = async () => {
     try {
       const res = await apiBookTrain(selectedTrain.id, bookingDetails.passengers, bookingDetails.classType);
-      setMsg({ text: `✅ Train booked! Reference: ${res.bookingReference}`, color: 'success' });
+      alert(`✅ Train booked successfully! Booking Reference: ${res.bookingReference}`);
       setShowModal(false);
       loadTrains();
     } catch (err) {

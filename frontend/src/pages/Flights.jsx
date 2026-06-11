@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Card, Form, Button, Modal } from 'react-bootstrap';
+import React, { useState, useEffect, useMemo } from 'react';
+import { Container, Row, Col, Card, Form, Button, Modal } from 'react-bootstrap';
 import { useAuth } from '../context/AuthContext';
 import { apiGetFlights, apiSearchFlights, apiBookFlight } from '../services/api';
 import '../styles/homeCss.css';
@@ -56,11 +56,15 @@ const AIRLINE_COLORS = {
 
 const Flights = () => {
   const { user } = useAuth();
-  const [flights, setFlights] = useState([]);
-  const [allFlights, setAllFlights] = useState([]);
-  const [search, setSearch] = useState({ origin: '', destination: '' });
+  const [baseFlights, setBaseFlights] = useState([]); // from API
+  const [search, setSearch] = useState({ origin: '', destination: '', date: '' });
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState({ text: '', color: '' });
+
+  // Filter States
+  const [maxPrice, setMaxPrice] = useState(15000);
+  const [selectedAirlines, setSelectedAirlines] = useState([]);
+  const [sortBy, setSortBy] = useState('price_asc');
 
   const [showModal, setShowModal] = useState(false);
   const [selectedFlight, setSelectedFlight] = useState(null);
@@ -69,12 +73,14 @@ const Flights = () => {
   useEffect(() => { loadFlights(); }, []);
 
   const loadFlights = async () => {
+    setLoading(true);
     try {
       const data = await apiGetFlights();
-      setFlights(data); setAllFlights(data);
+      setBaseFlights(data);
     } catch {
-      setFlights(MOCK_FLIGHTS); setAllFlights(MOCK_FLIGHTS);
+      setBaseFlights(MOCK_FLIGHTS);
     }
+    setLoading(false);
   };
 
   const handleSearch = async (e) => {
@@ -83,20 +89,84 @@ const Flights = () => {
     setMsg({ text: '', color: '' });
     try {
       const data = await apiSearchFlights(search.origin, search.destination);
-      setFlights(data);
+      setBaseFlights(data);
     } catch {
-      const filtered = allFlights.filter(f => {
+      // Fallback local filtering if API search fails
+      const filtered = (baseFlights.length > 0 ? baseFlights : MOCK_FLIGHTS).filter(f => {
         const matchOrigin = !search.origin || f.origin.toLowerCase().includes(search.origin.toLowerCase());
         const matchDest = !search.destination || f.destination.toLowerCase().includes(search.destination.toLowerCase());
         return matchOrigin && matchDest;
       });
-      setFlights(filtered);
-      setMsg(filtered.length === 0
-        ? { text: 'No flights found for this route', color: 'warning' }
-        : { text: `Found ${filtered.length} flight(s)`, color: 'success' }
-      );
-    } finally { setLoading(false); }
+      setBaseFlights(filtered);
+      if (filtered.length === 0) setMsg({ text: 'No flights found for this route', color: 'warning' });
+    } finally { 
+      setLoading(false); 
+    }
   };
+
+  const clearSearch = () => {
+    setSearch({ origin: '', destination: '', date: '' });
+    setMaxPrice(15000);
+    setSelectedAirlines([]);
+    setSortBy('price_asc');
+    setMsg({ text: '', color: '' });
+    loadFlights();
+  };
+
+  const handleAirlineToggle = (airline) => {
+    setSelectedAirlines(prev => 
+      prev.includes(airline) ? prev.filter(a => a !== airline) : [...prev, airline]
+    );
+  };
+
+  // Derive dynamic filter options
+  const availableAirlines = useMemo(() => {
+    const airlines = new Set(baseFlights.map(f => f.airline));
+    return Array.from(airlines).sort();
+  }, [baseFlights]);
+
+  const maxAvailablePrice = useMemo(() => {
+    if (baseFlights.length === 0) return 15000;
+    return Math.max(...baseFlights.map(f => f.price || 0));
+  }, [baseFlights]);
+
+  useEffect(() => {
+    if (maxAvailablePrice > 0 && maxPrice < maxAvailablePrice && maxPrice === 15000) {
+      setMaxPrice(Math.ceil(maxAvailablePrice / 1000) * 1000);
+    }
+  }, [maxAvailablePrice, maxPrice]);
+
+  // Apply filters and sorting reactively
+  const filteredFlights = useMemo(() => {
+    let result = [...baseFlights];
+
+    // Filter by search date if provided (matching YYYY-MM-DD to departureTime string)
+    if (search.date) {
+      result = result.filter(f => {
+        if (!f.departureTime) return true;
+        return f.departureTime.startsWith(search.date);
+      });
+    }
+
+    // Interactive Filters
+    result = result.filter(f => f.price <= maxPrice);
+
+    if (selectedAirlines.length > 0) {
+      result = result.filter(f => selectedAirlines.includes(f.airline));
+    }
+
+    // Sort
+    result.sort((a, b) => {
+      if (sortBy === 'price_asc') return a.price - b.price;
+      if (sortBy === 'price_desc') return b.price - a.price;
+      if (sortBy === 'time_asc') {
+        return (a.departureTime || '').localeCompare(b.departureTime || '');
+      }
+      return 0;
+    });
+
+    return result;
+  }, [baseFlights, search.date, maxPrice, selectedAirlines, sortBy]);
 
   const handleBook = (flight) => {
     if (!user) { setMsg({ text: 'Please login to book a flight', color: 'warning' }); return; }
@@ -107,7 +177,7 @@ const Flights = () => {
   const confirmBooking = async () => {
     try {
       const res = await apiBookFlight(selectedFlight.id, bookingDetails.passengers, bookingDetails.classType);
-      setMsg({ text: `✅ Flight booked! Reference: ${res.bookingReference}`, color: 'success' });
+      alert(`✅ Flight booked successfully! Booking Reference: ${res.bookingReference}`);
       setShowModal(false);
       loadFlights();
     } catch (err) {
@@ -133,48 +203,100 @@ const Flights = () => {
         </Container>
       </div>
 
-      <Container className="pb-5">
-        {/* Popular Routes */}
-        <div className="mb-4 mt-3">
-          <h5 className="fw-bold mb-3" style={{ color: '#1A1A1A' }}>🔥 Popular Routes</h5>
-          <div className="d-flex gap-2 flex-wrap">
-            {[
-              { label: 'Delhi → Mumbai', price: '₹3,499' },
-              { label: 'Mumbai → Bangalore', price: '₹2,999' },
-              { label: 'Delhi → Goa', price: '₹4,299' },
-              { label: 'Bangalore → Hyderabad', price: '₹1,899' },
-            ].map(({ label, price }) => (
-              <div key={label} style={{ background: '#fff', border: '1px solid #E2E8F0', borderRadius: '10px', padding: '10px 16px', cursor: 'pointer', transition: 'border-color 0.2s', display: 'flex', flexDirection: 'column', gap: '2px' }}
-                onMouseEnter={e => e.currentTarget.style.borderColor = '#FF6B00'}
-                onMouseLeave={e => e.currentTarget.style.borderColor = '#E2E8F0'}>
-                <span style={{ fontSize: '13px', fontWeight: 600, color: '#1A1A1A' }}>{label}</span>
-                <span style={{ fontSize: '12px', color: '#FF6B00', fontWeight: 700 }}>from {price}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+      <Container className="pb-5" style={{ marginTop: '-40px', position: 'relative', zIndex: 10 }}>
+        
+        {/* Combined Search & Filters Widget */}
+        <Card className="border-0 mb-4 shadow-sm" style={{ borderRadius: '16px', overflow: 'hidden' }}>
+          <div className="bg-white p-4">
+            <Form onSubmit={handleSearch}>
+              <Row className="g-3 align-items-end mb-4">
+                <Col md={3}>
+                  <Form.Label className="small fw-bold text-muted text-uppercase mb-1">From</Form.Label>
+                  <Form.Control
+                    placeholder="Origin city"
+                    value={search.origin}
+                    onChange={e => setSearch({ ...search, origin: e.target.value })}
+                    className="py-2 px-3 fw-bold bg-light border-light"
+                    style={{ fontSize: '1.1rem' }}
+                  />
+                </Col>
+                <Col md={3}>
+                  <Form.Label className="small fw-bold text-muted text-uppercase mb-1">To</Form.Label>
+                  <Form.Control
+                    placeholder="Destination city"
+                    value={search.destination}
+                    onChange={e => setSearch({ ...search, destination: e.target.value })}
+                    className="py-2 px-3 fw-bold bg-light border-light"
+                    style={{ fontSize: '1.1rem' }}
+                  />
+                </Col>
+                <Col md={3}>
+                  <Form.Label className="small fw-bold text-muted text-uppercase mb-1">Departure</Form.Label>
+                  <Form.Control
+                    type="date"
+                    value={search.date}
+                    onChange={e => setSearch({ ...search, date: e.target.value })}
+                    className="py-2 px-3 fw-bold bg-light border-light"
+                    style={{ fontSize: '1.1rem' }}
+                  />
+                </Col>
+                <Col md={3}>
+                  <div className="d-flex gap-2">
+                    <Button variant="primary" type="submit" className="fw-bold py-2 flex-grow-1" disabled={loading} style={{ fontSize: '1.1rem' }}>
+                      {loading ? '...' : 'Search'}
+                    </Button>
+                    <Button variant="light" onClick={clearSearch} className="fw-bold py-2 px-3 border" disabled={loading} title="Clear Search">
+                      <i className="fa-solid fa-rotate-right"></i>
+                    </Button>
+                  </div>
+                </Col>
+              </Row>
+              
+              {/* Inline Filters */}
+              <div className="pt-3 border-top d-flex flex-wrap align-items-center gap-4">
+                <div className="d-flex align-items-center gap-2">
+                  <span className="small fw-bold text-muted text-uppercase">Sort By:</span>
+                  <Form.Select className="shadow-none border-light bg-light fw-bold py-1 px-2" style={{ width: '180px', fontSize: '0.9rem' }} value={sortBy} onChange={e => setSortBy(e.target.value)}>
+                    <option value="price_asc">Price: Low to High</option>
+                    <option value="price_desc">Price: High to Low</option>
+                    <option value="time_asc">Departure Time</option>
+                  </Form.Select>
+                </div>
+                
+                <div className="d-flex align-items-center gap-3" style={{ minWidth: '250px' }}>
+                  <span className="small fw-bold text-muted text-uppercase">Max Price:</span>
+                  <Form.Range 
+                    min={1000} 
+                    max={Math.max(20000, maxAvailablePrice)} 
+                    step={500} 
+                    value={maxPrice} 
+                    onChange={e => setMaxPrice(parseInt(e.target.value))} 
+                    className="flex-grow-1"
+                  />
+                  <span className="fw-bold text-primary small">₹{maxPrice.toLocaleString()}</span>
+                </div>
 
-        {/* Search Widget */}
-        <Card className="booking-search-card glass-search-widget border-0 mb-4">
-          <Form onSubmit={handleSearch}>
-            <div className="d-flex gap-2 align-items-center flex-wrap">
-              <Form.Control
-                style={{ flex: 1, minWidth: '180px' }}
-                placeholder="From — Origin city or airport"
-                value={search.origin}
-                onChange={e => setSearch({ ...search, origin: e.target.value })}
-              />
-              <Form.Control
-                style={{ flex: 1, minWidth: '180px' }}
-                placeholder="To — Destination city or airport"
-                value={search.destination}
-                onChange={e => setSearch({ ...search, destination: e.target.value })}
-              />
-              <Button variant="primary" type="submit" className="fw-bold rounded-3 px-4" disabled={loading} style={{ whiteSpace: 'nowrap' }}>
-                {loading ? '...' : '🔍 Search'}
-              </Button>
-            </div>
-          </Form>
+                {availableAirlines.length > 0 && (
+                  <div className="d-flex align-items-center gap-3 flex-wrap">
+                    <span className="small fw-bold text-muted text-uppercase">Airlines:</span>
+                    <div className="d-flex gap-3">
+                      {availableAirlines.map(airline => (
+                        <Form.Check 
+                          key={airline}
+                          type="checkbox"
+                          id={`airline-${airline}`}
+                          label={airline}
+                          checked={selectedAirlines.includes(airline)}
+                          onChange={() => handleAirlineToggle(airline)}
+                          className="fw-bold small"
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </Form>
+          </div>
         </Card>
 
         {msg.text && (
@@ -182,96 +304,101 @@ const Flights = () => {
         )}
 
         {/* Flight Cards */}
-        <div className="d-flex flex-column gap-3">
-          {flights.map(f => {
-            const theme = AIRLINE_COLORS[f.airline] || { bg: '#F5F7FA', color: '#555', icon: 'fa-plane' };
-            const isFull = f.availableSeats <= 0;
-            const isLow = f.availableSeats > 0 && f.availableSeats <= 10;
-            return (
-              <div key={f.id} className="flight-card" style={{
-                background: '#fff',
-                borderRadius: '16px',
-                border: '1px solid #E2E8F0',
-                borderLeft: '4px solid #FF6B00',
-                boxShadow: '0 2px 12px rgba(15,23,42,0.07)',
-                padding: '20px 24px',
-                transition: 'transform 0.2s, box-shadow 0.2s',
-              }}
-                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 8px 28px rgba(15,23,42,0.12)'; }}
-                onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '0 2px 12px rgba(15,23,42,0.07)'; }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'nowrap', minWidth: 0 }}>
+        <div className="d-flex flex-column gap-3 mb-5">
+          <div className="d-flex justify-content-between align-items-center mb-2">
+            <h5 className="fw-bold m-0 text-dark">Available Flights</h5>
+            <span className="badge bg-primary rounded-pill px-3 py-2">{filteredFlights.length} found</span>
+          </div>
+              {filteredFlights.map(f => {
+                const theme = AIRLINE_COLORS[f.airline] || { bg: '#F5F7FA', color: '#555', icon: 'fa-plane' };
+                const isFull = f.availableSeats <= 0;
+                const isLow = f.availableSeats > 0 && f.availableSeats <= 10;
+                return (
+                  <div key={f.id} className="flight-card" style={{
+                    background: '#fff',
+                    borderRadius: '16px',
+                    border: '1px solid #E2E8F0',
+                    borderLeft: '4px solid #FF6B00',
+                    boxShadow: '0 2px 12px rgba(15,23,42,0.07)',
+                    padding: '20px 24px',
+                    transition: 'transform 0.2s, box-shadow 0.2s',
+                  }}
+                    onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 8px 28px rgba(15,23,42,0.12)'; }}
+                    onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '0 2px 12px rgba(15,23,42,0.07)'; }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
 
-                  {/* Airline Logo */}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0, width: '180px' }}>
-                    <div style={{ background: theme.bg, borderRadius: '12px', width: '46px', height: '46px', minWidth: '46px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', flexShrink: 0, color: theme.color }}>
-                      <i className={`fa-solid ${theme.icon}`}></i>
-                    </div>
-                    <div style={{ minWidth: 0 }}>
-                      <div style={{ fontWeight: 700, fontSize: '0.88rem', color: '#1A1A1A', lineHeight: 1.2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{f.airline}</div>
-                      <div style={{ fontSize: '0.72rem', color: '#888', marginTop: '3px', fontWeight: 600, whiteSpace: 'nowrap' }}>{f.flightNumber}</div>
-                    </div>
-                  </div>
-
-                  {/* Route Timeline */}
-                  <div style={{ flex: 1, display: 'flex', alignItems: 'center', minWidth: 0 }}>
-                    {/* Depart */}
-                    <div style={{ flexShrink: 0, textAlign: 'center', width: '76px' }}>
-                      <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#1A1A1A', lineHeight: 1, whiteSpace: 'nowrap' }}>{formatTime(f.departureTime)}</div>
-                      <div style={{ fontSize: '0.7rem', color: '#888', marginTop: '3px', fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '76px' }}>{f.origin}</div>
-                    </div>
-
-                    {/* Dashed line + icon */}
-                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '0 8px', minWidth: '50px' }}>
-                      <div style={{ position: 'relative', width: '100%', height: '2px', marginBottom: '5px' }}>
-                        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, borderTop: '2px dashed #D0D7E4' }} />
-                        <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', background: '#fff', padding: '0 5px', color: '#FF6B00', fontSize: '12px', lineHeight: 1 }}><i className="fa-solid fa-plane"></i></span>
+                      {/* Airline Logo */}
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0, width: '180px' }}>
+                        <div style={{ background: theme.bg, borderRadius: '12px', width: '46px', height: '46px', minWidth: '46px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', flexShrink: 0, color: theme.color }}>
+                          <i className={`fa-solid ${theme.icon}`}></i>
+                        </div>
+                        <div style={{ minWidth: 0 }}>
+                          <div style={{ fontWeight: 700, fontSize: '0.88rem', color: '#1A1A1A', lineHeight: 1.2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{f.airline}</div>
+                          <div style={{ fontSize: '0.72rem', color: '#888', marginTop: '3px', fontWeight: 600, whiteSpace: 'nowrap' }}>{f.flightNumber}</div>
+                        </div>
                       </div>
-                      <div style={{ fontSize: '0.65rem', color: '#bbb', fontWeight: 600, whiteSpace: 'nowrap' }}>{formatDuration(f.departureTime, f.arrivalTime, f.duration)}</div>
-                    </div>
 
-                    {/* Arrive */}
-                    <div style={{ flexShrink: 0, textAlign: 'center', width: '76px' }}>
-                      <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#1A1A1A', lineHeight: 1, whiteSpace: 'nowrap' }}>{formatTime(f.arrivalTime)}</div>
-                      <div style={{ fontSize: '0.7rem', color: '#888', marginTop: '3px', fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '76px' }}>{f.destination}</div>
+                      {/* Route Timeline */}
+                      <div style={{ flex: 1, display: 'flex', alignItems: 'center', minWidth: '220px' }}>
+                        {/* Depart */}
+                        <div style={{ flexShrink: 0, textAlign: 'center', width: '80px' }}>
+                          <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#1A1A1A', lineHeight: 1, whiteSpace: 'nowrap' }}>{formatTime(f.departureTime)}</div>
+                          <div style={{ fontSize: '0.75rem', color: '#888', marginTop: '4px', fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{f.origin}</div>
+                        </div>
+
+                        {/* Dashed line + icon */}
+                        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '0 8px', minWidth: '50px' }}>
+                          <div style={{ position: 'relative', width: '100%', height: '2px', marginBottom: '5px' }}>
+                            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, borderTop: '2px dashed #D0D7E4' }} />
+                            <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', background: '#fff', padding: '0 5px', color: '#FF6B00', fontSize: '12px', lineHeight: 1 }}><i className="fa-solid fa-plane"></i></span>
+                          </div>
+                          <div style={{ fontSize: '0.7rem', color: '#bbb', fontWeight: 600, whiteSpace: 'nowrap' }}>{formatDuration(f.departureTime, f.arrivalTime, f.duration)}</div>
+                        </div>
+
+                        {/* Arrive */}
+                        <div style={{ flexShrink: 0, textAlign: 'center', width: '80px' }}>
+                          <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#1A1A1A', lineHeight: 1, whiteSpace: 'nowrap' }}>{formatTime(f.arrivalTime)}</div>
+                          <div style={{ fontSize: '0.75rem', color: '#888', marginTop: '4px', fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{f.destination}</div>
+                        </div>
+                      </div>
+
+                      {/* Class & Seats */}
+                      <div style={{ textAlign: 'center', flexShrink: 0, width: '100px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <span style={{ background: '#FFF0E5', color: '#FF6B00', fontSize: '10px', fontWeight: 700, borderRadius: '20px', padding: '4px 10px', display: 'inline-block', marginBottom: '6px', whiteSpace: 'nowrap' }}>Non-stop</span>
+                        <div style={{ fontSize: '0.75rem', fontWeight: 700, whiteSpace: 'nowrap', color: isFull ? '#ef4444' : isLow ? '#f59e0b' : '#22c55e' }}>
+                          {isFull ? 'Sold Out' : isLow ? `⚠ ${f.availableSeats} left` : `${f.availableSeats} seats`}
+                        </div>
+                      </div>
+
+                      {/* Price & Book */}
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '15px', flexShrink: 0, marginLeft: 'auto' }}>
+                        <div style={{ textAlign: 'right' }}>
+                          <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#FF6B00', lineHeight: 1, whiteSpace: 'nowrap' }}>₹{formatPrice(f.price)}</div>
+                          <div style={{ fontSize: '0.75rem', color: '#aaa', marginTop: '4px', whiteSpace: 'nowrap', fontWeight: 500 }}>{f.classType || 'Economy'}</div>
+                        </div>
+                        <Button
+                          variant={isFull ? 'secondary' : 'primary'}
+                          className="rounded-pill fw-bold px-4 py-2 shadow-sm"
+                          style={{ fontSize: '0.9rem', whiteSpace: 'nowrap', minWidth: '110px' }}
+                          onClick={() => handleBook(f)}
+                          disabled={isFull}
+                        >
+                          {isFull ? 'Full' : 'Book Now'}
+                        </Button>
+                      </div>
                     </div>
                   </div>
-
-                  {/* Class & Seats */}
-                  <div style={{ textAlign: 'center', flexShrink: 0, width: '90px' }}>
-                    <span style={{ background: '#FFF0E5', color: '#FF6B00', fontSize: '10px', fontWeight: 700, borderRadius: '20px', padding: '3px 8px', display: 'inline-block', marginBottom: '5px', whiteSpace: 'nowrap' }}>Non-stop</span>
-                    <div style={{ fontSize: '0.68rem', fontWeight: 700, whiteSpace: 'nowrap', color: isFull ? '#ef4444' : isLow ? '#f59e0b' : '#22c55e' }}>
-                      {isFull ? 'Sold Out' : isLow ? `⚠ ${f.availableSeats} left` : `${f.availableSeats} seats`}
-                    </div>
-                  </div>
-
-                  {/* Price & Book */}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexShrink: 0 }}>
-                    <div style={{ textAlign: 'right' }}>
-                      <div style={{ fontSize: '1.3rem', fontWeight: 800, color: '#FF6B00', lineHeight: 1, whiteSpace: 'nowrap' }}>₹{formatPrice(f.price)}</div>
-                      <div style={{ fontSize: '0.68rem', color: '#aaa', marginTop: '3px', whiteSpace: 'nowrap' }}>{f.classType || 'Economy'}</div>
-                    </div>
-                    <Button
-                      variant={isFull ? 'secondary' : 'primary'}
-                      className="rounded-pill fw-bold px-4"
-                      style={{ fontSize: '0.85rem', whiteSpace: 'nowrap' }}
-                      onClick={() => handleBook(f)}
-                      disabled={isFull}
-                    >
-                      {isFull ? 'Full' : 'Book Now'}
-                    </Button>
-                  </div>
+                );
+              })}
+              {filteredFlights.length === 0 && !loading && (
+                <div className="text-center py-5 text-muted bg-white rounded-4 border">
+                  <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#ccc' }}><i className="fa-solid fa-plane-slash"></i></div>
+                  <div style={{ fontWeight: 600, fontSize: '1.1rem' }}>No flights found matching your filters</div>
+                  <Button variant="outline-primary" className="mt-3 rounded-pill px-4 fw-bold" onClick={clearSearch}>Clear Filters</Button>
                 </div>
-              </div>
-            );
-          })}
-          {flights.length === 0 && (
-            <div className="text-center py-5 text-muted">
-              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}><i className="fa-solid fa-plane"></i></div>
-              <div style={{ fontWeight: 600 }}>No flights found for this route</div>
+              )}
             </div>
-          )}
-        </div>
 
         {/* Booking Modal */}
         <Modal show={showModal} onHide={() => setShowModal(false)} centered>
@@ -308,8 +435,8 @@ const Flights = () => {
             </Form>
           </Modal.Body>
           <Modal.Footer className="border-0 pt-0">
-            <Button variant="light" onClick={() => setShowModal(false)} className="rounded-3 px-4">Cancel</Button>
-            <Button variant="primary" onClick={confirmBooking} className="rounded-3 px-4 shadow-sm">Confirm Booking</Button>
+            <Button variant="light" onClick={() => setShowModal(false)} className="rounded-3 px-4 fw-bold">Cancel</Button>
+            <Button variant="primary" onClick={confirmBooking} className="rounded-3 px-4 shadow-sm fw-bold">Confirm Booking</Button>
           </Modal.Footer>
         </Modal>
       </Container>
