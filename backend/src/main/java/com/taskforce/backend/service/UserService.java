@@ -7,6 +7,8 @@ import com.taskforce.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -25,13 +27,14 @@ public class UserService {
         return toProfileResponse(user);
     }
 
-    public UserProfileResponse updateProfile(Long userId, String name, String phone, String address) {
+    public UserProfileResponse updateProfile(Long userId, String name, String phone, String address, String dob) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         if (name != null && !name.isEmpty()) user.setName(name);
         if (phone != null) user.setPhone(phone);
         if (address != null) user.setAddress(address);
+        if (dob != null && !dob.isEmpty()) user.setDob(LocalDate.parse(dob));
 
         userRepository.save(user);
         return toProfileResponse(user);

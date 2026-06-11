@@ -10,7 +10,7 @@ const Profile = () => {
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(false);
-  const [editForm, setEditForm] = useState({ name: '', phone: '', address: '' });
+  const [editForm, setEditForm] = useState({ name: '', phone: '', address: '', dob: '' });
   const [msg, setMsg] = useState({ text: '', type: '' });
 
   useEffect(() => {
@@ -29,7 +29,8 @@ const Profile = () => {
         setEditForm({
           name: data.name || '',
           phone: data.phone || '',
-          address: data.address || ''
+          address: data.address || '',
+          dob: data.dob ? data.dob : ''
         });
       })
       .catch(console.error)
@@ -124,6 +125,12 @@ const Profile = () => {
                           </Col>
                           <Col md={12}>
                             <Form.Group>
+                              <Form.Label className="fw-bold small text-muted text-uppercase mb-1">Date of Birth</Form.Label>
+                              <Form.Control type="date" value={editForm.dob} onChange={e => setEditForm({...editForm, dob: e.target.value})} className="border-0 shadow-sm rounded-3 py-2 fw-semibold" />
+                            </Form.Group>
+                          </Col>
+                          <Col md={12}>
+                            <Form.Group>
                               <Form.Label className="fw-bold small text-muted text-uppercase mb-1">Address</Form.Label>
                               <Form.Control as="textarea" rows={3} value={editForm.address} onChange={e => setEditForm({...editForm, address: e.target.value})} className="border-0 shadow-sm rounded-3 py-2 fw-semibold" placeholder="Enter your full address" />
                             </Form.Group>
@@ -150,6 +157,15 @@ const Profile = () => {
                             <div className="fs-5 fw-bold" style={{ color: '#1A1A1A' }}>
                               <i className="fa-solid fa-calendar-check me-2 text-success"></i>
                               {profileData?.createdAt ? new Date(profileData.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric', day: 'numeric' }) : 'Recently'}
+                            </div>
+                          </div>
+                        </Col>
+                        <Col md={12}>
+                          <div className="p-4 rounded-4 h-100" style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', transition: 'transform 0.2s' }} onMouseEnter={e => e.currentTarget.style.transform='translateY(-2px)'} onMouseLeave={e => e.currentTarget.style.transform='none'}>
+                            <div className="text-muted small fw-bold text-uppercase mb-2">Date of Birth</div>
+                            <div className="fs-5 fw-bold" style={{ color: '#1A1A1A' }}>
+                              <i className="fa-solid fa-cake-candles me-2" style={{ color: '#E11D48' }}></i>
+                              {profileData?.dob ? new Date(profileData.dob).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : <span className="text-muted fw-normal" style={{ fontSize: '1rem' }}>No date of birth provided.</span>}
                             </div>
                           </div>
                         </Col>

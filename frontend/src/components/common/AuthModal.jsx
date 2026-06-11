@@ -161,6 +161,17 @@ const AuthModal = ({ show, handleClose, type = 'login' }) => {
                   </Form.Group>
                 </div>
               </div>
+              <Form.Group className="mb-3">
+                <Form.Label>Address</Form.Label>
+                <Form.Control 
+                  as="textarea" 
+                  rows={2} 
+                  name="address" 
+                  placeholder="123 Main St..."
+                  value={formData.address} 
+                  onChange={handleChange} 
+                />
+              </Form.Group>
             </>
           )}
           

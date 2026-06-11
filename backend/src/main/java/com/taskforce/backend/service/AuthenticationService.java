@@ -13,6 +13,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -31,6 +34,8 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .phone(request.getPhone())
+                .dob(request.getDob() != null && !request.getDob().isEmpty() ? LocalDate.parse(request.getDob()) : null)
+                .address(request.getAddress())
                 .role(Role.USER)
                 .build();
         repository.save(user);
@@ -60,7 +65,7 @@ public class AuthenticationService {
         // Device Control Logic
         if (request.getDeviceToken() != null && !request.getDeviceToken().isEmpty()) {
             if (user.getDeviceTokens() == null) {
-                user.setDeviceTokens(new java.util.ArrayList<>());
+                user.setDeviceTokens(new ArrayList<>());
             }
             if (!user.getDeviceTokens().contains(request.getDeviceToken())) {
                 if (user.getDeviceTokens().size() >= 2) {
