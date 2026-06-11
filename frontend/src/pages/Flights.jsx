@@ -15,13 +15,24 @@ const formatTime = (val) => {
   return String(val).substring(0, 5);
 };
 
+// Parse ISO datetime to extract date (e.g., "14 Jun")
+const formatDate = (val) => {
+  if (!val) return '';
+  if (typeof val === 'string' && val.includes('T')) {
+    const t = new Date(val);
+    if (isNaN(t)) return val.substring(0, 10);
+    return t.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
+  }
+  return '';
+};
+
 // Compute duration between two ISO timestamps, or return a stored duration string
 const formatDuration = (dep, arr, stored) => {
   if (stored && typeof stored === 'string' && !stored.includes('T')) return stored;
   if (dep && arr && dep.includes('T') && arr.includes('T')) {
     const d1 = new Date(dep), d2 = new Date(arr);
     if (!isNaN(d1) && !isNaN(d2)) {
-      let diff = (d2 - d1) / 60000; // minutes
+      let diff = Math.round((d2 - d1) / 60000); // round to nearest minute
       if (diff < 0) diff += 1440;   // overnight
       const h = Math.floor(diff / 60), m = diff % 60;
       return `${h}h ${m > 0 ? m + 'm' : ''}`;
@@ -344,7 +355,8 @@ const Flights = () => {
                         {/* Depart */}
                         <div style={{ flexShrink: 0, textAlign: 'center', width: '80px' }}>
                           <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#1A1A1A', lineHeight: 1, whiteSpace: 'nowrap' }}>{formatTime(f.departureTime)}</div>
-                          <div style={{ fontSize: '0.75rem', color: '#888', marginTop: '4px', fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{f.origin}</div>
+                          <div style={{ fontSize: '0.75rem', color: '#FF6B00', marginTop: '2px', fontWeight: 700 }}>{formatDate(f.departureTime)}</div>
+                          <div style={{ fontSize: '0.75rem', color: '#888', marginTop: '2px', fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{f.origin}</div>
                         </div>
 
                         {/* Dashed line + icon */}
@@ -359,7 +371,8 @@ const Flights = () => {
                         {/* Arrive */}
                         <div style={{ flexShrink: 0, textAlign: 'center', width: '80px' }}>
                           <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#1A1A1A', lineHeight: 1, whiteSpace: 'nowrap' }}>{formatTime(f.arrivalTime)}</div>
-                          <div style={{ fontSize: '0.75rem', color: '#888', marginTop: '4px', fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{f.destination}</div>
+                          <div style={{ fontSize: '0.75rem', color: '#FF6B00', marginTop: '2px', fontWeight: 700 }}>{formatDate(f.arrivalTime)}</div>
+                          <div style={{ fontSize: '0.75rem', color: '#888', marginTop: '2px', fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{f.destination}</div>
                         </div>
                       </div>
 
