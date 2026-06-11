@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (userData) => {
     try {
-      const data = await apiRegister(userData.fullname, userData.email, userData.password, userData.phone);
+      const data = await apiRegister(userData.fullname, userData.email, userData.password, userData.phone, userData.dob, userData.address);
       setUser({ id: data.userId, name: data.name, email: data.email });
       setToken(data.token);
       localStorage.setItem('currentUser', data.email);

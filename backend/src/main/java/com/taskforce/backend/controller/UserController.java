@@ -33,7 +33,8 @@ public class UserController {
                 user.getId(),
                 updates.get("name"),
                 updates.get("phone"),
-                updates.get("address")
+                updates.get("address"),
+                updates.get("dob")
         ));
     }
 }

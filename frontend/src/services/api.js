@@ -34,11 +34,11 @@ export async function apiLogin(email, password, deviceToken) {
   return handleResponse(res);
 }
 
-export async function apiRegister(name, email, password, phone) {
+export async function apiRegister(name, email, password, phone, dob, address) {
   const res = await fetch(`${API_BASE}/auth/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, email, password, phone })
+    body: JSON.stringify({ name, email, password, phone, dob, address })
   });
   return handleResponse(res);
 }
